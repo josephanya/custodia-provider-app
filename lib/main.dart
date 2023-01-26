@@ -1,9 +1,9 @@
+import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:custodia_provider/services/notifications_service.dart';
-import 'package:custodia_provider/theme/theme.dart';
-import 'package:custodia_provider/utils/routes.dart';
+import 'package:custodia_provider/ui/core/routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();

@@ -22,8 +22,10 @@ class NotificationsService {
         onSelectNotification: onSelectNotification);
   }
 
-  Future onSelectNotification(String payload) async {
-    print('notification payload: $payload');
+  Future onSelectNotification(String? payload) async {
+    if (payload != null) {
+      print('notification payload: $payload');
+    }
   }
 
   Future onDidReceiveLocalNotification(
@@ -33,16 +35,14 @@ class NotificationsService {
 
   getPlatformChannelSpecfics() {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'ng.lifebox.sustain',
-      'Sustain',
-      channelDescription: 'your channel description',
-      playSound: true,
-      enableLights: true,
-      enableVibration: true,
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'Sustain',
-    );
+        'ng.lifebox.sustain', 'Custodia',
+        channelDescription: 'your channel description',
+        playSound: true,
+        enableLights: true,
+        enableVibration: true,
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'Custodia');
     const iOSPlatformChannelSpecifics = IOSNotificationDetails();
     const platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
