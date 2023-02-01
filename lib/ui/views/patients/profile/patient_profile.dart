@@ -1,3 +1,4 @@
+import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
@@ -37,7 +38,7 @@ class PatientProfile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const CircleAvatar(
-                    radius: 35,
+                    radius: 30,
                   ),
                   TetiaryButtonOutlined(
                     onPress: () => Navigator.pushNamed(context, '/chat'),
@@ -63,81 +64,18 @@ class PatientProfile extends StatelessWidget {
               ),
               const YMargin(30),
               DefaultCard(
-                onPress: () =>
-                    Navigator.pushNamed(context, '/patient-information'),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 18,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: const [
-                          CircleAvatar(
-                            radius: 10,
-                          ),
-                          XMargin(16),
-                          Text(
-                            'Personal information',
-                          ),
-                        ],
-                      ),
-                      const Icon(
-                        Icons.chevron_right,
-                        color: grey,
-                        size: 18,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const YMargin(40),
-              const Text(
-                'Biomarkers',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const YMargin(15),
-              DefaultCard(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 19,
-                    ),
-                    child: InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, biomarkerOptions[index]['route']),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const CircleAvatar(
-                                radius: 10,
-                              ),
-                              const XMargin(16),
-                              Text(
-                                biomarkerOptions[index]['name'],
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.chevron_right,
-                            color: grey,
-                            size: 18,
-                          )
-                        ],
+                child: Column(
+                  children: const [
+                    Option(
+                      optionName: 'Patient details',
+                      optionRoute: '/patient-details',
+                      icon: Icon(
+                        CustomIcon.information,
+                        size: 20,
+                        color: blue,
                       ),
                     ),
-                  ),
-                  itemCount: biomarkerOptions.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  ],
                 ),
               ),
               const YMargin(40),
@@ -150,45 +88,106 @@ class PatientProfile extends StatelessWidget {
               ),
               const YMargin(15),
               DefaultCard(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 19,
-                    ),
-                    child: InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, dietOptions[index]['route']),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const CircleAvatar(
-                                radius: 10,
-                              ),
-                              const XMargin(16),
-                              Text(
-                                dietOptions[index]['name'],
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.chevron_right,
-                            color: grey,
-                            size: 18,
-                          )
-                        ],
+                child: Column(
+                  children: const [
+                    Option(
+                      optionName: 'Food',
+                      optionRoute: '/food-entries',
+                      icon: Icon(
+                        CustomIcon.food,
+                        size: 20,
+                        color: blue,
                       ),
                     ),
-                  ),
-                  itemCount: dietOptions.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  ],
+                ),
+              ),
+              const YMargin(40),
+              const Text(
+                'Biomarkers',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              const YMargin(15),
+              DefaultCard(
+                child: Column(
+                  children: const [
+                    Option(
+                      optionName: 'Blood glucose',
+                      optionRoute: '/blood-glucose-progress',
+                      icon: Icon(
+                        CustomIcon.blood_glucose,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                    Option(
+                      optionName: 'Blood pressure',
+                      optionRoute: '/blood-pressure-progress',
+                      icon: Icon(
+                        CustomIcon.blood_pressure,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                    Option(
+                      optionName: 'Weight',
+                      optionRoute: '/weight-progress',
+                      icon: Icon(
+                        CustomIcon.weight,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class Option extends StatelessWidget {
+  const Option({
+    required this.optionName,
+    required this.optionRoute,
+    required this.icon,
+    Key? key,
+  }) : super(key: key);
+
+  final String optionName, optionRoute;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 17.5,
+      ),
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, optionRoute),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                icon,
+                const XMargin(16),
+                Text(optionName),
+              ],
+            ),
+            const Icon(
+              Icons.chevron_right,
+              color: grey,
+              size: 18,
+            )
+          ],
         ),
       ),
     );

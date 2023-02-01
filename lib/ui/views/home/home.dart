@@ -84,15 +84,9 @@ class _HomeState extends State<Home> {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, '/profile'),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(46),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'https://pyxis.nymag.com/v1/imgs/361/d5b/c3d6afff0017b0bd01c82eb3e84eb8cd5a-michael-b-jordan.rsquare.w1200.jpg',
-                            height: 40,
-                            width: 40,
-                            fit: BoxFit.cover,
-                          ),
+                        child: const CircleAvatar(
+                          radius: 20,
+                          child: Text('JA'),
                         ),
                       ),
                     ],

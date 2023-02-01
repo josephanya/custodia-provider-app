@@ -1,3 +1,4 @@
+import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
@@ -48,18 +49,8 @@ class Profile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const CircleAvatar(
-                    radius: 35,
-                  ),
-                  TetiaryButtonOutlined(
-                    onPress: () =>
-                        Navigator.pushNamed(context, '/edit-profile'),
-                    buttonText: 'Edit photo',
-                  ),
-                ],
+              const CircleAvatar(
+                radius: 30,
               ),
               const YMargin(15),
               const Text(
@@ -87,41 +78,27 @@ class Profile extends StatelessWidget {
               ),
               const YMargin(15),
               DefaultCard(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 19,
-                    ),
-                    child: InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, accountOptions[index]['route']),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const CircleAvatar(
-                                radius: 10,
-                              ),
-                              const XMargin(16),
-                              Text(
-                                accountOptions[index]['name'],
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.chevron_right,
-                            color: grey,
-                            size: 18,
-                          )
-                        ],
+                child: Column(
+                  children: const [
+                    Option(
+                      optionName: 'Personal details',
+                      optionRoute: '/personal-details',
+                      icon: Icon(
+                        CustomIcon.information,
+                        size: 20,
+                        color: blue,
                       ),
                     ),
-                  ),
-                  itemCount: accountOptions.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                    Option(
+                      optionName: 'Change password',
+                      optionRoute: '/change-pasword',
+                      icon: Icon(
+                        CustomIcon.asterisk,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const YMargin(40),
@@ -134,82 +111,70 @@ class Profile extends StatelessWidget {
               ),
               const YMargin(15),
               DefaultCard(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 17.5,
-                    ),
-                    child: InkWell(
-                      onTap: () => _openLink(aboutOptions[index]['url']),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const CircleAvatar(
-                                radius: 10,
-                              ),
-                              const XMargin(16),
-                              Text(
-                                aboutOptions[index]['name'],
-                              ),
-                            ],
-                          ),
-                          const Icon(
-                            Icons.chevron_right,
-                            color: grey,
-                            size: 18,
-                          )
-                        ],
+                child: Column(
+                  children: const [
+                    AboutOptions(
+                      optionName: 'Help center',
+                      optionLink: 'https://helpcenter.custodiahealth.com',
+                      icon: Icon(
+                        CustomIcon.help,
+                        size: 20,
+                        color: blue,
                       ),
                     ),
-                  ),
-                  itemCount: aboutOptions.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                    AboutOptions(
+                      optionName: 'Privacy policy',
+                      optionLink: 'https://custodiahealth.com/privacy-policy',
+                      icon: Icon(
+                        CustomIcon.privacy_policy,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                    AboutOptions(
+                      optionName: 'Terms of use',
+                      optionLink: 'https://custodiahealth.com/terms-of-use',
+                      icon: Icon(
+                        CustomIcon.terms,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               const YMargin(40),
               DefaultCard(
-                child: ListView.builder(
-                  itemBuilder: (context, index) => Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 15,
-                      vertical: 17.5,
-                    ),
-                    child: InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, logoutOptions[index]['route']),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const CircleAvatar(
-                                radius: 10,
-                              ),
-                              const XMargin(16),
-                              Text(
-                                logoutOptions[index]['name'],
-                                style: const TextStyle(
-                                  color: red,
-                                ),
-                              ),
-                            ],
+                onPress: () => Navigator.pushNamed(context, '/home'),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 17.5,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: const [
+                          Icon(
+                            CustomIcon.logout,
+                            size: 20,
+                            color: red,
                           ),
-                          const Icon(
-                            Icons.chevron_right,
-                            color: grey,
-                            size: 18,
-                          )
+                          XMargin(16),
+                          Text(
+                            'Logout',
+                            style: TextStyle(),
+                          ),
                         ],
                       ),
-                    ),
+                      const Icon(
+                        Icons.chevron_right,
+                        color: grey,
+                        size: 18,
+                      )
+                    ],
                   ),
-                  itemCount: logoutOptions.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                 ),
               ),
               const YMargin(20),
@@ -229,6 +194,100 @@ class Profile extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class AboutOptions extends StatelessWidget {
+  const AboutOptions({
+    required this.optionName,
+    required this.optionLink,
+    required this.icon,
+    Key? key,
+  }) : super(key: key);
+
+  final String optionName, optionLink;
+  final Icon icon;
+
+  Future<void> _openLink(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 17.5,
+      ),
+      child: InkWell(
+        onTap: () => _openLink(optionLink),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                icon,
+                const XMargin(16),
+                Text(
+                  optionName,
+                ),
+              ],
+            ),
+            const Icon(
+              Icons.chevron_right,
+              color: grey,
+              size: 18,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Option extends StatelessWidget {
+  const Option({
+    required this.optionName,
+    required this.optionRoute,
+    required this.icon,
+    Key? key,
+  }) : super(key: key);
+
+  final String optionName, optionRoute;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 17.5,
+      ),
+      child: InkWell(
+        onTap: () => Navigator.pushNamed(context, optionRoute),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                icon,
+                const XMargin(16),
+                Text(optionName),
+              ],
+            ),
+            const Icon(
+              Icons.chevron_right,
+              color: grey,
+              size: 18,
+            )
+          ],
         ),
       ),
     );

@@ -8,7 +8,7 @@ import 'package:custodia_provider/ui/views/patients/progress/blood_pressure/read
 import 'package:custodia_provider/ui/views/patients/progress/weight/progress_weight.dart';
 import 'package:custodia_provider/ui/views/patients/progress/weight/readings_weight.dart';
 import 'package:custodia_provider/ui/views/profile/edit_profile/edit_profile.dart';
-import 'package:custodia_provider/ui/views/profile/my_details/my_details.dart';
+import 'package:custodia_provider/ui/views/profile/personal_details/personal_details.dart';
 import 'package:custodia_provider/ui/views/profile/profile.dart';
 import 'package:custodia_provider/ui/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +43,9 @@ class RouteGenerator {
           builder: (context) => const Profile(),
         );
 
-      case '/my-details':
+      case '/personal-details':
         return MaterialPageRoute(
-          builder: (context) => const MyDetails(),
+          builder: (context) => const PersonalDetails(),
         );
 
       case '/edit-profile':
@@ -68,7 +68,7 @@ class RouteGenerator {
           builder: (context) => const ChatsList(),
         );
 
-      case '/patient-information':
+      case '/patient-details':
         return MaterialPageRoute(
           builder: (context) => const PatientDetails(),
         );

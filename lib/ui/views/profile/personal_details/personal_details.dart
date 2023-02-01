@@ -1,8 +1,8 @@
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 
-class MyDetails extends StatelessWidget {
-  const MyDetails({super.key});
+class PersonalDetails extends StatelessWidget {
+  const PersonalDetails({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

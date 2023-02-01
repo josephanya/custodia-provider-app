@@ -40,21 +40,6 @@ flutter:
     - .env
 
   fonts:
-    - family: Proxima Nova
-      fonts:
-        - asset: fonts/ProximaNova-Extrabold.ttf
-          weight: 800
-        - asset: fonts/ProximaNova-Bold.ttf
-          weight: 700
-        - asset: fonts/ProximaNova-Semibold.ttf
-          weight: 600
-        - asset: fonts/ProximaNova-Regular.ttf
-          weight: 400
-        - asset: fonts/ProximaNova-Light.ttf
-          weight: 300
-        - asset: fonts/ProximaNova-Thin.ttf
-          weight: 100
-
     - family: Circular Std
       fonts:
         - asset: fonts/Circular-Std-Bold.ttf
@@ -65,3 +50,6 @@ flutter:
           weight: 400
         - asset: fonts/Circular-Std-Light.ttf
           weight: 300
+    - family: CustomIcon
+      fonts:
+        - asset: fonts/CustomIcon.ttf

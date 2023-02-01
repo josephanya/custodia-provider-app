@@ -25,15 +25,8 @@ class PatientsListCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(46),
-              child: CachedNetworkImage(
-                imageUrl:
-                    'https://pyxis.nymag.com/v1/imgs/361/d5b/c3d6afff0017b0bd01c82eb3e84eb8cd5a-michael-b-jordan.rsquare.w1200.jpg',
-                height: 46,
-                width: 46,
-                fit: BoxFit.cover,
-              ),
+            const CircleAvatar(
+              radius: 23,
             ),
             const XMargin(13),
             Column(
@@ -46,7 +39,7 @@ class PatientsListCard extends StatelessWidget {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const YMargin(5),
+                const YMargin(4),
                 Text(
                   info,
                   style: const TextStyle(

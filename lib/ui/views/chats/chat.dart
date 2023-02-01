@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/patients/profile/patient_profile.dart';
+import 'package:custodia_provider/ui/widgets/bottom_sheet.dart';
 import 'package:custodia_provider/ui/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
@@ -49,35 +51,12 @@ class Chat extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: [
-              Stack(
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(38),
-                    child: CachedNetworkImage(
-                      imageUrl:
-                          'https://pyxis.nymag.com/v1/imgs/361/d5b/c3d6afff0017b0bd01c82eb3e84eb8cd5a-michael-b-jordan.rsquare.w1200.jpg',
-                      height: 38,
-                      width: 38,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Positioned(
-                    right: 0,
-                    bottom: 0,
-                    child: Container(
-                      width: 10,
-                      height: 10,
-                      decoration: BoxDecoration(
-                        color: blue,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                    ),
-                  )
-                ],
+            children: const [
+              CircleAvatar(
+                radius: 19,
               ),
-              const XMargin(15),
-              const Text(
+              XMargin(13),
+              Text(
                 'Ezeogo Mang',
                 style: TextStyle(
                   fontSize: 18,
@@ -196,7 +175,48 @@ class Chat extends StatelessWidget {
                                 child: IconButton(
                                   iconSize: 18,
                                   icon: const Icon(Icons.add),
-                                  onPressed: () {},
+                                  onPressed: () => CustomBottomSheet(
+                                    context: context,
+                                    body: Column(
+                                      children: [
+                                        Row(
+                                          children: const [
+                                            Icon(
+                                              CustomIcon.camera,
+                                              size: 22,
+                                              color: blue,
+                                            ),
+                                            XMargin(15),
+                                            Text(
+                                              'Camera',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const YMargin(30),
+                                        Row(
+                                          children: const [
+                                            Icon(
+                                              CustomIcon.gallery,
+                                              size: 22,
+                                              color: blue,
+                                            ),
+                                            XMargin(15),
+                                            Text(
+                                              'Gallery',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ).modalBottomSheet(),
                                   color: Colors.white,
                                 ),
                               ),
