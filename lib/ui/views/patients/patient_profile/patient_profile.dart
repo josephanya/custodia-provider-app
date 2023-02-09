@@ -5,6 +5,7 @@ import 'package:custodia_provider/ui/widgets/buttons.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final List biomarkerOptions = [
   {'name': 'Blood glucose', 'route': '/blood-glucose-progress'},
@@ -71,6 +72,15 @@ class PatientProfile extends StatelessWidget {
                       optionRoute: '/patient-details',
                       icon: Icon(
                         CustomIcon.information,
+                        size: 20,
+                        color: blue,
+                      ),
+                    ),
+                    LinkOption(
+                      optionName: 'Medical records',
+                      optionLink: 'https://custodiahealth.com/terms-of-use',
+                      icon: Icon(
+                        CustomIcon.medical_records,
                         size: 20,
                         color: blue,
                       ),
@@ -180,6 +190,58 @@ class Option extends StatelessWidget {
                 icon,
                 const XMargin(16),
                 Text(optionName),
+              ],
+            ),
+            const Icon(
+              Icons.chevron_right,
+              color: grey,
+              size: 18,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class LinkOption extends StatelessWidget {
+  const LinkOption({
+    required this.optionName,
+    required this.optionLink,
+    required this.icon,
+    Key? key,
+  }) : super(key: key);
+
+  final String optionName, optionLink;
+  final Icon icon;
+
+  Future<void> _openLink(String urlString) async {
+    final Uri url = Uri.parse(urlString);
+
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 15,
+        vertical: 17.5,
+      ),
+      child: InkWell(
+        onTap: () => _openLink(optionLink),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                icon,
+                const XMargin(16),
+                Text(
+                  optionName,
+                ),
               ],
             ),
             const Icon(

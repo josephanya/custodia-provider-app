@@ -13,7 +13,28 @@ class AlertDetails extends StatelessWidget {
       appBar: appBarWithAction(
         context,
         '',
-        const Text('k'),
+        GestureDetector(
+          onTap: () => Navigator.maybePop(context),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: lightBlue,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(6.0),
+                child: Icon(
+                  Icons.check,
+                  size: 16,
+                  color: blue,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

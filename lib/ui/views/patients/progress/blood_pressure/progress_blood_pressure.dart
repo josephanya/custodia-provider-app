@@ -10,10 +10,10 @@ class ProgressBloodPressure extends StatefulWidget {
   const ProgressBloodPressure({Key? key}) : super(key: key);
 
   @override
-  _ProgressBloodPressureState createState() => _ProgressBloodPressureState();
+  ProgressBloodPressureState createState() => ProgressBloodPressureState();
 }
 
-class _ProgressBloodPressureState extends State<ProgressBloodPressure> {
+class ProgressBloodPressureState extends State<ProgressBloodPressure> {
   int segmentedControlValue = 0;
 
   Widget segmentedControl() {

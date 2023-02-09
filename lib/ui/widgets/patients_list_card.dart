@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/patients/profile/patient_profile.dart';
+import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 

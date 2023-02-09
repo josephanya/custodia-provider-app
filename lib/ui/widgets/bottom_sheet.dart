@@ -21,7 +21,7 @@ class CustomBottomSheet {
         return Container(
           color: Colors.transparent,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 40, 20, 70),
+            padding: const EdgeInsets.fromLTRB(20, 45, 20, 70),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,

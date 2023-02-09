@@ -10,10 +10,10 @@ class ProgressBloodGlucose extends StatefulWidget {
   const ProgressBloodGlucose({Key? key}) : super(key: key);
 
   @override
-  _ProgressBloodGlucoseState createState() => _ProgressBloodGlucoseState();
+  ProgressBloodGlucoseState createState() => ProgressBloodGlucoseState();
 }
 
-class _ProgressBloodGlucoseState extends State<ProgressBloodGlucose> {
+class ProgressBloodGlucoseState extends State<ProgressBloodGlucose> {
   int segmentedControlValue = 0;
 
   Widget segmentedControl() {

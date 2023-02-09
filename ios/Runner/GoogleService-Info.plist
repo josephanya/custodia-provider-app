@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>820598870164-7c3ndc40q5vq01hfbq2dq3g7kf3o9sah.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.820598870164-7c3ndc40q5vq01hfbq2dq3g7kf3o9sah</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBqgzkBszNgP8NY_mmTNYqhuAyi5oHkx4U</string>
+	<key>GCM_SENDER_ID</key>
+	<string>820598870164</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ng.lifebox.custodiaProvider</string>
+	<key>PROJECT_ID</key>
+	<string>custodia-0001</string>
+	<key>STORAGE_BUCKET</key>
+	<string>custodia-0001.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:820598870164:ios:a6844676d59d0131c0a481</string>
+</dict>
+</plist>

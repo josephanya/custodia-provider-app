@@ -2,10 +2,11 @@ import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
+import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/ui/widgets/textfield.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LogIn extends ConsumerWidget {
   const LogIn({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class LogIn extends ConsumerWidget {
             children: [
               const YMargin(20),
               const Text(
-                'Welcome back',
+                'Login',
                 style: TextStyle(
                   fontSize: 26,
                   color: blue,
@@ -94,12 +95,14 @@ class LogIn extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              PrimaryButton(
-                isEnabled: provider.isButtonEnabled,
-                buttonText: 'Log in',
-                onPressed: () =>
-                    provider.isButtonEnabled ? provider.signIn(context) : null,
-              ),
+              provider.isLoading
+                  ? const Loader()
+                  : PrimaryButton(
+                      isEnabled: provider.isButtonEnabled,
+                      buttonText: 'Log in',
+                      onPressed: () =>
+                          provider.isButtonEnabled ? provider.login() : null,
+                    ),
             ],
           ),
         ),

@@ -17,18 +17,17 @@ import 'package:custodia_provider/ui/views/patients/progress/food/food_entries.d
 import 'package:custodia_provider/ui/views/patients/diet/meal_planner.dart';
 import 'package:custodia_provider/ui/views/patients/patient_details/patient_details.dart';
 import 'package:custodia_provider/ui/views/auth/login/login.dart';
-import 'package:custodia_provider/ui/views/startup/splash.dart';
+import 'package:custodia_provider/ui/views/startup/startup.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
-    final args = settings.arguments;
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => const Splash(),
+          builder: (context) => const Startup(),
         );
 
-      case '/sign-in':
+      case '/login':
         return MaterialPageRoute(
           builder: (context) => const LogIn(),
         );

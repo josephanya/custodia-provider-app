@@ -1,276 +1,102 @@
+import 'dart:convert';
+import 'package:custodia_provider/core/api_base.dart';
+import 'package:custodia_provider/services/api/interceptors/api_interceptor.dart';
+import 'package:custodia_provider/services/local_storage/local_storage.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
+import 'api.dart';
+import 'failure.dart';
 
-// import 'package:dio/dio.dart';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
+final apiProvider = Provider<Api>(
+  (ref) => ApiService(
+    ref.watch(localStorageProvider.future),
+  ),
+);
 
-// final String? baseURL = dotenv.env['BASE_URL'];
+class ApiService implements Api {
+  ApiService(this._localStorage) {
+    initialize();
+  }
 
-// final authProvider = Provider<Auth>((ref) => Auth());
+  final _log = Logger(filter: DevelopmentFilter());
+  final Future<LocalStorage> _localStorage;
 
-// class Auth {
-//   final Dio _dio = Dio();
+  late final Dio _http;
 
-//   Future<Response> login(Map<String, dynamic> payload) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/user/auth/login',
-//         data: payload,
-//       );
-//       return response;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
+  void initialize() {
+    _http = Dio()
+      ..options.baseUrl = ApiBase.baseUri.toString()
+      ..options.connectTimeout = ApiBase.connectTimeout
+      ..options.sendTimeout = ApiBase.sendTimeout
+      ..options.responseType = ResponseType.json
+      ..options.receiveTimeout = ApiBase.receiveTimeout
+      ..httpClientAdapter
+      ..options.headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+      };
 
-//   Future<Response> signUp(Map<String, dynamic>? payload) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/user/auth/signup',
-//         data: payload,
-//       );
-//       return response;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
+    if (kDebugMode) {
+      _http.interceptors.add(LogInterceptor(
+          responseBody: true,
+          error: true,
+          requestHeader: true,
+          responseHeader: true,
+          request: true,
+          requestBody: true));
+    }
 
-//   Future<Response> logout(String authToken) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/user/auth/logout',
-//         options: Options(
-//           headers: {
-//             'Authorization':
-//                 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImphamFAbGlmZWJveC5uZyIsInVzZXJJRCI6IjYzNDFkYzQxNmRmOWI5OGMyN2UxMmU4ZCIsImlhdCI6MTY2NTI2MDYwOX0.7fLVDCVJJPi-xaSj72_lT0mNKgipd3FH1VHtoQSLJKU'
-//           },
-//         ),
-//       );
-//       return response;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
+    _http.interceptors.add(ApiInterceptor(_localStorage));
+  }
 
-//   Future<bool> checkMembershipValidity(String authToken) async {
-//     try {
-//       print(' my $authToken');
-//       Response response = await _dio.get(
-//         '$baseURL/v1/user/membership/check-validity',
-//         options: Options(
-//           headers: {
-//             'Authorization':
-//                 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Impvc2VwaEBsaWZlYm94Lm5nIiwidXNlcklEIjoiNjM1ZDgxZWRmZmRlNGRhZGFiMWUzZjAyIiwiaWF0IjoxNjY3MDczNzkzfQ.I96U0jSMod7jZvpVCzgrhc1fsT9iovOzl6RWb-qWjuQ'
-//           },
-//         ),
-//       );
-//       return response.data['data']['has_valid_membership'];
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-// }
+  @override
+  Future<Map<String, dynamic>> get(Uri uri,
+      {Map<String, dynamic>? queryParameters}) async {
+    return await _performRequest(
+      _http.get(
+        uri.toString(),
+        queryParameters: queryParameters,
+      ),
+    );
+  }
 
-// final databaseProvider = Provider<Database>((ref) => Database());
+  @override
+  Future post(
+    Uri uri, {
+    required Map<String, dynamic> body,
+  }) async {
+    return await _performRequest(
+      _http.post(
+        uri.toString(),
+        data: body,
+      ),
+    );
+  }
 
-// class Database {
-//   final Dio _dio = Dio();
+  Future _performRequest(Future<Response<dynamic>> apiCall) async {
+    try {
+      final response = await apiCall;
+      _throwOnFail(response);
+      return response.data;
+    } on DioError catch (e) {
+      _log.e(e.error);
+      _log.e('Check here for errors api ${e.response?.data}');
+      throw Failure(
+        message: Failure.fromJson(e.response?.data ?? '' ?? []).message,
+      );
+    } catch (e) {
+      _log.e(e);
+      throw Failure(
+        message: e.toString(),
+      );
+    }
+  }
 
-//   Future<List<BloodGlucose>> getBloodGlucose(String authToken, userID) async {
-//     try {
-//       Response response = await _dio.get(
-//         '$baseURL/v1/patients/$userID/biomarker/blood-glucose',
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       final result = List<Map<String, dynamic>>.from(response.data['result']);
-//       List<BloodGlucose> readings =
-//           result.map((reading) => BloodGlucose.fromJSON(reading)).toList();
-//       return readings;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   Future<List<BloodPressure>> getBloodPressure(String authToken, userID) async {
-//     try {
-//       Response response = await _dio.get(
-//         '$baseURL/v1/patients/$userID/biomarker/blood-pressure',
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       final result = List<Map<String, dynamic>>.from(response.data['result']);
-//       List<BloodPressure> readings =
-//           result.map((reading) => BloodPressure.fromJSON(reading)).toList();
-//       return readings;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   Future<List<Weight>> getWeight(String authToken, userID) async {
-//     try {
-//       Response response = await _dio.get(
-//         '$baseURL/v1/patients/$userID/biomarker/weight',
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       final result = List<Map<String, dynamic>>.from(response.data['result']);
-//       List<Weight> readings =
-//           result.map((reading) => Weight.fromJSON(reading)).toList();
-//       return readings;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   Future<List<Food>> getFood(String authToken, userID) async {
-//     try {
-//       Response response = await _dio.get(
-//         '$baseURL/v1/patients/$userID/biomarker/food',
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       final result = List<Map<String, dynamic>>.from(response.data['result']);
-//       List<Food> readings =
-//           result.map((reading) => Food.fromJSON(reading)).toList();
-//       return readings;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   Future<BiomarkersSummary> getBiomarkersSummary(
-//       String authToken, userID) async {
-//     try {
-//       Response response = await _dio.get(
-//         '$baseURL/v1/patients/$userID/biomarker/summary',
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       return BiomarkersSummary.fromJSON(response.data);
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   logBloodGlucose(Map<String, dynamic> payload, String authToken) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/patients/biomarker/blood-glucose',
-//         data: payload,
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       print(response);
-//       return response.data;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   logBloodPressure(Map<String, dynamic> payload, String authToken) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/patients/biomarker/blood-pressure',
-//         data: payload,
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       print(response);
-//       return response.data;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   logWeight(Map<String, dynamic> payload, String authToken) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/patients/biomarker/weight',
-//         data: payload,
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       print(response);
-//       return response.data;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-
-//   logFood(FormData payload, String authToken) async {
-//     try {
-//       Response response = await _dio.post(
-//         '$baseURL/v1/patients/biomarker/food',
-//         data: payload,
-//         options: Options(
-//           headers: {'Authorization': 'Bearer $authToken'},
-//         ),
-//       );
-//       print(response);
-//       return response.data;
-//     } on DioError catch (e) {
-//       if (e.response != null) {
-//         throw CustomError(e.response!.data.toString());
-//       } else {
-//         throw CustomError('No Internet connection');
-//       }
-//     }
-//   }
-// }
+  void _throwOnFail(Response response) {
+    if (!response.statusCode.toString().contains('20')) {
+      final failure = Failure.fromJson(json.decode(response.data));
+      throw failure;
+    }
+  }
+}

@@ -1,10 +1,11 @@
 import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
-import 'package:custodia_provider/ui/widgets/buttons.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final List accountOptions = [
@@ -25,19 +26,11 @@ final List logoutOptions = [
   {'name': 'Logout', 'route': '/log-weight'},
 ];
 
-class Profile extends StatelessWidget {
+class Profile extends ConsumerWidget {
   const Profile({Key? key}) : super(key: key);
 
-  Future<void> _openLink(String urlString) async {
-    final Uri url = Uri.parse(urlString);
-
-    if (!await launchUrl(url)) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: appBar(context, ''),
       body: SafeArea(
@@ -113,7 +106,7 @@ class Profile extends StatelessWidget {
               DefaultCard(
                 child: Column(
                   children: const [
-                    AboutOptions(
+                    LinkOption(
                       optionName: 'Help center',
                       optionLink: 'https://helpcenter.custodiahealth.com',
                       icon: Icon(
@@ -122,7 +115,7 @@ class Profile extends StatelessWidget {
                         color: blue,
                       ),
                     ),
-                    AboutOptions(
+                    LinkOption(
                       optionName: 'Privacy policy',
                       optionLink: 'https://custodiahealth.com/privacy-policy',
                       icon: Icon(
@@ -131,7 +124,7 @@ class Profile extends StatelessWidget {
                         color: blue,
                       ),
                     ),
-                    AboutOptions(
+                    LinkOption(
                       optionName: 'Terms of use',
                       optionLink: 'https://custodiahealth.com/terms-of-use',
                       icon: Icon(
@@ -145,7 +138,9 @@ class Profile extends StatelessWidget {
               ),
               const YMargin(40),
               DefaultCard(
-                onPress: () => Navigator.pushNamed(context, '/home'),
+                onPress: () async {
+                  ref.read(loginProvider).logout();
+                },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 15,
@@ -200,8 +195,8 @@ class Profile extends StatelessWidget {
   }
 }
 
-class AboutOptions extends StatelessWidget {
-  const AboutOptions({
+class LinkOption extends StatelessWidget {
+  const LinkOption({
     required this.optionName,
     required this.optionLink,
     required this.icon,

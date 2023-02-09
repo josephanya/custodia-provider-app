@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/patients/profile/patient_profile.dart';
+import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile.dart';
 import 'package:custodia_provider/ui/widgets/bottom_sheet.dart';
 import 'package:custodia_provider/ui/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
@@ -196,7 +195,7 @@ class Chat extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        const YMargin(30),
+                                        const YMargin(33),
                                         Row(
                                           children: const [
                                             Icon(
