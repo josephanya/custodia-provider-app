@@ -41,12 +41,12 @@ class Chat extends StatelessWidget {
           ),
         ),
         title: GestureDetector(
-          onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const PatientProfile(),
-            ),
-          ),
+          // onTap: () => Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) =>  PatientProfile(),
+          //   ),
+          // ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

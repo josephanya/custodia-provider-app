@@ -20,13 +20,9 @@ class LoginVM with ChangeNotifier {
   final TextEditingController passwordTEC = TextEditingController();
 
   bool _isLoading = false, _isButtonEnabled = false;
+
   bool get isLoading => _isLoading;
   bool get isButtonEnabled => _isButtonEnabled;
-
-  set isLoading(bool val) {
-    _isLoading = val;
-    notifyListeners();
-  }
 
   void isValid() {
     _isButtonEnabled = (Validator.isPassword(passwordTEC.text)) &&

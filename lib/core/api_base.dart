@@ -20,6 +20,7 @@ class ApiBase {
         port: apiPort,
         path: '$apiVersion/',
       );
+
   static Uri authBase(String? endpoint) => Uri(
         scheme: httpsScheme,
         host: apiHost,
@@ -27,6 +28,33 @@ class ApiBase {
         path: '$apiVersion/auth${endpoint ?? ''}',
       );
 
+  static Uri alertBase(String? endpoint) => Uri(
+        scheme: httpsScheme,
+        host: apiHost,
+        port: apiPort,
+        path: '$apiVersion/alerts${endpoint ?? ''}',
+      );
+
+  static Uri profileBase(String? endpoint) => Uri(
+        scheme: httpsScheme,
+        host: apiHost,
+        port: apiPort,
+        path: '$apiVersion/profile${endpoint ?? ''}',
+      );
+
+  static Uri patientBase(String? endpoint) => Uri(
+        scheme: httpsScheme,
+        host: apiHost,
+        port: apiPort,
+        path: '$apiVersion/patients${endpoint ?? ''}',
+      );
+
   static get login => authBase('/login');
   static get logout => authBase('/logout');
+
+  static get alert => alertBase('');
+
+  static get profile => profileBase('');
+
+  static get patients => patientBase('');
 }

@@ -1,3 +1,4 @@
+import 'package:custodia_provider/models/patient_model.dart';
 import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
@@ -20,7 +21,12 @@ final List dietOptions = [
 ];
 
 class PatientProfile extends StatelessWidget {
-  const PatientProfile({super.key});
+  const PatientProfile({
+    Key? key,
+    required this.patientModel,
+  }) : super(key: key);
+
+  final PatientModel patientModel;
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +44,14 @@ class PatientProfile extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const CircleAvatar(
+                  CircleAvatar(
                     radius: 30,
+                    child: Text(
+                      '${patientModel.firstName[0].toUpperCase()}${patientModel.lastName[0].toUpperCase()}',
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
                   ),
                   TetiaryButtonOutlined(
                     onPress: () => Navigator.pushNamed(context, '/chat'),
@@ -48,17 +60,17 @@ class PatientProfile extends StatelessWidget {
                 ],
               ),
               const YMargin(15),
-              const Text(
-                'Joseph Anya',
-                style: TextStyle(
+              Text(
+                '${patientModel.firstName} ${patientModel.lastName}',
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const YMargin(4),
-              const Text(
-                '4783484 • Female',
-                style: TextStyle(
+              Text(
+                patientModel.gender,
+                style: const TextStyle(
                   color: grey,
                   fontSize: 13,
                 ),

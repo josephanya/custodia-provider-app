@@ -7,15 +7,13 @@ import 'package:custodia_provider/ui/views/patients/progress/blood_pressure/prog
 import 'package:custodia_provider/ui/views/patients/progress/blood_pressure/readings_blood_pressure.dart';
 import 'package:custodia_provider/ui/views/patients/progress/weight/progress_weight.dart';
 import 'package:custodia_provider/ui/views/patients/progress/weight/readings_weight.dart';
-import 'package:custodia_provider/ui/views/profile/edit_profile/edit_profile.dart';
-import 'package:custodia_provider/ui/views/profile/personal_details/personal_details.dart';
+import 'package:custodia_provider/ui/views/profile/personal_details.dart';
 import 'package:custodia_provider/ui/views/profile/profile.dart';
 import 'package:custodia_provider/ui/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/ui/views/home/alert_details.dart';
 import 'package:custodia_provider/ui/views/patients/progress/food/food_entries.dart';
-import 'package:custodia_provider/ui/views/patients/diet/meal_planner.dart';
-import 'package:custodia_provider/ui/views/patients/patient_details/patient_details.dart';
+import 'package:custodia_provider/ui/views/patients/patient_profile/patient_details.dart';
 import 'package:custodia_provider/ui/views/auth/login/login.dart';
 import 'package:custodia_provider/ui/views/startup/startup.dart';
 
@@ -47,11 +45,6 @@ class RouteGenerator {
           builder: (context) => const PersonalDetails(),
         );
 
-      case '/edit-profile':
-        return MaterialPageRoute(
-          builder: (context) => const EditProfile(),
-        );
-
       case '/patients-list':
         return MaterialPageRoute(
           builder: (context) => const PatientsList(),
@@ -70,11 +63,6 @@ class RouteGenerator {
       case '/patient-details':
         return MaterialPageRoute(
           builder: (context) => const PatientDetails(),
-        );
-
-      case '/meal-planner':
-        return MaterialPageRoute(
-          builder: (context) => const MealPlanner(),
         );
 
       case '/food-entries':

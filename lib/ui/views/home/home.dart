@@ -1,18 +1,26 @@
 import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/alert_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Home extends StatefulWidget {
+class Home extends ConsumerStatefulWidget {
   const Home({Key? key}) : super(key: key);
 
   @override
-  State<Home> createState() => _HomeState();
+  ConsumerState<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends ConsumerState<Home> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(profileProvider.notifier).initialize();
+  }
+
   int segmentedControlValue = 0;
 
   Widget segmentedControl() {
@@ -63,6 +71,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final profile = ref.watch(profileProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -83,9 +92,11 @@ class _HomeState extends State<Home> {
                     children: [
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, '/profile'),
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: 20,
-                          child: Text('JA'),
+                          child: Text(
+                            '${profile.provider?.firstName![0].toUpperCase()}${profile.provider?.lastName![0].toUpperCase()}',
+                          ),
                         ),
                       ),
                     ],

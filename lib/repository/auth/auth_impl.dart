@@ -1,5 +1,6 @@
 import 'package:custodia_provider/core/api_base.dart';
-import 'package:custodia_provider/models/user_model.dart';
+import 'package:custodia_provider/models/auth_user_model.dart';
+import 'package:custodia_provider/models/provider_model.dart';
 import 'package:custodia_provider/services/api/api.dart';
 import 'package:custodia_provider/services/api/api_service.dart';
 import 'package:custodia_provider/services/local_storage/local_storage.dart';
@@ -36,22 +37,23 @@ class AuthImpl implements Auth {
       },
     );
 
-    User? user = User.fromJSON(response);
+    AuthModel? authUser = AuthModel.fromJSON(response);
     await _localStorage.then(
-      (storage) async => await storage.saveUser(user),
+      (storage) async => await storage.saveAuthUser(authUser),
     );
-  }
 
-  @override
-  void setToken({required String token}) {
-    _token = token;
+    final providerProfile = await _api.get(ApiBase.profile);
+    ProviderModel? provider = ProviderModel.fromJSON(providerProfile);
+    await _localStorage.then(
+      (storage) async => await storage.saveProvider(provider),
+    );
   }
 
   @override
   Future<void> logout() async {
     _api.post(ApiBase.logout, body: {}).whenComplete(
       () async => await _localStorage
-          .then((storage) async => await storage.removeUser()),
+          .then((storage) async => await storage.removeAuthUser()),
     );
   }
 

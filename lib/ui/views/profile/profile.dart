@@ -1,6 +1,7 @@
 import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
+import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
@@ -8,29 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-final List accountOptions = [
-  {'name': 'My details', 'route': '/my-details'},
-  {'name': 'Change password', 'route': '/change-password'},
-];
-
-final List aboutOptions = [
-  {'name': 'Help center', 'url': 'https://helpcenter.custodiahealth.com'},
-  {
-    'name': 'Privacy policy',
-    'url': 'https://custodiahealth.com/privacy-policy'
-  },
-  {'name': 'Terms of use', 'url': 'https://custodiahealth.com/terms-of-use'},
-];
-
-final List logoutOptions = [
-  {'name': 'Logout', 'route': '/log-weight'},
-];
-
-class Profile extends ConsumerWidget {
+class Profile extends ConsumerStatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends ConsumerState<Profile> {
+  @override
+  Widget build(BuildContext context) {
+    final provider = ref.watch(profileProvider);
     return Scaffold(
       appBar: appBar(context, ''),
       body: SafeArea(
@@ -42,21 +31,27 @@ class Profile extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 radius: 30,
+                child: Text(
+                  '${provider.provider?.firstName![0].toUpperCase()}${provider.provider?.lastName![0].toUpperCase()}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
               ),
               const YMargin(15),
-              const Text(
-                'Joseph Anya',
-                style: TextStyle(
+              Text(
+                '${provider.provider?.firstName} ${provider.provider?.lastName}',
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const YMargin(4),
-              const Text(
-                'josephanya4real@gmail.com',
-                style: TextStyle(
+              Text(
+                '${provider.provider?.email} ',
+                style: const TextStyle(
                   fontSize: 13,
                   color: grey,
                 ),
@@ -82,15 +77,15 @@ class Profile extends ConsumerWidget {
                         color: blue,
                       ),
                     ),
-                    Option(
-                      optionName: 'Change password',
-                      optionRoute: '/change-pasword',
-                      icon: Icon(
-                        CustomIcon.asterisk,
-                        size: 20,
-                        color: blue,
-                      ),
-                    ),
+                    // Option(
+                    //   optionName: 'Change password',
+                    //   optionRoute: '/change-pasword',
+                    //   icon: Icon(
+                    //     CustomIcon.asterisk,
+                    //     size: 20,
+                    //     color: blue,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

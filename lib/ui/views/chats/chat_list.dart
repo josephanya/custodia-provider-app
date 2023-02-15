@@ -19,61 +19,63 @@ class ChatsList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(patientListProvider);
+    // final provider = ref.watch(patientListProvider);
     return Scaffold(
-      appBar: provider.isSearching
-          ? SearchAppBar(
-              buildActions: GestureDetector(
-                onTap: () {
-                  if (provider.searchTEC.text.isEmpty) {
-                    provider.stopSearching(false);
-                    return;
-                  }
-                  provider.clearSearchQuery();
-                },
-                child: const Center(
-                  child: Text(
-                    'Cancel',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: blue,
-                    ),
-                  ),
-                ),
-              ),
-              searchBar: Center(
-                child: TextField(
-                  controller: provider.searchTEC,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    fillColor: offWhite,
-                    focusColor: offWhite,
-                    filled: true,
-                    isDense: true,
-                    contentPadding: const EdgeInsets.all(12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: const BorderSide(
-                        color: offWhite,
-                      ),
-                    ),
-                    hintText: 'Search',
-                    hintStyle: const TextStyle(color: grey),
-                  ),
-                  style: const TextStyle(
-                    color: black,
-                    fontSize: 15,
-                  ),
-                  onChanged: (query) => provider.updateSearchQuery,
-                ),
-              ),
-            )
-          : appBarWithActionWithoutBack(
-              context,
-              'Chats',
-              const SearchChats(),
-            ),
+      appBar:
+          //  provider.isSearching
+          //     ? SearchAppBar(
+          //         buildActions: GestureDetector(
+          //           onTap: () {
+          //             if (provider.searchTEC.text.isEmpty) {
+          //               provider.stopSearching(false);
+          //               return;
+          //             }
+          //             provider.clearSearchQuery();
+          //           },
+          //           child: const Center(
+          //             child: Text(
+          //               'Cancel',
+          //               style: TextStyle(
+          //                 fontSize: 16,
+          //                 fontWeight: FontWeight.w500,
+          //                 color: blue,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         searchBar: Center(
+          //           child: TextField(
+          //             controller: provider.searchTEC,
+          //             autofocus: true,
+          //             decoration: InputDecoration(
+          //               fillColor: offWhite,
+          //               focusColor: offWhite,
+          //               filled: true,
+          //               isDense: true,
+          //               contentPadding: const EdgeInsets.all(12),
+          //               border: OutlineInputBorder(
+          //                 borderRadius: BorderRadius.circular(15),
+          //                 borderSide: const BorderSide(
+          //                   color: offWhite,
+          //                 ),
+          //               ),
+          //               hintText: 'Search',
+          //               hintStyle: const TextStyle(color: grey),
+          //             ),
+          //             style: const TextStyle(
+          //               color: black,
+          //               fontSize: 15,
+          //             ),
+          //             onChanged: (query) => provider.updateSearchQuery,
+          //           ),
+          //         ),
+          //       )
+          //     :
+          appBarWithoutBack(
+        context,
+        'Chats',
+        // const SearchChats(),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -98,35 +100,35 @@ class ChatsList extends ConsumerWidget {
   }
 }
 
-class SearchChats extends ConsumerWidget {
-  const SearchChats({
-    Key? key,
-  }) : super(key: key);
+// class SearchChats extends ConsumerWidget {
+//   const SearchChats({
+//     Key? key,
+//   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(patientListProvider);
-    return GestureDetector(
-      onTap: () => provider.startSearch(true),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Container(
-          decoration: const BoxDecoration(
-            color: lightBlue,
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
-            ),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.all(6.0),
-            child: Icon(
-              Icons.search,
-              size: 16,
-              color: blue,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     final provider = ref.watch(patientListProvider);
+//     return GestureDetector(
+//       onTap: () => provider.startSearch(true),
+//       child: Padding(
+//         padding: const EdgeInsets.all(14.0),
+//         child: Container(
+//           decoration: const BoxDecoration(
+//             color: lightBlue,
+//             borderRadius: BorderRadius.all(
+//               Radius.circular(20),
+//             ),
+//           ),
+//           child: const Padding(
+//             padding: EdgeInsets.all(6.0),
+//             child: Icon(
+//               Icons.search,
+//               size: 16,
+//               color: blue,
+//             ),
+//           ),
+//         ),
+//       ),
+//     );
+//   }
+// }
