@@ -1,19 +1,19 @@
-class Food {
+class FoodModel {
   String food, mealType, imageURL;
   DateTime timestamp;
 
-  Food({
+  FoodModel({
     required this.food,
     required this.mealType,
     required this.imageURL,
     required this.timestamp,
   });
 
-  factory Food.fromJSON(Map<String, dynamic> data) {
-    return Food(
+  factory FoodModel.fromJSON(Map<String, dynamic> data) {
+    return FoodModel(
       food: data['food'],
       mealType: data['mealType'],
-      imageURL: data['imageURL'],
+      imageURL: data['imageURL'] ?? '',
       timestamp: DateTime.parse(data['createdAt']),
     );
   }

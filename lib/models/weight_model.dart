@@ -1,14 +1,14 @@
-class Weight {
+class WeightModel {
   String weight;
   DateTime timestamp;
 
-  Weight({
+  WeightModel({
     required this.weight,
     required this.timestamp,
   });
 
-  factory Weight.fromJSON(Map<String, dynamic> data) {
-    return Weight(
+  factory WeightModel.fromJSON(Map<String, dynamic> data) {
+    return WeightModel(
       weight: data['weight'],
       timestamp: DateTime.parse(data['createdAt']),
     );

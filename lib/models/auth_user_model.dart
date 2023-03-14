@@ -11,10 +11,10 @@ class AuthModel {
 
   factory AuthModel.fromJSON(Map<String, dynamic> responseData) {
     return AuthModel(
-      userID: responseData['data']['patient']['patient_id'],
-      firstName: responseData['data']['patient']['first_name'],
-      lastName: responseData['data']['patient']['last_name'],
-      email: responseData['data']['patient']['email'],
+      userID: responseData['data']['provider']['provider_id'],
+      firstName: responseData['data']['provider']['first_name'],
+      lastName: responseData['data']['provider']['last_name'],
+      email: responseData['data']['provider']['email'],
       authToken: responseData['data']['token'],
     );
   }

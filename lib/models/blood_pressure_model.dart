@@ -1,15 +1,15 @@
-class BloodPressure {
+class BloodPressureModel {
   String systolicBloodPressure, diastolicBloodPressure;
   DateTime timestamp;
 
-  BloodPressure({
+  BloodPressureModel({
     required this.systolicBloodPressure,
     required this.diastolicBloodPressure,
     required this.timestamp,
   });
 
-  factory BloodPressure.fromJSON(Map<String, dynamic> data) {
-    return BloodPressure(
+  factory BloodPressureModel.fromJSON(Map<String, dynamic> data) {
+    return BloodPressureModel(
       systolicBloodPressure: data['systolicBloodPressure'],
       diastolicBloodPressure: data['diastolicBloodPressure'],
       timestamp: DateTime.parse(data['createdAt']),

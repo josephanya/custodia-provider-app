@@ -37,54 +37,54 @@
 //   }
 // }
 
+import 'package:custodia_provider/core/navigation.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 import 'package:custodia_provider/repository/patient/patient_impl.dart';
 
-final patientsProvider =
-    StateNotifierProvider.autoDispose<PatientsVM, PatientsViewState>(
-  (ref) => PatientsVM(ref.read),
+final patientListProvider =
+    StateNotifierProvider.autoDispose<PatientlistVM, PatientListViewState>(
+  (ref) => PatientlistVM(ref.read),
 );
 
-class PatientsVM extends StateNotifier<PatientsViewState> {
-  PatientsVM(this._reader) : super(PatientsViewState.initial());
+class PatientlistVM extends StateNotifier<PatientListViewState> {
+  PatientlistVM(this._reader) : super(PatientListViewState.initial());
 
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
   void initialize() async {
-    await fetchResource();
+    await fetchPatientList();
   }
 
-  Future<void> fetchResource() async {
+  Future<void> fetchPatientList() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
       final patients = await _reader(patientRepository).getPatients();
       if (!mounted) return;
-      state = state.copyWith(patients: patients);
+      state = state.copyWith(patients: patients, viewState: ViewState.idle);
     } on Failure catch (e) {
       state = state.copyWith(viewState: ViewState.error);
+      _reader(navigationProvider).showErrorSnackbar(message: e.message);
       _log.e(e);
-    } finally {
-      if (!mounted) return;
-      state = state.copyWith(viewState: ViewState.idle);
     }
   }
 }
 
-class PatientsViewState {
+class PatientListViewState {
   final ViewState viewState;
   final List? patients;
 
-  const PatientsViewState._({required this.viewState, required this.patients});
+  const PatientListViewState._(
+      {required this.viewState, required this.patients});
 
-  factory PatientsViewState.initial() =>
-      const PatientsViewState._(viewState: ViewState.idle, patients: []);
+  factory PatientListViewState.initial() =>
+      const PatientListViewState._(viewState: ViewState.idle, patients: []);
 
-  PatientsViewState copyWith({ViewState? viewState, List? patients}) =>
-      PatientsViewState._(
+  PatientListViewState copyWith({ViewState? viewState, List? patients}) =>
+      PatientListViewState._(
           viewState: viewState ?? this.viewState,
           patients: patients ?? this.patients);
 }

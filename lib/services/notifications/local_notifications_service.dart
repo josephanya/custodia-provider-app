@@ -1,16 +1,17 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter/foundation.dart';
 
-class NotificationsService {
+class LocalNotificationsService {
   var flutterLocalNotificationsPlugin;
 
-  NotificationsService() {
+  LocalNotificationsService() {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
     initNotifications();
   }
 
   void initNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('app_icon');
+        AndroidInitializationSettings('drawable/ic_launcher_foreground');
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
             onDidReceiveLocalNotification: onDidReceiveLocalNotification);
@@ -24,7 +25,9 @@ class NotificationsService {
 
   Future onSelectNotification(String? payload) async {
     if (payload != null) {
-      print('notification payload: $payload');
+      if (kDebugMode) {
+        print('notification payload: $payload');
+      }
     }
   }
 
@@ -36,7 +39,7 @@ class NotificationsService {
   getPlatformChannelSpecfics() {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'ng.lifebox.sustain', 'Custodia',
-        channelDescription: 'your channel description',
+        channelDescription: 'default channel',
         playSound: true,
         enableLights: true,
         enableVibration: true,
@@ -55,7 +58,9 @@ class NotificationsService {
       int id, String title, String body, dynamic payload) async {
     await flutterLocalNotificationsPlugin
         .show(id, title, body, getPlatformChannelSpecfics(), payload: payload);
-    print(payload);
+    if (kDebugMode) {
+      print(payload);
+    }
   }
 
   void showNotificationDaily(
@@ -63,7 +68,9 @@ class NotificationsService {
     var time = Time(hour, minute, 0);
     await flutterLocalNotificationsPlugin.showDailyAtTime(
         id, title, body, time, getPlatformChannelSpecfics());
-    print('Notification Succesfully Scheduled at ${time.toString()}');
+    if (kDebugMode) {
+      print('Notification Succesfully Scheduled at ${time.toString()}');
+    }
   }
 
   void showNotificationWeekly(
@@ -71,7 +78,9 @@ class NotificationsService {
     var time = Time(hour, minute, 0);
     await flutterLocalNotificationsPlugin.showWeeklyAtDayAndTime(
         id, title, body, Day.monday, getPlatformChannelSpecfics());
-    print('Notification Succesfully Scheduled at ${time.toString()}');
+    if (kDebugMode) {
+      print('Notification Succesfully Scheduled at ${time.toString()}');
+    }
   }
 
   void showNotificationAtintervals(int id, String title, String body) async {

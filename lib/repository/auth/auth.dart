@@ -6,4 +6,8 @@ abstract class Auth {
   Future<void> logout();
 
   Future<bool> hasAuthToken();
+
+  Future<void> saveDeviceToken({
+    required String deviceToken,
+  });
 }

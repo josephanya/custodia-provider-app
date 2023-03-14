@@ -47,7 +47,7 @@ class LoginVM with ChangeNotifier {
     } on Failure catch (e) {
       _isLoading = false;
       _log.e(e);
-      _reader(navigationProvider).showCustomSnackbar(message: e.message);
+      _reader(navigationProvider).showErrorSnackbar(message: e.message);
     }
   }
 
@@ -60,7 +60,7 @@ class LoginVM with ChangeNotifier {
           .pushNamedAndRemoveUntil('/login', (_) => false);
     } on Failure catch (e) {
       _log.e(e);
-      _reader(navigationProvider).showCustomSnackbar(message: e.message);
+      _reader(navigationProvider).showErrorSnackbar(message: e.message);
     }
   }
 }

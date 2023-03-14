@@ -4,4 +4,12 @@ abstract class Patient {
   Future<List<PatientModel>> getPatients();
 
   Future getSinglePatient(String patientID);
+
+  Future getPatientFood(String patientID);
+
+  Future getPatientBloodGlucose(String patientID);
+
+  Future getPatientBloodPressure(String patientID);
+
+  Future getPatientWeight(String patientID);
 }

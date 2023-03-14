@@ -103,7 +103,7 @@ class _ProfileState extends ConsumerState<Profile> {
                   children: const [
                     LinkOption(
                       optionName: 'Help center',
-                      optionLink: 'https://helpcenter.custodiahealth.com',
+                      optionLink: 'https://wa.link/5pmuke',
                       icon: Icon(
                         CustomIcon.help,
                         size: 20,

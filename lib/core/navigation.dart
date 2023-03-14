@@ -84,7 +84,19 @@ class Navigation {
   void showCustomSnackbar({required String message}) {
     showOverlayNotification(
       (context) {
-        return ErrorFlashbar(
+        return Flashbar(
+          color: navyBlue,
+          message: message,
+        );
+      },
+      duration: const Duration(milliseconds: 4000),
+    );
+  }
+
+  void showErrorSnackbar({required String message}) {
+    showOverlayNotification(
+      (context) {
+        return Flashbar(
           color: red,
           message: message,
         );

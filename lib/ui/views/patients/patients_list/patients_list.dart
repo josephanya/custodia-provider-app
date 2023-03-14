@@ -27,12 +27,12 @@ class _PatientsListState extends ConsumerState<PatientsList> {
   @override
   void initState() {
     super.initState();
-    ref.read(patientsProvider.notifier).initialize();
+    ref.read(patientListProvider.notifier).initialize();
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = ref.watch(patientsProvider);
+    final provider = ref.watch(patientListProvider);
     // final provider = ref.watch(patientListProvider);
     return Scaffold(
       // appBar: provider.isSearching
@@ -97,20 +97,50 @@ class _PatientsListState extends ConsumerState<PatientsList> {
           ),
           child: provider.viewState.isLoading
               ? const Center(
-                  child: Loader(),
-                )
-              : ListView.separated(
-                  itemBuilder: (context, index) => PatientsListCard(
-                    name:
-                        '${provider.patients?[index].firstName} ${provider.patients?[index].lastName}',
-                    info: provider.patients?[index].gender,
-                    patientModel: provider.patients?[index],
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: 10,
+                    ),
+                    child: Loader(),
                   ),
-                  itemCount: provider.patients?.length ?? 1,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) => const YMargin(30),
-                ),
+                )
+              : provider.patients == null || provider.viewState.isError
+                  ? Center(
+                      child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 50,
+                        vertical: 250,
+                      ),
+                      child: Column(
+                        children: const [
+                          Text(
+                            'No data yet',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          YMargin(14),
+                          Text(
+                            'Your patients will show up here',
+                            style: TextStyle(color: grey, height: 1.35),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ))
+                  : ListView.separated(
+                      itemBuilder: (context, index) => PatientsListCard(
+                        name:
+                            '${provider.patients?[index].firstName} ${provider.patients?[index].lastName}',
+                        info: provider.patients?[index].gender,
+                        patientModel: provider.patients?[index],
+                      ),
+                      itemCount: provider.patients?.length ?? 1,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (context, index) => const YMargin(30),
+                    ),
         ),
       ),
     );

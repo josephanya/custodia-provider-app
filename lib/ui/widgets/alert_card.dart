@@ -1,45 +1,53 @@
+import 'package:custodia_provider/models/alert_model.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class AlertCard extends StatelessWidget {
   const AlertCard({
     Key? key,
     required this.urgent,
+    required this.alert,
   }) : super(key: key);
 
   final bool urgent;
+  final AlertModel alert;
 
   @override
   Widget build(BuildContext context) {
     return DefaultCard(
-      onPress: () => Navigator.pushNamed(context, '/alert-details'),
+      onPress: () => Navigator.pushNamed(
+        context,
+        '/alert-details',
+        arguments: alert.alertID,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'New blood pressure log',
-              style: TextStyle(
+            Text(
+              alert.alertType,
+              style: const TextStyle(
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const YMargin(5),
-            const Text(
-              'Reading: 124/87 mmHg',
-              style: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-            const YMargin(20),
+            const YMargin(10),
+            // const Text(
+            //   'Reading: 124/87 mmHg',
+            //   style: TextStyle(
+            //     fontSize: 12,
+            //   ),
+            // ),
+            // const YMargin(20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Ude Mang • 17 min ago',
-                  style: TextStyle(
+                Text(
+                  timeago.format(alert.triggerTime),
+                  style: const TextStyle(
                     fontSize: 12,
                     color: grey,
                   ),

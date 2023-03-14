@@ -2,11 +2,11 @@ import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:overlay_support/overlay_support.dart';
 
-class ErrorFlashbar extends StatelessWidget {
+class Flashbar extends StatelessWidget {
   final String message;
   final Color color;
 
-  const ErrorFlashbar({
+  const Flashbar({
     required this.message,
     required this.color,
     Key? key,

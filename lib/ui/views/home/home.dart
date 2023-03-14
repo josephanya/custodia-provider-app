@@ -1,11 +1,14 @@
 import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/views/home/home_vm.dart';
 import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/alert_card.dart';
+import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 
 class Home extends ConsumerStatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,6 +22,7 @@ class _HomeState extends ConsumerState<Home> {
   void initState() {
     super.initState();
     ref.read(profileProvider.notifier).initialize();
+    ref.read(homeProvider.notifier).initialize();
   }
 
   int segmentedControlValue = 0;
@@ -54,7 +58,7 @@ class _HomeState extends ConsumerState<Home> {
     );
   }
 
-  final Map<int, Widget> graph = <int, Widget>{
+  Map<int, Widget> list = <int, Widget>{
     0: const SizedBox(
       height: 300,
       child: Center(
@@ -72,6 +76,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(profileProvider);
+    final provider = ref.watch(homeProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -103,33 +108,62 @@ class _HomeState extends ConsumerState<Home> {
                   ),
                 ],
               ),
+              // const YMargin(25),
+              // segmentedControl(),
               const YMargin(25),
-              segmentedControl(),
-              const YMargin(25),
-              const AlertCard(
-                urgent: true,
-              ),
-              const YMargin(12),
-              const AlertCard(
-                urgent: false,
-              ),
-              const YMargin(12),
-              const AlertCard(
-                urgent: true,
-              ),
-              const YMargin(12),
-              const AlertCard(
-                urgent: true,
-              ),
-              const YMargin(12),
-              const AlertCard(
-                urgent: true,
-              ),
-              const YMargin(12),
-              const AlertCard(
-                urgent: true,
-              ),
-              const YMargin(12),
+              Column(
+                children: [
+                  provider.viewState.isLoading
+                      ? const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: 20,
+                            ),
+                            child: Loader(),
+                          ),
+                        )
+                      : provider.alerts == null || provider.viewState.isError
+                          ? Center(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 50,
+                                  vertical: 190,
+                                ),
+                                child: Column(
+                                  children: const [
+                                    Text(
+                                      'No alerts yet',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    YMargin(14),
+                                    Text(
+                                      'Alerts from patient will show up here',
+                                      style:
+                                          TextStyle(color: grey, height: 1.35),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: provider.alerts?.length ?? 1,
+                              itemBuilder: (context, index) {
+                                return AlertCard(
+                                  urgent: true,
+                                  alert: provider.alerts?[index],
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const YMargin(12),
+                            ),
+                ],
+              )
             ],
           ),
         ),

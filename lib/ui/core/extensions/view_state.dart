@@ -1,6 +1,5 @@
-import '../enums/view_state.dart';
+import 'package:custodia_provider/ui/core/enums/view_state.dart';
 
-/// An extension on [ViewState] to indicate states
 extension ViewStateExtension on ViewState {
   bool get isLoading => this == ViewState.loading;
 

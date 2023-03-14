@@ -1,8 +1,7 @@
-import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 
 class FullPhoto extends StatelessWidget {
   final String path;
@@ -17,7 +16,7 @@ class FullPhoto extends StatelessWidget {
     return Scaffold(
       backgroundColor: black,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(0, 58, 58, 58),
         leading: GestureDetector(
           onTap: () => Navigator.maybePop(context),
           child: Padding(
@@ -43,18 +42,29 @@ class FullPhoto extends StatelessWidget {
         elevation: 0,
       ),
       body: SafeArea(
-        child: PhotoView(
-          imageProvider: NetworkImage(
-            path,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 15,
           ),
-          loadingBuilder: (context, event) => Center(
-            child: SizedBox(
-              width: 20.0,
-              height: 20.0,
-              child: Platform.isAndroid
-                  ? const CircularProgressIndicator()
-                  : const CupertinoActivityIndicator(),
+          child: CachedNetworkImage(
+            placeholder: (context, url) => Container(
+              decoration: const BoxDecoration(
+                color: lightBlue,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+              child: const Center(
+                child: Loader(),
+              ),
             ),
+            errorWidget: (context, url, error) => Image.asset(
+              'images/img_not_available.jpeg',
+              fit: BoxFit.cover,
+            ),
+            imageUrl: path,
+            fit: BoxFit.contain,
+            width: double.infinity,
           ),
         ),
       ),

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/models/patient_model.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile.dart';
@@ -23,7 +22,7 @@ class PatientsListCard extends StatelessWidget {
         context,
         MaterialPageRoute(
           builder: (context) => PatientProfile(
-            patientModel: patientModel,
+            patientID: patientModel.patientID,
           ),
         ),
       ),

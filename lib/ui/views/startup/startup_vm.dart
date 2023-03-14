@@ -17,13 +17,18 @@ class StartupVM extends ChangeNotifier {
     await checkLoggedIn();
   }
 
-  Future<void> checkLoggedIn() async {
-    bool isAuthorized = await _reader(authRepository).hasAuthToken();
-    if (isAuthorized) {
-      goToHome();
-    } else {
-      goToLogin();
-    }
+  checkLoggedIn() async {
+    Timer(
+      const Duration(seconds: 3),
+      () async {
+        bool isAuthorized = await _reader(authRepository).hasAuthToken();
+        if (isAuthorized) {
+          goToHome();
+        } else {
+          goToLogin();
+        }
+      },
+    );
   }
 
   void goToHome() {

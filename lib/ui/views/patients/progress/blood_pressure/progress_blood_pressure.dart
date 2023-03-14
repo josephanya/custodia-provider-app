@@ -17,7 +17,7 @@ class ProgressBloodPressureState extends State<ProgressBloodPressure> {
   int segmentedControlValue = 0;
 
   Widget segmentedControl() {
-    return Container(
+    return SizedBox(
       width: 320,
       child: CupertinoSlidingSegmentedControl(
         groupValue: segmentedControlValue,

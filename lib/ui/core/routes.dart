@@ -1,3 +1,4 @@
+import 'package:custodia_provider/models/patient_model.dart';
 import 'package:custodia_provider/ui/views/chats/chat.dart';
 import 'package:custodia_provider/ui/views/chats/chat_list.dart';
 import 'package:custodia_provider/ui/views/patients/patients_list/patients_list.dart';
@@ -13,12 +14,13 @@ import 'package:custodia_provider/ui/widgets/bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/ui/views/home/alert_details.dart';
 import 'package:custodia_provider/ui/views/patients/progress/food/food_entries.dart';
-import 'package:custodia_provider/ui/views/patients/patient_profile/patient_details.dart';
+import 'package:custodia_provider/ui/views/patients/patient_details/patient_details.dart';
 import 'package:custodia_provider/ui/views/auth/login/login.dart';
 import 'package:custodia_provider/ui/views/startup/startup.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
@@ -62,12 +64,12 @@ class RouteGenerator {
 
       case '/patient-details':
         return MaterialPageRoute(
-          builder: (context) => const PatientDetails(),
+          builder: (context) => PatientDetails(patient: args as PatientModel),
         );
 
       case '/food-entries':
         return MaterialPageRoute(
-          builder: (context) => const FoodEntries(),
+          builder: (context) => FoodEntries(patientID: args.toString()),
         );
 
       case '/blood-glucose-progress':
@@ -87,27 +89,29 @@ class RouteGenerator {
 
       case '/readings-blood-glucose':
         return MaterialPageRoute(
-          builder: (context) => const ReadingsBloodGlucose(),
+          builder: (context) =>
+              ReadingsBloodGlucose(patientID: args.toString()),
         );
 
       case '/readings-blood-pressure':
         return MaterialPageRoute(
-          builder: (context) => const ReadingsBloodPressure(),
+          builder: (context) =>
+              ReadingsBloodPressure(patientID: args.toString()),
         );
 
       case '/readings-weight':
         return MaterialPageRoute(
-          builder: (context) => const ReadingsWeight(),
+          builder: (context) => ReadingsWeight(patientID: args.toString()),
         );
 
       case '/alert-details':
         return MaterialPageRoute(
-          builder: (context) => const AlertDetails(),
+          builder: (context) => AlertDetails(alertID: args.toString()),
         );
 
       default:
         return MaterialPageRoute(
-          builder: (context) => const FoodEntries(),
+          builder: (context) => const LogIn(),
         );
     }
   }

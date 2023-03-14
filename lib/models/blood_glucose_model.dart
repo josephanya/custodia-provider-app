@@ -1,15 +1,15 @@
-class BloodGlucose {
+class BloodGlucoseModel {
   String bloodGlucose, context;
   DateTime timestamp;
 
-  BloodGlucose({
+  BloodGlucoseModel({
     required this.bloodGlucose,
     required this.context,
     required this.timestamp,
   });
 
-  factory BloodGlucose.fromJSON(Map<String, dynamic> data) {
-    return BloodGlucose(
+  factory BloodGlucoseModel.fromJSON(Map<String, dynamic> data) {
+    return BloodGlucoseModel(
       bloodGlucose: data['bloodGlucose'],
       context: data['context'],
       timestamp: DateTime.parse(data['createdAt']),

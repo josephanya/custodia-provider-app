@@ -1,7 +1,8 @@
+import 'package:custodia_provider/core/navigation.dart';
+import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
 import 'package:custodia_provider/models/provider_model.dart';
 import 'package:custodia_provider/repository/provider/provider_impl.dart';
-import 'package:custodia_provider/services/api/failure.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
@@ -26,6 +27,7 @@ class ProfileVM extends StateNotifier<ProfileViewState> {
       final provider = await _reader(providerRepository).getProvider();
       state = state.copyWith(provider: provider);
     } on Failure catch (e) {
+      _reader(navigationProvider).showErrorSnackbar(message: e.message);
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
     } finally {

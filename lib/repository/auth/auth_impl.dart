@@ -70,4 +70,16 @@ class AuthImpl implements Auth {
     }
     return false;
   }
+
+  @override
+  Future<void> saveDeviceToken({
+    required String deviceToken,
+  }) async {
+    await _api.post(
+      ApiBase.deviceToken,
+      body: {
+        'push_token': deviceToken,
+      },
+    );
+  }
 }

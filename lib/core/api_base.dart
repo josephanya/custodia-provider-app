@@ -50,6 +50,7 @@ class ApiBase {
       );
 
   static get login => authBase('/login');
+  static get deviceToken => authBase('/push-token');
   static get logout => authBase('/logout');
 
   static get alert => alertBase('');
