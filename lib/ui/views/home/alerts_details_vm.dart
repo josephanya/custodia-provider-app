@@ -37,6 +37,20 @@ class AlertVM extends StateNotifier<AlertViewState> {
       _log.e(e);
     }
   }
+
+  void resolveAlert(String alertID) async {
+    try {
+      state = state.copyWith(viewState: ViewState.loading);
+      await _reader(alertRepository).resolveAlert(alertID);
+      state = state.copyWith(viewState: ViewState.idle);
+      _reader(navigationProvider).pop();
+      _reader(navigationProvider)
+          .showCustomSnackbar(message: 'Alert resolved successfully');
+    } on Failure catch (e) {
+      state = state.copyWith(viewState: ViewState.idle);
+      _reader(navigationProvider).showErrorSnackbar(message: e.message);
+    }
+  }
 }
 
 class AlertViewState {

@@ -10,7 +10,7 @@ class BloodGlucoseModel {
 
   factory BloodGlucoseModel.fromJSON(Map<String, dynamic> data) {
     return BloodGlucoseModel(
-      bloodGlucose: data['bloodGlucose'],
+      bloodGlucose: data['blood_glucose'],
       context: data['context'],
       timestamp: DateTime.parse(data['createdAt']),
     );

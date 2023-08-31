@@ -1,15 +1,52 @@
-import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
+import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/widgets/bottom_sheet.dart';
+import 'package:custodia_provider/ui/views/chats/chat_vm.dart';
+import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/ui/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class Chat extends StatelessWidget {
-  const Chat({Key? key}) : super(key: key);
+class Chat extends ConsumerStatefulWidget {
+  const Chat({
+    Key? key,
+    required this.patientID,
+  }) : super(key: key);
+
+  final String patientID;
+
+  @override
+  ConsumerState<Chat> createState() => _ChatState();
+}
+
+class _ChatState extends ConsumerState<Chat> {
+  @override
+  void initState() {
+    super.initState();
+    ref.read(chatProvider.notifier).initialize(patientID: widget.patientID);
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge) {
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          // User has scrolled to the top
+          ref.watch(chatProvider.notifier).fetchOldMessages(widget.patientID);
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    ref.watch(chatProvider.notifier).clearMessages();
+  }
+
+  final TextEditingController _chatFieldTEC = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    final provider = ref.watch(chatProvider);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -46,23 +83,30 @@ class Chat extends StatelessWidget {
           //     builder: (context) =>  PatientProfile(),
           //   ),
           // ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: const [
-              CircleAvatar(
-                radius: 19,
-              ),
-              XMargin(13),
-              Text(
-                'Ezeogo Mang',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+          child: provider.viewState.isLoading
+              ? const Loader()
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: blue,
+                      foregroundColor: white,
+                      radius: 19,
+                      child: Text(
+                        '${provider.patient?.firstName[0].toUpperCase()}${provider.patient?.lastName[0].toUpperCase()}',
+                      ),
+                    ),
+                    const XMargin(13),
+                    Text(
+                      '${provider.patient?.firstName} ${provider.patient?.lastName}',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
-          ),
         ),
       ),
       body: SafeArea(
@@ -79,64 +123,23 @@ class Chat extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(6, 3, 6, 0),
-                  child: ListView(
+                  child: ListView.builder(
                     reverse: true,
-                    children: [
-                      MessageBubble(
-                        content:
-                            'https://getsustain.app/assets/sustain-phone-mockup.png',
-                        sender: 'joe',
-                        type: 1,
-                        isMe: true,
-                        time: DateTime.now(),
-                      ),
-                      MessageBubble(
-                        content:
-                            'i was thinking the whole building could be an indoor sports park something',
-                        sender: 'joe',
-                        type: 0,
-                        isMe: true,
-                        time: DateTime.now(),
-                      ),
-                      MessageBubble(
-                        content:
-                            'Thanks Bibi! The changes I had to make haven’t been difficult afterall.',
-                        sender: 'joe',
-                        type: 0,
-                        isMe: true,
-                        time: DateTime.now(),
-                      ),
-                      MessageBubble(
-                        content:
-                            'Thanks Bibi! The changes I had to make haven’t been difficult afterall.',
-                        sender: 'joe',
-                        type: 0,
-                        isMe: true,
-                        time: DateTime.now(),
-                      ),
-                      MessageBubble(
-                        content:
-                            'You’ve been tracking your meals consistently. Tracking helps me give you the best possible advice. Keep those details coming! ',
-                        sender: 'joe',
-                        type: 0,
-                        isMe: false,
-                        time: DateTime.now(),
-                      ),
-                      MessageBubble(
-                        content: 'Good morning Joseph! 👋',
-                        sender: 'joe',
-                        type: 0,
-                        isMe: false,
-                        time: DateTime.now(),
-                      ),
-                      MessageBubble(
-                        content: 'hello there',
-                        sender: 'joe',
-                        type: 0,
-                        isMe: true,
-                        time: DateTime.now(),
-                      ),
-                    ],
+                    itemCount: provider.messages?.length,
+                    itemBuilder: (context, index) {
+                      if (index == provider.messages?.length) {
+                        return const Loader();
+                      } else {
+                        return MessageBubble(
+                          content: provider.messages![index].content,
+                          type: provider.messages![index].type,
+                          isMe: provider.messages![index].senderID ==
+                              ref.read(chatProvider.notifier).user.userID,
+                          time: DateTime.now(),
+                        );
+                      }
+                    },
+                    controller: _scrollController,
                   ),
                 ),
               ),
@@ -147,7 +150,6 @@ class Chat extends StatelessWidget {
                   children: <Widget>[
                     Flexible(
                       child: Container(
-                        // height: 45,
                         alignment: const Alignment(0.0, 1.0),
                         decoration: BoxDecoration(
                           color: offWhite,
@@ -158,70 +160,70 @@ class Chat extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Container(
-                                width: 35,
-                                height: 35,
-                                decoration: BoxDecoration(
-                                  color: blue,
-                                  border: Border.all(
-                                    color: blue,
-                                  ),
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(35),
-                                  ),
-                                ),
-                                child: IconButton(
-                                  iconSize: 18,
-                                  icon: const Icon(Icons.add),
-                                  onPressed: () => CustomBottomSheet(
-                                    context: context,
-                                    body: Column(
-                                      children: [
-                                        Row(
-                                          children: const [
-                                            Icon(
-                                              CustomIcon.camera,
-                                              size: 22,
-                                              color: blue,
-                                            ),
-                                            XMargin(15),
-                                            Text(
-                                              'Camera',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        const YMargin(33),
-                                        Row(
-                                          children: const [
-                                            Icon(
-                                              CustomIcon.gallery,
-                                              size: 22,
-                                              color: blue,
-                                            ),
-                                            XMargin(15),
-                                            Text(
-                                              'Gallery',
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ).modalBottomSheet(),
-                                  color: Colors.white,
-                                ),
-                              ),
+                              // Container(
+                              //   width: 35,
+                              //   height: 35,
+                              //   decoration: BoxDecoration(
+                              //     color: blue,
+                              //     border: Border.all(
+                              //       color: blue,
+                              //     ),
+                              //     borderRadius: const BorderRadius.all(
+                              //       Radius.circular(35),
+                              //     ),
+                              //   ),
+                              //   child: IconButton(
+                              //     iconSize: 18,
+                              //     icon: const Icon(Icons.add),
+                              //     onPressed: () => CustomBottomSheet(
+                              //       context: context,
+                              //       body: const Column(
+                              //         children: [
+                              //           Row(
+                              //             children: [
+                              //               Icon(
+                              //                 CustomIcon.camera,
+                              //                 size: 22,
+                              //                 color: blue,
+                              //               ),
+                              //               XMargin(15),
+                              //               Text(
+                              //                 'Camera',
+                              //                 style: TextStyle(
+                              //                   fontWeight: FontWeight.w500,
+                              //                   fontSize: 14,
+                              //                 ),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //           YMargin(33),
+                              //           Row(
+                              //             children: [
+                              //               Icon(
+                              //                 CustomIcon.gallery,
+                              //                 size: 22,
+                              //                 color: blue,
+                              //               ),
+                              //               XMargin(15),
+                              //               Text(
+                              //                 'Gallery',
+                              //                 style: TextStyle(
+                              //                   fontWeight: FontWeight.w500,
+                              //                   fontSize: 14,
+                              //                 ),
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ).modalBottomSheet(),
+                              //     color: Colors.white,
+                              //   ),
+                              // ),
                               const XMargin(10),
-                              const Flexible(
+                              Flexible(
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                     vertical: 8.5,
                                   ),
                                   child: TextField(
@@ -229,14 +231,14 @@ class Chat extends StatelessWidget {
                                     minLines: 1,
                                     cursorColor: blue,
                                     cursorWidth: 1.5,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: black,
                                       height: 1.32,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
-                                    // controller: provider2.chatFieldTEC,
-                                    decoration: InputDecoration.collapsed(
+                                    controller: _chatFieldTEC,
+                                    decoration: const InputDecoration.collapsed(
                                       hintText: 'Type your message...',
                                       hintStyle: TextStyle(color: grey),
                                     ),
@@ -244,17 +246,24 @@ class Chat extends StatelessWidget {
                                 ),
                               ),
                               const XMargin(10),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                                child: Text(
-                                  'Send',
-                                  style: TextStyle(
-                                    fontSize: 14.5,
-                                    fontWeight: FontWeight.w500,
-                                    color: blue,
+                              GestureDetector(
+                                onTap: () {
+                                  ref.read(chatProvider.notifier).sendMessage(
+                                      content: _chatFieldTEC.text.trim());
+                                  _chatFieldTEC.clear();
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 8,
+                                  ),
+                                  child: Text(
+                                    'Send',
+                                    style: TextStyle(
+                                      fontSize: 14.5,
+                                      fontWeight: FontWeight.w500,
+                                      color: blue,
+                                    ),
                                   ),
                                 ),
                               )

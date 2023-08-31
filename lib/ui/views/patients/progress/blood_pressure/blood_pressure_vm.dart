@@ -33,10 +33,6 @@ class GetBloodPressureVM extends StateNotifier<GetBloodPressureViewState> {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
     }
-    // finally {
-    //   if (!mounted) return;
-    //   state = state.copyWith(viewState: ViewState.idle);
-    // }
   }
 }
 
@@ -51,10 +47,16 @@ class GetBloodPressureViewState {
 
   factory GetBloodPressureViewState.initial() =>
       const GetBloodPressureViewState._(
-          viewState: ViewState.idle, readings: []);
+        viewState: ViewState.idle,
+        readings: [],
+      );
 
-  GetBloodPressureViewState copyWith({ViewState? viewState, List? readings}) =>
+  GetBloodPressureViewState copyWith({
+    ViewState? viewState,
+    List? readings,
+  }) =>
       GetBloodPressureViewState._(
-          viewState: viewState ?? this.viewState,
-          readings: readings ?? this.readings);
+        viewState: viewState ?? this.viewState,
+        readings: readings ?? this.readings,
+      );
 }

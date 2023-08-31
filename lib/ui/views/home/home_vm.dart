@@ -1,4 +1,5 @@
 import 'package:custodia_provider/core/navigation.dart';
+import 'package:custodia_provider/models/alert_model.dart';
 import 'package:custodia_provider/repository/alert/alert_impl.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
@@ -34,6 +35,17 @@ class HomeVM extends StateNotifier<HomeViewState> {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
     }
+  }
+
+  void goToAlertDetailView(AlertModel alert) {
+    _reader(navigationProvider)
+        .pushNamed('/alert-details', arguments: alert)
+        ?.then((value) async {
+      final alerts = await _reader(alertRepository).getAlerts();
+      state = state.copyWith(
+        alerts: alerts,
+      );
+    });
   }
 }
 

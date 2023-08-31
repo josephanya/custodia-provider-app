@@ -12,8 +12,8 @@ class FoodModel {
   factory FoodModel.fromJSON(Map<String, dynamic> data) {
     return FoodModel(
       food: data['food'],
-      mealType: data['mealType'],
-      imageURL: data['imageURL'] ?? '',
+      mealType: data['meal_type'],
+      imageURL: data['image_url'] ?? '',
       timestamp: DateTime.parse(data['createdAt']),
     );
   }

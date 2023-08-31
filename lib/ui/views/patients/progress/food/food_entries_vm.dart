@@ -40,13 +40,22 @@ class GetFoodViewState {
   final ViewState viewState;
   final List? entries;
 
-  const GetFoodViewState._({required this.viewState, required this.entries});
+  const GetFoodViewState._({
+    required this.viewState,
+    required this.entries,
+  });
 
-  factory GetFoodViewState.initial() =>
-      const GetFoodViewState._(viewState: ViewState.idle, entries: []);
+  factory GetFoodViewState.initial() => const GetFoodViewState._(
+        viewState: ViewState.idle,
+        entries: [],
+      );
 
-  GetFoodViewState copyWith({ViewState? viewState, List? entries}) =>
+  GetFoodViewState copyWith({
+    ViewState? viewState,
+    List? entries,
+  }) =>
       GetFoodViewState._(
-          viewState: viewState ?? this.viewState,
-          entries: entries ?? this.entries);
+        viewState: viewState ?? this.viewState,
+        entries: entries ?? this.entries,
+      );
 }

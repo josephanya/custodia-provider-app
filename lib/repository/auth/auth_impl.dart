@@ -1,6 +1,6 @@
 import 'package:custodia_provider/core/api_base.dart';
 import 'package:custodia_provider/models/auth_user_model.dart';
-import 'package:custodia_provider/models/provider_model.dart';
+import 'package:custodia_provider/models/user_model.dart';
 import 'package:custodia_provider/services/api/api.dart';
 import 'package:custodia_provider/services/api/api_service.dart';
 import 'package:custodia_provider/services/local_storage/local_storage.dart';
@@ -42,26 +42,19 @@ class AuthImpl implements Auth {
       (storage) async => await storage.saveAuthUser(authUser),
     );
 
-    final providerProfile = await _api.get(ApiBase.profile);
-    ProviderModel? provider = ProviderModel.fromJSON(providerProfile);
+    final userResponse = await _api.get(ApiBase.profile);
+    UserModel? user = UserModel.fromJSON(userResponse['data']);
     await _localStorage.then(
-      (storage) async => await storage.saveProvider(provider),
-    );
-  }
-
-  @override
-  Future<void> logout() async {
-    _api.post(ApiBase.logout, body: {}).whenComplete(
-      () async => await _localStorage
-          .then((storage) async => await storage.removeAuthUser()),
+      (storage) async => await storage.saveUser(user),
     );
   }
 
   @override
   Future<bool> hasAuthToken() async {
+    String? token;
     try {
-      final String token = await _localStorage
-          .then<String>((storage) async => await storage.getToken());
+      token = await _localStorage.then((storage) async =>
+          storage.getAuthUser().then((user) => user.authToken));
       if (token != null) {
         return true;
       }
@@ -81,5 +74,10 @@ class AuthImpl implements Auth {
         'push_token': deviceToken,
       },
     );
+  }
+
+  @override
+  Future<void> logout() async {
+    await _localStorage.then((storage) async => await storage.removeAuthUser());
   }
 }

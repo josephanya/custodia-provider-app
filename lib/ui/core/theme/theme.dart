@@ -30,15 +30,15 @@ const Color darkGrey = Color(0xFF2B353B);
 themeData(context) => ThemeData(
       fontFamily: 'Circular Std',
       primaryColor: blue,
-      backgroundColor: white,
       scaffoldBackgroundColor: white,
       visualDensity: VisualDensity.adaptivePlatformDensity,
-      colorScheme:
-          ColorScheme.fromSwatch(primarySwatch: createMaterialColor(white))
-              .copyWith(secondary: blue),
       textSelectionTheme: const TextSelectionThemeData(
         selectionColor: hilighted,
         cursorColor: blue,
         selectionHandleColor: blue,
       ),
+      colorScheme:
+          ColorScheme.fromSwatch(primarySwatch: createMaterialColor(white))
+              .copyWith(secondary: blue)
+              .copyWith(background: white),
     );

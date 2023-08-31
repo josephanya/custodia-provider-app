@@ -18,12 +18,12 @@ class ApiInterceptor implements Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     String? token;
     try {
-      token = await _localStorage.then((storage) async => storage.getToken());
-      _log.e("token exists $token");
+      token = await _localStorage.then((storage) async =>
+          storage.getAuthUser().then((user) => user.authToken));
+      _log.i("token exists $token");
     } catch (e) {
-      _log.e("No token");
+      _log.e("no token");
     }
-
     if (!options.path.contains('/auth/login')) {
       options.headers['Authorization'] = 'Bearer $token';
     }

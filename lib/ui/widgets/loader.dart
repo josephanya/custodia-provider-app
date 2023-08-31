@@ -14,7 +14,7 @@ class Loader extends StatelessWidget {
       child: Platform.isIOS
           ? const CupertinoActivityIndicator()
           : const CircularProgressIndicator(
-              color: grey,
+              color: blue,
             ),
     );
   }

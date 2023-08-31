@@ -98,9 +98,11 @@ class _HomeState extends ConsumerState<Home> {
                       GestureDetector(
                         onTap: () => Navigator.pushNamed(context, '/profile'),
                         child: CircleAvatar(
+                          backgroundColor: blue,
+                          foregroundColor: white,
                           radius: 20,
                           child: Text(
-                            '${profile.provider?.firstName![0].toUpperCase()}${profile.provider?.lastName![0].toUpperCase()}',
+                            '${profile.user?.firstName![0].toUpperCase()}${profile.user?.lastName![0].toUpperCase()}',
                           ),
                         ),
                       ),
@@ -122,15 +124,15 @@ class _HomeState extends ConsumerState<Home> {
                             child: Loader(),
                           ),
                         )
-                      : provider.alerts == null || provider.viewState.isError
-                          ? Center(
+                      : provider.alerts!.isEmpty || provider.viewState.isError
+                          ? const Center(
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                   horizontal: 50,
                                   vertical: 190,
                                 ),
                                 child: Column(
-                                  children: const [
+                                  children: [
                                     Text(
                                       'No alerts yet',
                                       style: TextStyle(

@@ -23,7 +23,8 @@ class PatientImpl implements Patient {
   @override
   Future<List<PatientModel>> getPatients() async {
     final response = await _api.get(ApiBase.patients);
-    final result = List<Map<String, dynamic>>.from(response['result']);
+    final result =
+        List<Map<String, dynamic>>.from(response['data']['patients']);
     List<PatientModel> patients =
         result.map((patient) => PatientModel.fromJSON(patient)).toList();
     return patients;
@@ -32,14 +33,14 @@ class PatientImpl implements Patient {
   @override
   Future getSinglePatient(String patientID) async {
     final response = await _api.get(ApiBase.patientBase('/$patientID'));
-    return PatientModel.fromJSON(response);
+    return PatientModel.fromJSON(response['data']);
   }
 
   @override
   Future getPatientFood(String patientID) async {
     final response =
         await _api.get(ApiBase.patientBase('/$patientID/biomarker/food'));
-    final result = List<Map<String, dynamic>>.from(response['result']);
+    final result = List<Map<String, dynamic>>.from(response['data']['logs']);
     List<FoodModel> entries =
         result.map((reading) => FoodModel.fromJSON(reading)).toList();
     return entries;
@@ -49,7 +50,7 @@ class PatientImpl implements Patient {
   Future getPatientBloodGlucose(String patientID) async {
     final response = await _api
         .get(ApiBase.patientBase('/$patientID/biomarker/blood-glucose'));
-    final result = List<Map<String, dynamic>>.from(response['result']);
+    final result = List<Map<String, dynamic>>.from(response['data']['logs']);
     List<BloodGlucoseModel> entries =
         result.map((reading) => BloodGlucoseModel.fromJSON(reading)).toList();
     return entries;
@@ -59,7 +60,7 @@ class PatientImpl implements Patient {
   Future getPatientBloodPressure(String patientID) async {
     final response = await _api
         .get(ApiBase.patientBase('/$patientID/biomarker/blood-pressure'));
-    final result = List<Map<String, dynamic>>.from(response['result']);
+    final result = List<Map<String, dynamic>>.from(response['data']['logs']);
     List<BloodPressureModel> entries =
         result.map((reading) => BloodPressureModel.fromJSON(reading)).toList();
     return entries;
@@ -69,7 +70,7 @@ class PatientImpl implements Patient {
   Future getPatientWeight(String patientID) async {
     final response =
         await _api.get(ApiBase.patientBase('/$patientID/biomarker/weight'));
-    final result = List<Map<String, dynamic>>.from(response['result']);
+    final result = List<Map<String, dynamic>>.from(response['data']['logs']);
     List<WeightModel> entries =
         result.map((reading) => WeightModel.fromJSON(reading)).toList();
     return entries;

@@ -3,6 +3,7 @@ import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:custodia_provider/utils/utility_functions.dart';
 import 'package:flutter/material.dart';
 
 class PatientDetails extends StatelessWidget {
@@ -15,6 +16,7 @@ class PatientDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final age = UtilityFunctions.calculateAge(patient.dob);
     return Scaffold(
       appBar: appBar(context, 'Patient details'),
       body: SafeArea(
@@ -42,7 +44,7 @@ class PatientDetails extends StatelessWidget {
                               color: grey,
                             ),
                           ),
-                          Text('${patient.firstName}'),
+                          Text(patient.firstName),
                         ],
                       ),
                       const YMargin(29),
@@ -55,7 +57,7 @@ class PatientDetails extends StatelessWidget {
                               color: grey,
                             ),
                           ),
-                          Text('${patient.lastName}'),
+                          Text(patient.lastName),
                         ],
                       ),
                       const YMargin(29),
@@ -68,7 +70,20 @@ class PatientDetails extends StatelessWidget {
                               color: grey,
                             ),
                           ),
-                          Text('${patient.gender}'),
+                          Text(patient.gender),
+                        ],
+                      ),
+                      const YMargin(29),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Age',
+                            style: TextStyle(
+                              color: grey,
+                            ),
+                          ),
+                          Text(age),
                         ],
                       ),
                     ],

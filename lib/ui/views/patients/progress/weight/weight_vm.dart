@@ -31,9 +31,6 @@ class GetWeightVM extends StateNotifier<GetWeightViewState> {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
     }
-    // finally {
-    //   state = state.copyWith(viewState: ViewState.idle);
-    // }
   }
 }
 
@@ -41,13 +38,22 @@ class GetWeightViewState {
   final ViewState viewState;
   final List? readings;
 
-  const GetWeightViewState._({required this.viewState, required this.readings});
+  const GetWeightViewState._({
+    required this.viewState,
+    required this.readings,
+  });
 
-  factory GetWeightViewState.initial() =>
-      const GetWeightViewState._(viewState: ViewState.idle, readings: []);
+  factory GetWeightViewState.initial() => const GetWeightViewState._(
+        viewState: ViewState.idle,
+        readings: [],
+      );
 
-  GetWeightViewState copyWith({ViewState? viewState, List? readings}) =>
+  GetWeightViewState copyWith({
+    ViewState? viewState,
+    List? readings,
+  }) =>
       GetWeightViewState._(
-          viewState: viewState ?? this.viewState,
-          readings: readings ?? this.readings);
+        viewState: viewState ?? this.viewState,
+        readings: readings ?? this.readings,
+      );
 }

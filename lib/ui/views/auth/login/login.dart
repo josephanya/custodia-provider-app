@@ -1,3 +1,4 @@
+import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
@@ -14,6 +15,7 @@ class LogIn extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final provider = ref.watch(loginProvider);
+    final providerNotifier = ref.watch(loginProvider.notifier);
     return Scaffold(
       appBar: const AppBarBorderlessWithoutBack(),
       body: SafeArea(
@@ -33,8 +35,8 @@ class LogIn extends ConsumerWidget {
               ),
               const YMargin(35),
               Form(
-                key: provider.formKey,
-                onChanged: () => provider.isValid(),
+                key: providerNotifier.formKey,
+                onChanged: () => providerNotifier.isLoginButtonValid(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -56,7 +58,7 @@ class LogIn extends ConsumerWidget {
                       isNumber: false,
                       isEnabled: true,
                       hintText: 'Email address',
-                      controller: provider.emailTEC,
+                      controller: providerNotifier.emailTEC,
                     ),
                     const YMargin(35),
                     const Text(
@@ -77,7 +79,7 @@ class LogIn extends ConsumerWidget {
                       isNumber: false,
                       isEnabled: true,
                       hintText: 'Password',
-                      controller: provider.passwordTEC,
+                      controller: providerNotifier.passwordTEC,
                     ),
                   ],
                 ),
@@ -95,13 +97,14 @@ class LogIn extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              provider.isLoading
+              provider.viewState.isLoading
                   ? const Loader()
                   : PrimaryButton(
-                      isEnabled: provider.isButtonEnabled,
+                      isEnabled: provider.isLoginButtonEnabled,
                       buttonText: 'Log in',
-                      onPressed: () =>
-                          provider.isButtonEnabled ? provider.login() : null,
+                      onPressed: () => provider.isLoginButtonEnabled
+                          ? providerNotifier.login()
+                          : null,
                     ),
             ],
           ),

@@ -6,6 +6,7 @@ import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
+import 'package:custodia_provider/utils/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -59,6 +60,8 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                       children: [
                         CircleAvatar(
                           radius: 30,
+                          backgroundColor: blue,
+                          foregroundColor: white,
                           child: Text(
                             '${provider.patient!.firstName[0].toUpperCase()}${provider.patient!.lastName[0].toUpperCase()}',
                             style: const TextStyle(
@@ -66,8 +69,15 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         TetiaryButtonOutlined(
-                          onPress: () => Navigator.pushNamed(context, '/chat'),
+                          onPress: () => Navigator.pushNamed(
+                            context,
+                            '/chat',
+                            arguments: provider.patient!.patientID,
+                          ),
                           buttonText: 'Message',
                         ),
                       ],
@@ -82,7 +92,7 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                     ),
                     const YMargin(4),
                     Text(
-                      provider.patient!.gender,
+                      '${provider.patient!.gender} • ${UtilityFunctions.calculateAge(provider.patient!.dob)}',
                       style: const TextStyle(
                         color: grey,
                         fontSize: 13,
@@ -110,10 +120,9 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                               color: blue,
                             ),
                           ),
-                          const LinkOption(
+                          const Option(
                             optionName: 'Medical records',
-                            optionLink:
-                                'https://custodiahealth.com/terms-of-use',
+                            optionRoute: '/medical-records',
                             icon: Icon(
                               CustomIcon.medical_records,
                               size: 20,
@@ -123,9 +132,9 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                         ],
                       ),
                     ),
-                    const YMargin(40),
+                    const YMargin(35),
                     const Text(
-                      'Tracked data',
+                      'Health data',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,

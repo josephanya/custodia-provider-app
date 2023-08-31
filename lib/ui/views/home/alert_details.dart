@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:custodia_provider/models/alert_model.dart';
+import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/chats/full_photo.dart';
 import 'package:custodia_provider/ui/views/home/alerts_details_vm.dart';
+import 'package:custodia_provider/ui/views/photo/full_photo.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
@@ -9,16 +11,15 @@ import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 import 'package:intl/intl.dart';
 
 class AlertDetails extends ConsumerStatefulWidget {
   const AlertDetails({
     Key? key,
-    required this.alertID,
+    required this.alert,
   }) : super(key: key);
 
-  final String alertID;
+  final AlertModel alert;
 
   @override
   ConsumerState<AlertDetails> createState() => _AlertDetailsState();
@@ -26,40 +27,36 @@ class AlertDetails extends ConsumerStatefulWidget {
 
 class _AlertDetailsState extends ConsumerState<AlertDetails> {
   @override
-  void initState() {
-    super.initState();
-    ref.read(alertProvider.notifier).initialize(widget.alertID);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final alert = widget.alert;
     final provider = ref.watch(alertProvider);
+    final providerNotifier = ref.watch(alertProvider.notifier);
     return Scaffold(
-      appBar: appBar(
+      appBar: appBarWithAction(
         context,
         '',
-        // GestureDetector(
-        //   onTap: () => Navigator.maybePop(context),
-        //   child: Padding(
-        //     padding: const EdgeInsets.all(14.0),
-        //     child: Container(
-        //       decoration: const BoxDecoration(
-        //         color: lightBlue,
-        //         borderRadius: BorderRadius.all(
-        //           Radius.circular(20),
-        //         ),
-        //       ),
-        //       child: const Padding(
-        //         padding: EdgeInsets.all(6.0),
-        //         child: Icon(
-        //           Icons.check,
-        //           size: 16,
-        //           color: blue,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        GestureDetector(
+          onTap: () => providerNotifier.resolveAlert(alert.alertID),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: lightBlue,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20),
+                ),
+              ),
+              child: const Padding(
+                padding: EdgeInsets.all(6.0),
+                child: Icon(
+                  Icons.check,
+                  size: 16,
+                  color: blue,
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -80,7 +77,7 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      provider.alert!.alertType,
+                      alert.alertType,
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -88,7 +85,7 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                     ),
                     const YMargin(8),
                     Text(
-                      'Triggered at ${DateFormat('d/M/y, hh:mm aaa').format(provider.alert!.triggerTime)}',
+                      'Triggered at ${DateFormat('d/M/y, hh:mm aaa').format(alert.triggerTime)}',
                       style: const TextStyle(
                         fontSize: 13,
                         color: grey,
@@ -96,7 +93,7 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                     ),
                     const YMargin(35),
                     Column(
-                        children: provider.alert!.data.entries.map((entry) {
+                        children: alert.data.entries.map((entry) {
                       return Padding(
                         padding: const EdgeInsets.only(
                           bottom: 20,
@@ -178,7 +175,7 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
       floatingActionButton: Container(
         color: white,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -188,7 +185,7 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => PatientProfile(
-                      patientID: provider.alert!.patientID,
+                      patientID: alert.patientID,
                     ),
                   ),
                 ),
@@ -196,7 +193,11 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
               const YMargin(15),
               SecondaryButton(
                 buttonText: 'Message patient',
-                onPressed: () => Navigator.pushNamed(context, '/sign-in'),
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  '/chat',
+                  arguments: alert.patientID,
+                ),
               ),
               const YMargin(15),
             ],

@@ -32,9 +32,11 @@ class _ProfileState extends ConsumerState<Profile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
+                backgroundColor: blue,
+                foregroundColor: white,
                 radius: 30,
                 child: Text(
-                  '${provider.provider?.firstName![0].toUpperCase()}${provider.provider?.lastName![0].toUpperCase()}',
+                  '${provider.user?.firstName![0].toUpperCase()}${provider.user?.lastName![0].toUpperCase()}',
                   style: const TextStyle(
                     fontSize: 20,
                   ),
@@ -42,7 +44,7 @@ class _ProfileState extends ConsumerState<Profile> {
               ),
               const YMargin(15),
               Text(
-                '${provider.provider?.firstName} ${provider.provider?.lastName}',
+                '${provider.user?.firstName} ${provider.user?.lastName}',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -50,7 +52,7 @@ class _ProfileState extends ConsumerState<Profile> {
               ),
               const YMargin(4),
               Text(
-                '${provider.provider?.email} ',
+                '${provider.user?.email} ',
                 style: const TextStyle(
                   fontSize: 13,
                   color: grey,
@@ -65,9 +67,9 @@ class _ProfileState extends ConsumerState<Profile> {
                 ),
               ),
               const YMargin(15),
-              DefaultCard(
+              const DefaultCard(
                 child: Column(
-                  children: const [
+                  children: [
                     Option(
                       optionName: 'Personal details',
                       optionRoute: '/personal-details',
@@ -98,9 +100,9 @@ class _ProfileState extends ConsumerState<Profile> {
                 ),
               ),
               const YMargin(15),
-              DefaultCard(
+              const DefaultCard(
                 child: Column(
-                  children: const [
+                  children: [
                     LinkOption(
                       optionName: 'Help center',
                       optionLink: 'https://wa.link/5pmuke',
@@ -134,10 +136,10 @@ class _ProfileState extends ConsumerState<Profile> {
               const YMargin(40),
               DefaultCard(
                 onPress: () async {
-                  ref.read(loginProvider).logout();
+                  ref.read(loginProvider.notifier).logout();
                 },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 15,
                     vertical: 17.5,
                   ),
@@ -145,7 +147,7 @@ class _ProfileState extends ConsumerState<Profile> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
-                        children: const [
+                        children: [
                           Icon(
                             CustomIcon.logout,
                             size: 20,
@@ -158,7 +160,7 @@ class _ProfileState extends ConsumerState<Profile> {
                           ),
                         ],
                       ),
-                      const Icon(
+                      Icon(
                         Icons.chevron_right,
                         color: grey,
                         size: 18,

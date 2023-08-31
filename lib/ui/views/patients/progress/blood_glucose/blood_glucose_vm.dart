@@ -33,10 +33,6 @@ class GetBloodGlucoseVM extends StateNotifier<GetBloodGlucoseViewState> {
       state = state.copyWith(viewState: ViewState.error);
       _log.e(e);
     }
-    // finally {
-    //   if (!mounted) return;
-    //   state = state.copyWith(viewState: ViewState.idle);
-    // }
   }
 }
 
@@ -44,14 +40,23 @@ class GetBloodGlucoseViewState {
   final ViewState viewState;
   final List? readings;
 
-  const GetBloodGlucoseViewState._(
-      {required this.viewState, required this.readings});
+  const GetBloodGlucoseViewState._({
+    required this.viewState,
+    required this.readings,
+  });
 
   factory GetBloodGlucoseViewState.initial() =>
-      const GetBloodGlucoseViewState._(viewState: ViewState.idle, readings: []);
+      const GetBloodGlucoseViewState._(
+        viewState: ViewState.idle,
+        readings: [],
+      );
 
-  GetBloodGlucoseViewState copyWith({ViewState? viewState, List? readings}) =>
+  GetBloodGlucoseViewState copyWith({
+    ViewState? viewState,
+    List? readings,
+  }) =>
       GetBloodGlucoseViewState._(
-          viewState: viewState ?? this.viewState,
-          readings: readings ?? this.readings);
+        viewState: viewState ?? this.viewState,
+        readings: readings ?? this.readings,
+      );
 }

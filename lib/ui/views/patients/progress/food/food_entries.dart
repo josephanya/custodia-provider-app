@@ -46,15 +46,15 @@ class _FoodEntriesState extends ConsumerState<FoodEntries> {
                     child: Loader(),
                   ),
                 )
-              : provider.entries == null || provider.viewState.isError
-                  ? Center(
+              : provider.entries!.isEmpty || provider.viewState.isError
+                  ? const Center(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 50,
                           vertical: 250,
                         ),
                         child: Column(
-                          children: const [
+                          children: [
                             Text(
                               'No data yet',
                               style: TextStyle(
@@ -72,10 +72,10 @@ class _FoodEntriesState extends ConsumerState<FoodEntries> {
                         ),
                       ),
                     )
-                  : ListView.builder(
+                  : ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: provider.entries?.length,
+                      itemCount: provider.entries?.length ?? 1,
                       itemBuilder: (context, index) {
                         return FoodLogCard(
                           food: provider.entries?[index].food,
@@ -83,6 +83,9 @@ class _FoodEntriesState extends ConsumerState<FoodEntries> {
                           imageURL: provider.entries?[index].imageURL,
                           date: provider.entries?[index].timestamp,
                         );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const YMargin(12);
                       },
                     ),
         ),

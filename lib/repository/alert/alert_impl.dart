@@ -19,7 +19,7 @@ class AlertImpl implements Alert {
   @override
   Future<List<AlertModel>> getAlerts() async {
     final response = await _api.get(ApiBase.alert);
-    final result = List<Map<String, dynamic>>.from(response['alerts']);
+    final result = List<Map<String, dynamic>>.from(response['data']);
     List<AlertModel> alerts =
         result.map((alert) => AlertModel.fromJSON(alert)).toList();
     return alerts;
@@ -29,5 +29,15 @@ class AlertImpl implements Alert {
   Future<AlertModel> getSingleAlert(String alertID) async {
     final response = await _api.get(ApiBase.alertBase('/$alertID'));
     return AlertModel.fromJSON(response);
+  }
+
+  @override
+  Future<void> resolveAlert(String alertID) async {
+    await _api.post(
+      ApiBase.alertBase('/resolve'),
+      body: {
+        'alert_id': alertID,
+      },
+    );
   }
 }

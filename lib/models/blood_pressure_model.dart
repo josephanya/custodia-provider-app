@@ -10,8 +10,8 @@ class BloodPressureModel {
 
   factory BloodPressureModel.fromJSON(Map<String, dynamic> data) {
     return BloodPressureModel(
-      systolicBloodPressure: data['systolicBloodPressure'],
-      diastolicBloodPressure: data['diastolicBloodPressure'],
+      systolicBloodPressure: data['systolic_blood_pressure'],
+      diastolicBloodPressure: data['diastolic_blood_pressure'],
       timestamp: DateTime.parse(data['createdAt']),
     );
   }

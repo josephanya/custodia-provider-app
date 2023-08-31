@@ -1,42 +1,3 @@
-// final patientListProvider = ChangeNotifierProvider((ref) => PatientListVM());
-
-// class PatientListVM with ChangeNotifier {
-//   final TextEditingController searchTEC = TextEditingController();
-
-//   String searchQuery = "Search query";
-
-//   bool _isSearching = false;
-
-//   bool get isSearching => _isSearching;
-
-//   set isSearching(bool val) {
-//     _isSearching = val;
-//     notifyListeners();
-//   }
-
-//   void startSearch(bool val) {
-//     _isSearching = val;
-//     notifyListeners();
-//   }
-
-//   void updateSearchQuery(String newQuery) {
-//     searchQuery = newQuery;
-//     notifyListeners();
-//   }
-
-//   void stopSearching(bool val) {
-//     clearSearchQuery();
-//     _isSearching = val;
-//     notifyListeners();
-//   }
-
-//   void clearSearchQuery() {
-//     searchTEC.clear();
-//     updateSearchQuery("");
-//     notifyListeners();
-//   }
-// }
-
 import 'package:custodia_provider/core/navigation.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
@@ -77,14 +38,19 @@ class PatientListViewState {
   final ViewState viewState;
   final List? patients;
 
-  const PatientListViewState._(
-      {required this.viewState, required this.patients});
+  const PatientListViewState._({
+    required this.viewState,
+    required this.patients,
+  });
 
-  factory PatientListViewState.initial() =>
-      const PatientListViewState._(viewState: ViewState.idle, patients: []);
+  factory PatientListViewState.initial() => const PatientListViewState._(
+        viewState: ViewState.idle,
+        patients: [],
+      );
 
   PatientListViewState copyWith({ViewState? viewState, List? patients}) =>
       PatientListViewState._(
-          viewState: viewState ?? this.viewState,
-          patients: patients ?? this.patients);
+        viewState: viewState ?? this.viewState,
+        patients: patients ?? this.patients,
+      );
 }

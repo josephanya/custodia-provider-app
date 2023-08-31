@@ -8,14 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 
-final List patients = [
-  {'name': 'Ezeogo Mang', 'info': '4783484 • Male'},
-  {'name': 'Stephanie Ekwueme', 'info': '4783484 • Female'},
-  {'name': 'Asemota Osaretin', 'info': '4783484 • Male'},
-  {'name': 'Nosa Asemota', 'info': '4783484 • Male'},
-  {'name': 'Jessica Moore', 'info': '4783484 • Female'},
-];
-
 class PatientsList extends ConsumerStatefulWidget {
   const PatientsList({super.key});
 
@@ -33,7 +25,6 @@ class _PatientsListState extends ConsumerState<PatientsList> {
   @override
   Widget build(BuildContext context) {
     final provider = ref.watch(patientListProvider);
-    // final provider = ref.watch(patientListProvider);
     return Scaffold(
       // appBar: provider.isSearching
       //     ? SearchAppBar(
@@ -105,14 +96,14 @@ class _PatientsListState extends ConsumerState<PatientsList> {
                   ),
                 )
               : provider.patients == null || provider.viewState.isError
-                  ? Center(
+                  ? const Center(
                       child: Padding(
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 50,
                         vertical: 250,
                       ),
                       child: Column(
-                        children: const [
+                        children: [
                           Text(
                             'No data yet',
                             style: TextStyle(
@@ -131,9 +122,6 @@ class _PatientsListState extends ConsumerState<PatientsList> {
                     ))
                   : ListView.separated(
                       itemBuilder: (context, index) => PatientsListCard(
-                        name:
-                            '${provider.patients?[index].firstName} ${provider.patients?[index].lastName}',
-                        info: provider.patients?[index].gender,
                         patientModel: provider.patients?[index],
                       ),
                       itemCount: provider.patients?.length ?? 1,

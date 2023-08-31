@@ -1,8 +1,8 @@
 import 'package:custodia_provider/core/navigation.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
-import 'package:custodia_provider/models/provider_model.dart';
-import 'package:custodia_provider/repository/provider/provider_impl.dart';
+import 'package:custodia_provider/models/user_model.dart';
+import 'package:custodia_provider/repository/user/user_impl.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
 
@@ -18,14 +18,14 @@ class ProfileVM extends StateNotifier<ProfileViewState> {
   final _log = Logger(filter: DevelopmentFilter());
 
   void initialize() async {
-    await getPatient();
+    await getUserProfile();
   }
 
-  Future<void> getPatient() async {
+  Future<void> getUserProfile() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
-      final provider = await _reader(providerRepository).getProvider();
-      state = state.copyWith(provider: provider);
+      final user = await _reader(userRepository).getUser();
+      state = state.copyWith(user: user);
     } on Failure catch (e) {
       _reader(navigationProvider).showErrorSnackbar(message: e.message);
       state = state.copyWith(viewState: ViewState.error);
@@ -38,15 +38,24 @@ class ProfileVM extends StateNotifier<ProfileViewState> {
 
 class ProfileViewState {
   final ViewState viewState;
-  final ProviderModel? provider;
+  final UserModel? user;
 
-  const ProfileViewState._({required this.viewState, required this.provider});
+  const ProfileViewState._({
+    required this.viewState,
+    required this.user,
+  });
 
-  factory ProfileViewState.initial() =>
-      const ProfileViewState._(viewState: ViewState.idle, provider: null);
+  factory ProfileViewState.initial() => const ProfileViewState._(
+        viewState: ViewState.idle,
+        user: null,
+      );
 
-  ProfileViewState copyWith({ViewState? viewState, ProviderModel? provider}) =>
+  ProfileViewState copyWith({
+    ViewState? viewState,
+    UserModel? user,
+  }) =>
       ProfileViewState._(
-          viewState: viewState ?? this.viewState,
-          provider: provider ?? this.provider);
+        viewState: viewState ?? this.viewState,
+        user: user ?? this.user,
+      );
 }

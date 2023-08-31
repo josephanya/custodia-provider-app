@@ -18,10 +18,10 @@ class PatientVM extends StateNotifier<PatientViewState> {
   final _log = Logger(filter: DevelopmentFilter());
 
   void initialize(String patientID) async {
-    await fetchPatient(patientID);
+    await getPatient(patientID);
   }
 
-  Future<void> fetchPatient(String patientID) async {
+  Future<void> getPatient(String patientID) async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
       final patient =

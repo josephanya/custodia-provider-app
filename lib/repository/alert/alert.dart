@@ -5,5 +5,5 @@ abstract class Alert {
 
   Future<AlertModel> getSingleAlert(String alertID);
 
-  // Future markAsCompleted();
+  Future<void> resolveAlert(String alertID);
 }

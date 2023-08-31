@@ -1,31 +1,31 @@
-import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:custodia_provider/ui/views/chats/full_photo.dart';
+import 'package:custodia_provider/ui/views/photo/full_photo.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MessageBubble extends StatelessWidget {
-  final String sender, content;
-  final bool isMe;
-  final DateTime time;
-  final int type;
-
   const MessageBubble({
-    super.key,
-    required this.sender,
+    Key? key,
     required this.content,
     required this.isMe,
     required this.time,
     required this.type,
-  });
+  }) : super(key: key);
+
+  final String content;
+  final bool isMe;
+  final DateTime time;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 10),
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
@@ -48,7 +48,7 @@ class MessageBubble extends StatelessWidget {
                       bottomRight: Radius.circular(15),
                     ),
             ),
-            child: (type == 1)
+            child: (type == 'image')
                 ? GestureDetector(
                     child: Material(
                       borderRadius: isMe
@@ -70,12 +70,8 @@ class MessageBubble extends StatelessWidget {
                           width: 150,
                           height: 230,
                           color: lightBlue,
-                          child: Center(
-                            child: Platform.isAndroid
-                                ? const CircularProgressIndicator(
-                                    color: blue,
-                                  )
-                                : const CupertinoActivityIndicator(),
+                          child: const Center(
+                            child: Loader(),
                           ),
                         ),
                         errorWidget: (context, url, error) => Image.asset(
@@ -90,20 +86,22 @@ class MessageBubble extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FullPhoto(
-                            path: content,
-                          ),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FullPhoto(
+                          path: content,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   )
                 : GestureDetector(
                     onLongPress: () {
-                      Clipboard.setData(ClipboardData(text: content)).then((_) {
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: content,
+                        ),
+                      ).then((_) {
                         toast('Text copied to clipboard');
                       });
                     },
@@ -112,12 +110,25 @@ class MessageBubble extends StatelessWidget {
                         horizontal: 12,
                         vertical: 11,
                       ),
-                      child: Text(
-                        content,
+                      child: Linkify(
+                        onOpen: (link) async {
+                          if (await canLaunchUrl(Uri.parse(link.url))) {
+                            await launchUrl(Uri.parse(link.url));
+                          } else {
+                            throw 'Could not launch $link';
+                          }
+                        },
+                        text: content,
                         style: TextStyle(
-                          color: isMe ? Colors.white : Colors.black87,
+                          color: isMe ? white : Colors.black87,
                           fontSize: 13,
                           height: 1.4,
+                        ),
+                        linkStyle: TextStyle(
+                          color: isMe ? white : Colors.black87,
+                          fontSize: 13,
+                          height: 1.4,
+                          decoration: TextDecoration.underline,
                         ),
                       ),
                     ),

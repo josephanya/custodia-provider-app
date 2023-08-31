@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/chats/full_photo.dart';
+import 'package:custodia_provider/ui/views/photo/full_photo.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +31,18 @@ class FoodLogCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
+              mealType,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const YMargin(5),
+            Text(
               food,
               style: const TextStyle(
                 fontSize: 14,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 height: 1.35,
               ),
             ),
@@ -83,27 +91,16 @@ class FoodLogCard extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const YMargin(3),
                     ],
                   ),
             const YMargin(12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  DateFormat('MMM dd, hh:mm aaa').format(date),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: grey,
-                  ),
-                ),
-                Text(
-                  mealType,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: grey,
-                  ),
-                ),
-              ],
+            Text(
+              DateFormat('MMM dd, hh:mm aaa').format(date),
+              style: const TextStyle(
+                fontSize: 12,
+                color: grey,
+              ),
             ),
           ],
         ),
