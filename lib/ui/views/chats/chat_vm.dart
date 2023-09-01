@@ -48,9 +48,9 @@ class ChatVM extends StateNotifier<ChatViewState> {
     _socket.connect();
     _socket.onConnect((_) {
       _log.i('socket connected');
-      socket.on('message', (data) {
-        addMessages(data);
-      });
+    });
+    socket.on('message', (data) {
+      addMessages(data);
     });
   }
 
@@ -96,9 +96,15 @@ class ChatVM extends StateNotifier<ChatViewState> {
     state = state.copyWith(messages: _chatMessages);
   }
 
-  clearMessages() {
+  disposeChat() {
     _chatMessages.clear();
     currentPage = 1;
+    _socket.dispose();
+  }
+
+  navigateToPatientDetails() {
+    _reader(navigationProvider)
+        .pushNamed('/patient-profile', arguments: patient.patientID);
   }
 
   fetchOldMessages(String patientID) async {

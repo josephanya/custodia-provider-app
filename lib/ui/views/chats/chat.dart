@@ -28,7 +28,7 @@ class _ChatState extends ConsumerState<Chat> {
       if (_scrollController.position.atEdge) {
         if (_scrollController.position.pixels ==
             _scrollController.position.maxScrollExtent) {
-          // User has scrolled to the top
+          // user has scrolled to the top
           ref.watch(chatProvider.notifier).fetchOldMessages(widget.patientID);
         }
       }
@@ -38,7 +38,7 @@ class _ChatState extends ConsumerState<Chat> {
   @override
   void dispose() {
     super.dispose();
-    ref.watch(chatProvider.notifier).clearMessages();
+    ref.watch(chatProvider.notifier).disposeChat();
   }
 
   final TextEditingController _chatFieldTEC = TextEditingController();
@@ -76,38 +76,30 @@ class _ChatState extends ConsumerState<Chat> {
             ),
           ),
         ),
-        title: GestureDetector(
-          // onTap: () => Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) =>  PatientProfile(),
-          //   ),
-          // ),
-          child: provider.viewState.isLoading
-              ? const Loader()
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    CircleAvatar(
-                      backgroundColor: blue,
-                      foregroundColor: white,
-                      radius: 19,
-                      child: Text(
-                        '${provider.patient?.firstName[0].toUpperCase()}${provider.patient?.lastName[0].toUpperCase()}',
-                      ),
+        title: provider.viewState.isLoading
+            ? const Loader()
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  CircleAvatar(
+                    backgroundColor: blue,
+                    foregroundColor: white,
+                    radius: 19,
+                    child: Text(
+                      '${provider.patient?.firstName[0].toUpperCase()}${provider.patient?.lastName[0].toUpperCase()}',
                     ),
-                    const XMargin(13),
-                    Text(
-                      '${provider.patient?.firstName} ${provider.patient?.lastName}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    )
-                  ],
-                ),
-        ),
+                  ),
+                  const XMargin(13),
+                  Text(
+                    '${provider.patient?.firstName} ${provider.patient?.lastName}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  )
+                ],
+              ),
       ),
       body: SafeArea(
         child: GestureDetector(

@@ -4,6 +4,7 @@ import 'package:custodia_provider/ui/views/404/not_found.dart';
 import 'package:custodia_provider/ui/views/chats/chat.dart';
 import 'package:custodia_provider/ui/views/chats/conversations/conversation_list.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/medical_records/medical_records.dart';
+import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile.dart';
 import 'package:custodia_provider/ui/views/patients/patients_list/patients_list.dart';
 import 'package:custodia_provider/ui/views/patients/progress/blood_glucose/progress_blood_glucose.dart';
 import 'package:custodia_provider/ui/views/patients/progress/blood_glucose/readings_blood_glucose.dart';
@@ -63,6 +64,11 @@ class RouteGenerator {
       case '/chats-list':
         return MaterialPageRoute(
           builder: (context) => const ConversationList(),
+        );
+
+      case '/patient-profile':
+        return MaterialPageRoute(
+          builder: (context) => PatientProfile(patientID: args.toString()),
         );
 
       case '/patient-details':
