@@ -112,7 +112,7 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                               ),
                             ),
                             const XMargin(20),
-                            (entry.key == 'Photo')
+                            (entry.key == 'image_url')
                                 ? GestureDetector(
                                     onTap: () => Navigator.push(
                                       context,
