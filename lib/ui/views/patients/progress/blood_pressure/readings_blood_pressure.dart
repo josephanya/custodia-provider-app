@@ -34,7 +34,10 @@ class ReadingsBloodPressureState extends ConsumerState<ReadingsBloodPressure> {
       appBar: appBar(context, 'All Readings'),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 12,
+          ),
           child: provider.viewState.isLoading
               ? const Center(
                   child: Padding(

@@ -164,6 +164,7 @@ class _HomeState extends ConsumerState<Home> {
                               separatorBuilder: (context, index) =>
                                   const YMargin(12),
                             ),
+                  const YMargin(12),
                 ],
               )
             ],

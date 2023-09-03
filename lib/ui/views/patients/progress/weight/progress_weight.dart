@@ -10,10 +10,10 @@ class ProgressWeight extends StatefulWidget {
   const ProgressWeight({Key? key}) : super(key: key);
 
   @override
-  _ProgressWeightState createState() => _ProgressWeightState();
+  ProgressWeightState createState() => ProgressWeightState();
 }
 
-class _ProgressWeightState extends State<ProgressWeight> {
+class ProgressWeightState extends State<ProgressWeight> {
   int segmentedControlValue = 0;
 
   Widget segmentedControl() {
@@ -98,8 +98,8 @@ class _ProgressWeightState extends State<ProgressWeight> {
                       ),
                     ),
                     const YMargin(10),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         InfoCard(
                           label: 'Starting Weight',
                           value: '100',
@@ -119,14 +119,14 @@ class _ProgressWeightState extends State<ProgressWeight> {
                     DefaultCard(
                       onPress: () =>
                           Navigator.pushNamed(context, '/readings-weight'),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical: 17,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
                               'All Readings',
                               style: TextStyle(fontSize: 14),

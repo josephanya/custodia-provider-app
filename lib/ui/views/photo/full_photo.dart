@@ -16,7 +16,7 @@ class FullPhoto extends StatelessWidget {
     return Scaffold(
       backgroundColor: black,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(0, 58, 58, 58),
+        backgroundColor: const Color.fromARGB(0, 58, 58, 58),
         leading: GestureDetector(
           onTap: () => Navigator.maybePop(context),
           child: Padding(

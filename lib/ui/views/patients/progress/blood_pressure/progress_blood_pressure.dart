@@ -54,21 +54,21 @@ class ProgressBloodPressureState extends State<ProgressBloodPressure> {
   }
 
   final Map<int, Widget> graph = <int, Widget>{
-    0: Container(
+    0: const SizedBox(
       height: 300,
-      child: const Center(
+      child: Center(
         child: Text('Daily'),
       ),
     ),
-    1: Container(
+    1: const SizedBox(
       height: 300,
-      child: const Center(
+      child: Center(
         child: Text('Weekly'),
       ),
     ),
-    2: Container(
+    2: const SizedBox(
       height: 300,
-      child: const Center(
+      child: Center(
         child: Text('Monthly'),
       ),
     ),
@@ -99,8 +99,8 @@ class ProgressBloodPressureState extends State<ProgressBloodPressure> {
                       ),
                     ),
                     const YMargin(10),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         InfoCard(
                           label: 'Systolic',
                           value: '100',
@@ -120,14 +120,14 @@ class ProgressBloodPressureState extends State<ProgressBloodPressure> {
                     DefaultCard(
                       onPress: () => Navigator.pushNamed(
                           context, '/readings-blood-pressure'),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
                           horizontal: 15,
                           vertical: 17,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
+                          children: [
                             Text(
                               'All Readings',
                               style: TextStyle(fontSize: 14),
