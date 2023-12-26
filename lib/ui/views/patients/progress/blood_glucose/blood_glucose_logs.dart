@@ -33,7 +33,7 @@ class BloodGlucoseLogsState extends ConsumerState<BloodGlucoseLogs> {
   Widget build(BuildContext context) {
     final provider = ref.watch(getBloodGlucoseProvider);
     return Scaffold(
-      appBar: appBar(context, 'All Readings'),
+      appBar: appBar(context, 'Blood glucose'),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(

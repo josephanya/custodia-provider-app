@@ -34,7 +34,7 @@ class WeightLogCard extends StatelessWidget {
                 Text(
                   weight,
                   style: TextStyle(
-                    fontSize: FontSize.s12,
+                    fontSize: FontSize.s20,
                     fontWeight: FontWeight.w500,
                   ),
                 ),

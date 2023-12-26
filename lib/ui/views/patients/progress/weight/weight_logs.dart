@@ -33,7 +33,7 @@ class WeightLogsState extends ConsumerState<WeightLogs> {
   Widget build(BuildContext context) {
     final provider = ref.watch(getWeightProvider);
     return Scaffold(
-      appBar: appBar(context, 'All Readings'),
+      appBar: appBar(context, 'Weight'),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(

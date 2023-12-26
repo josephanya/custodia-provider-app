@@ -33,7 +33,7 @@ class BloodPressureLogsState extends ConsumerState<BloodPressureLogs> {
   Widget build(BuildContext context) {
     final provider = ref.watch(getBloodPressureProvider);
     return Scaffold(
-      appBar: appBar(context, 'All Readings'),
+      appBar: appBar(context, 'Blood pressure'),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
