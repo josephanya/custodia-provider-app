@@ -1,6 +1,8 @@
 import 'package:custodia_provider/models/patient_model.dart';
-import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
+import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
@@ -9,6 +11,7 @@ import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
@@ -39,17 +42,17 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
       appBar: appBar(context, ''),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            vertical: 20,
-            horizontal: 16,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
           ),
           child: provider.viewState.isLoading
-              ? const Center(
+              ? Center(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: 20,
+                      top: 20.h,
                     ),
-                    child: Loader(),
+                    child: const Loader(),
                   ),
                 )
               : Column(
@@ -59,18 +62,18 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
-                          radius: 30,
-                          backgroundColor: blue,
-                          foregroundColor: white,
+                          radius: 32.r,
+                          backgroundColor: AppColors.blue,
+                          foregroundColor: AppColors.white,
                           child: Text(
                             '${provider.patient!.firstName[0].toUpperCase()}${provider.patient!.lastName[0].toUpperCase()}',
-                            style: const TextStyle(
-                              fontSize: 20,
+                            style: TextStyle(
+                              fontSize: FontSize.s20,
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          width: 10,
+                        SizedBox(
+                          width: 10.w,
                         ),
                         TetiaryButtonOutlined(
                           onPress: () => Navigator.pushNamed(
@@ -82,106 +85,106 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                         ),
                       ],
                     ),
-                    const YMargin(15),
+                    const YMargin(16),
                     Text(
                       '${provider.patient!.firstName} ${provider.patient!.lastName}',
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: FontSize.s18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const YMargin(4),
                     Text(
                       '${provider.patient!.gender} • ${UtilityFunctions.calculateAge(provider.patient!.dob)}',
-                      style: const TextStyle(
-                        color: grey,
-                        fontSize: 13,
+                      style: TextStyle(
+                        color: AppColors.grey,
+                        fontSize: FontSize.s13,
                       ),
                     ),
-                    const YMargin(30),
-                    const Text(
+                    const YMargin(32),
+                    Text(
                       'Personal info',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: FontSize.s16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const YMargin(15),
+                    const YMargin(12),
                     DefaultCard(
                       child: Column(
                         children: [
                           PatientDetailOption(
                             optionName: 'Patient details',
-                            optionRoute: '/patient-details',
+                            optionRoute: Routes.patientDetailsView,
                             patientModel: provider.patient!,
                             icon: const Icon(
                               CustomIcon.information,
                               size: 20,
-                              color: blue,
+                              color: AppColors.blue,
                             ),
                           ),
                           const Option(
                             optionName: 'Medical records',
-                            optionRoute: '/medical-records',
+                            optionRoute: Routes.medicalRecordsView,
                             icon: Icon(
                               CustomIcon.medical_records,
                               size: 20,
-                              color: blue,
+                              color: AppColors.blue,
                             ),
                           ),
                         ],
                       ),
                     ),
-                    const YMargin(35),
-                    const Text(
+                    const YMargin(32),
+                    Text(
                       'Health data',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: FontSize.s16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const YMargin(15),
+                    const YMargin(12),
                     DefaultCard(
                       child: Column(
                         children: [
                           Option(
                             optionName: 'Food',
-                            optionRoute: '/food-entries',
+                            optionRoute: Routes.foodLogsView,
                             patientID: provider.patient!.patientID,
                             icon: const Icon(
                               CustomIcon.food,
                               size: 20,
-                              color: blue,
+                              color: AppColors.blue,
                             ),
                           ),
                           Option(
                             optionName: 'Blood glucose',
-                            optionRoute: '/readings-blood-glucose',
+                            optionRoute: Routes.bloodGlucoseLogsView,
                             patientID: provider.patient!.patientID,
                             icon: const Icon(
                               CustomIcon.blood_glucose,
                               size: 20,
-                              color: blue,
+                              color: AppColors.blue,
                             ),
                           ),
                           Option(
                             optionName: 'Blood pressure',
-                            optionRoute: '/readings-blood-pressure',
+                            optionRoute: Routes.bloodPressureLogsView,
                             patientID: provider.patient!.patientID,
                             icon: const Icon(
                               CustomIcon.blood_pressure,
                               size: 20,
-                              color: blue,
+                              color: AppColors.blue,
                             ),
                           ),
                           Option(
                             optionName: 'Weight',
-                            optionRoute: '/readings-weight',
+                            optionRoute: Routes.weightLogsView,
                             patientID: provider.patient!.patientID,
                             icon: const Icon(
                               CustomIcon.weight,
                               size: 20,
-                              color: blue,
+                              color: AppColors.blue,
                             ),
                           ),
                         ],
@@ -213,9 +216,9 @@ class Option extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 17.5,
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.w,
+        vertical: 16.h,
       ),
       child: InkWell(
         onTap: () =>
@@ -227,12 +230,17 @@ class Option extends StatelessWidget {
               children: [
                 icon,
                 const XMargin(16),
-                Text(optionName),
+                Text(
+                  optionName,
+                  style: TextStyle(
+                    fontSize: FontSize.s14,
+                  ),
+                ),
               ],
             ),
             const Icon(
               Icons.chevron_right,
-              color: grey,
+              color: AppColors.grey,
               size: 18,
             )
           ],
@@ -258,9 +266,9 @@ class PatientDetailOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 17.5,
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.w,
+        vertical: 16.h,
       ),
       child: InkWell(
         onTap: () =>
@@ -272,12 +280,17 @@ class PatientDetailOption extends StatelessWidget {
               children: [
                 icon,
                 const XMargin(16),
-                Text(optionName),
+                Text(
+                  optionName,
+                  style: TextStyle(
+                    fontSize: FontSize.s14,
+                  ),
+                ),
               ],
             ),
             const Icon(
               Icons.chevron_right,
-              color: grey,
+              color: AppColors.grey,
               size: 18,
             )
           ],
@@ -310,8 +323,8 @@ class LinkOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 17.5,
+        horizontal: 16,
+        vertical: 16,
       ),
       child: InkWell(
         onTap: () => _openLink(optionLink),
@@ -324,12 +337,15 @@ class LinkOption extends StatelessWidget {
                 const XMargin(16),
                 Text(
                   optionName,
+                  style: TextStyle(
+                    fontSize: FontSize.s14,
+                  ),
                 ),
               ],
             ),
             const Icon(
               Icons.chevron_right,
-              color: grey,
+              color: AppColors.grey,
               size: 18,
             )
           ],

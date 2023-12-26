@@ -1,9 +1,11 @@
 import 'package:custodia_provider/models/alert_model.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/home/home_vm.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/views/home/alerts_list/alerts_list_vm.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -19,53 +21,50 @@ class AlertCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final provider = ref.watch(homeProvider.notifier);
+    final provider = ref.watch(alertProvider.notifier);
     return DefaultCard(
       onPress: () => provider.goToAlertDetailView(alert),
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: EdgeInsets.symmetric(
+          horizontal: 15.w,
+          vertical: 15.h,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               alert.alertType,
-              style: const TextStyle(
+              style: TextStyle(
+                fontSize: FontSize.s14,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const YMargin(10),
-            // const Text(
-            //   'Reading: 124/87 mmHg',
-            //   style: TextStyle(
-            //     fontSize: 12,
-            //   ),
-            // ),
-            // const YMargin(20),
+            const YMargin(5),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   timeago.format(alert.triggerTime),
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: grey,
+                  style: TextStyle(
+                    fontSize: FontSize.s12,
+                    color: AppColors.grey,
                   ),
                 ),
                 urgent
                     ? Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 2,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10.w,
+                          vertical: 2.h,
                         ),
                         decoration: BoxDecoration(
-                          color: lightRed,
-                          borderRadius: BorderRadius.circular(15),
+                          color: AppColors.lightRed,
+                          borderRadius: BorderRadius.circular(15.r),
                         ),
-                        child: const Text(
+                        child: Text(
                           'Urgent',
                           style: TextStyle(
-                            color: red,
-                            fontSize: 10,
+                            color: AppColors.red,
+                            fontSize: FontSize.s10,
                           ),
                         ),
                       )

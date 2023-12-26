@@ -1,14 +1,16 @@
 import 'package:custodia_provider/services/notifications/push_notification_service.dart';
-import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
+import 'package:custodia_provider/ui/core/constants/fonts.dart';
 import 'package:custodia_provider/ui/views/chats/conversations/conversation_list.dart';
 import 'package:custodia_provider/ui/views/patients/patients_list/patients_list.dart';
 import 'package:flutter/material.dart';
-import 'package:custodia_provider/ui/views/home/home.dart';
+import 'package:custodia_provider/ui/views/home/alerts_list/alerts_list.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class BottomNavigation extends ConsumerStatefulWidget {
-  const BottomNavigation({super.key});
+  const BottomNavigation({Key? key}) : super(key: key);
 
   @override
   BottomNavigationState createState() => BottomNavigationState();
@@ -39,17 +41,17 @@ class BottomNavigationState extends ConsumerState<BottomNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: white,
+      backgroundColor: AppColors.white,
       body: _widgetOptions[_selectedIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            width: .5,
-            color: lightGrey,
+            width: .5.w,
+            color: AppColors.lightGrey,
           ),
         ),
         child: BottomNavigationBar(
-          backgroundColor: white,
+          backgroundColor: AppColors.white,
           elevation: 0,
           type: BottomNavigationBarType.fixed,
           items: const <BottomNavigationBarItem>[
@@ -67,14 +69,14 @@ class BottomNavigationState extends ConsumerState<BottomNavigation> {
             ),
           ],
           selectedLabelStyle: const TextStyle(
-            fontFamily: 'Circular Std',
+            fontFamily: Fonts.kPrimary,
           ),
           unselectedLabelStyle: const TextStyle(
-            fontFamily: 'Circular Std',
+            fontFamily: Fonts.kPrimary,
           ),
           currentIndex: _selectedIndex,
-          selectedItemColor: blue,
-          unselectedItemColor: grey,
+          selectedItemColor: AppColors.blue,
+          unselectedItemColor: AppColors.grey,
           unselectedFontSize: 11.5,
           selectedFontSize: 11.5,
           onTap: _onItemTapped,

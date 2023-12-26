@@ -1,10 +1,12 @@
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/chats/chat_vm.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/ui/widgets/message_bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class Chat extends ConsumerStatefulWidget {
@@ -51,26 +53,35 @@ class _ChatState extends ConsumerState<Chat> {
       appBar: AppBar(
         centerTitle: false,
         elevation: 0,
-        shape: const Border(
-          bottom: BorderSide(color: white, width: .5),
+        shape: Border(
+          bottom: BorderSide(
+            color: AppColors.white,
+            width: .5.w,
+          ),
         ),
         leading: GestureDetector(
           onTap: () => Navigator.maybePop(context),
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 14.h,
+            ),
             child: Container(
-              decoration: const BoxDecoration(
-                color: lightBlue,
+              decoration: BoxDecoration(
+                color: AppColors.lightBlue,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(20.r),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Icon(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 6.w,
+                  vertical: 6.h,
+                ),
+                child: const Icon(
                   Icons.arrow_back,
                   size: 16,
-                  color: blue,
+                  color: AppColors.blue,
                 ),
               ),
             ),
@@ -83,18 +94,21 @@ class _ChatState extends ConsumerState<Chat> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CircleAvatar(
-                    backgroundColor: blue,
-                    foregroundColor: white,
-                    radius: 19,
+                    backgroundColor: AppColors.blue,
+                    foregroundColor: AppColors.white,
+                    radius: 19.r,
                     child: Text(
                       '${provider.patient?.firstName[0].toUpperCase()}${provider.patient?.lastName[0].toUpperCase()}',
+                      style: TextStyle(
+                        fontSize: FontSize.s14,
+                      ),
                     ),
                   ),
-                  const XMargin(13),
+                  const XMargin(12),
                   Text(
                     '${provider.patient?.firstName} ${provider.patient?.lastName}',
-                    style: const TextStyle(
-                      fontSize: 18,
+                    style: TextStyle(
+                      fontSize: FontSize.s18,
                       fontWeight: FontWeight.w500,
                     ),
                   )
@@ -114,7 +128,7 @@ class _ChatState extends ConsumerState<Chat> {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(6, 3, 6, 0),
+                  padding: EdgeInsets.fromLTRB(6.w, 3.h, 6.w, 0.h),
                   child: ListView.builder(
                     reverse: true,
                     itemCount: provider.messages?.length,
@@ -127,7 +141,7 @@ class _ChatState extends ConsumerState<Chat> {
                           type: provider.messages![index].type,
                           isMe: provider.messages![index].senderID ==
                               ref.read(chatProvider.notifier).user.userID,
-                          time: DateTime.now(),
+                          // time: provider.messages![index].timestamp,
                         );
                       }
                     },
@@ -136,32 +150,38 @@ class _ChatState extends ConsumerState<Chat> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(10),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10.w,
+                  vertical: 10.h,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
+                  children: [
                     Flexible(
                       child: Container(
                         alignment: const Alignment(0.0, 1.0),
                         decoration: BoxDecoration(
-                          color: offWhite,
-                          borderRadius: BorderRadius.circular(25),
+                          color: AppColors.offWhite,
+                          borderRadius: BorderRadius.circular(25.r),
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.all(6),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 6.w,
+                            vertical: 6.h,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               // Container(
-                              //   width: 35,
-                              //   height: 35,
+                              //   width: 35.w,
+                              //   height: 35.h,
                               //   decoration: BoxDecoration(
-                              //     color: blue,
+                              //     color: AppColors.blue,
                               //     border: Border.all(
-                              //       color: blue,
+                              //       color: AppColors.blue,
                               //     ),
                               //     borderRadius: const BorderRadius.all(
-                              //       Radius.circular(35),
+                              //       Radius.circular(35.r),
                               //     ),
                               //   ),
                               //   child: IconButton(
@@ -169,70 +189,35 @@ class _ChatState extends ConsumerState<Chat> {
                               //     icon: const Icon(Icons.add),
                               //     onPressed: () => CustomBottomSheet(
                               //       context: context,
-                              //       body: const Column(
-                              //         children: [
-                              //           Row(
-                              //             children: [
-                              //               Icon(
-                              //                 CustomIcon.camera,
-                              //                 size: 22,
-                              //                 color: blue,
-                              //               ),
-                              //               XMargin(15),
-                              //               Text(
-                              //                 'Camera',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.w500,
-                              //                   fontSize: 14,
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //           YMargin(33),
-                              //           Row(
-                              //             children: [
-                              //               Icon(
-                              //                 CustomIcon.gallery,
-                              //                 size: 22,
-                              //                 color: blue,
-                              //               ),
-                              //               XMargin(15),
-                              //               Text(
-                              //                 'Gallery',
-                              //                 style: TextStyle(
-                              //                   fontWeight: FontWeight.w500,
-                              //                   fontSize: 14,
-                              //                 ),
-                              //               ),
-                              //             ],
-                              //           ),
-                              //         ],
-                              //       ),
+                              //       body: const BottomSheet(),
                               //     ).modalBottomSheet(),
-                              //     color: Colors.white,
+                              //     color: AppColors.white,
                               //   ),
                               // ),
                               const XMargin(10),
                               Flexible(
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 8.5,
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: 8.5.h,
                                   ),
                                   child: TextField(
                                     maxLines: 3,
                                     minLines: 1,
-                                    cursorColor: blue,
+                                    cursorColor: AppColors.blue,
                                     cursorWidth: 1.5,
-                                    style: const TextStyle(
-                                      color: black,
-                                      height: 1.32,
-                                      fontSize: 14,
+                                    style: TextStyle(
+                                      color: AppColors.black,
+                                      height: 1.32.h,
+                                      fontSize: FontSize.s14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                     controller: _chatFieldTEC,
-                                    decoration: const InputDecoration.collapsed(
+                                    decoration: InputDecoration.collapsed(
                                       hintText: 'Type your message...',
-                                      hintStyle: TextStyle(color: grey),
+                                      hintStyle: TextStyle(
+                                        color: AppColors.grey,
+                                        fontSize: FontSize.s14,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -244,17 +229,17 @@ class _ChatState extends ConsumerState<Chat> {
                                       content: _chatFieldTEC.text.trim());
                                   _chatFieldTEC.clear();
                                 },
-                                child: const Padding(
+                                child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 8,
+                                    horizontal: 12.w,
+                                    vertical: 8.h,
                                   ),
                                   child: Text(
                                     'Send',
                                     style: TextStyle(
-                                      fontSize: 14.5,
-                                      fontWeight: FontWeight.w500,
-                                      color: blue,
+                                      fontSize: 14.5.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: AppColors.blue,
                                     ),
                                   ),
                                 ),

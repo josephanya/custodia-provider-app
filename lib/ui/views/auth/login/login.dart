@@ -1,5 +1,6 @@
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/buttons.dart';
@@ -7,6 +8,7 @@ import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/ui/widgets/textfield.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LogIn extends ConsumerWidget {
@@ -20,36 +22,38 @@ class LogIn extends ConsumerWidget {
       appBar: const AppBarBorderlessWithoutBack(),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const YMargin(20),
-              const Text(
+              const YMargin(16),
+              Text(
                 'Login',
                 style: TextStyle(
-                  fontSize: 26,
-                  color: blue,
+                  fontSize: FontSize.s26,
+                  color: AppColors.blue,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const YMargin(35),
+              const YMargin(32),
               Form(
                 key: providerNotifier.formKey,
                 onChanged: () => providerNotifier.isLoginButtonValid(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Email',
                       style: TextStyle(
-                        fontSize: 14,
-                        color: black,
+                        fontSize: FontSize.s14,
+                        color: AppColors.black,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const YMargin(10),
-                    SustainTextField(
+                    AppTextField(
                       isTextArea: true,
                       isPassword: false,
                       autocorrect: false,
@@ -60,17 +64,17 @@ class LogIn extends ConsumerWidget {
                       hintText: 'Email address',
                       controller: providerNotifier.emailTEC,
                     ),
-                    const YMargin(35),
-                    const Text(
+                    const YMargin(32),
+                    Text(
                       'Password',
                       style: TextStyle(
-                        fontSize: 14,
-                        color: black,
+                        fontSize: FontSize.s14,
+                        color: AppColors.black,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const YMargin(10),
-                    SustainTextField(
+                    AppTextField(
                       isTextArea: true,
                       isPassword: true,
                       autocorrect: false,
@@ -91,9 +95,12 @@ class LogIn extends ConsumerWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
-        color: white,
+        color: AppColors.white,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 10.h,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

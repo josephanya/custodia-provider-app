@@ -1,7 +1,9 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class InfoCard extends StatelessWidget {
   const InfoCard({
@@ -20,18 +22,21 @@ class InfoCard extends StatelessWidget {
     return Expanded(
       child: DefaultCard(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 10.w,
+            vertical: 10.h,
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 label,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: grey,
+                style: TextStyle(
+                  fontSize: FontSize.s12,
+                  color: AppColors.grey,
                 ),
               ),
-              const YMargin(5),
+              const YMargin(4),
               Row(
                 textBaseline: TextBaseline.ideographic,
                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -40,15 +45,15 @@ class InfoCard extends StatelessWidget {
                     value,
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
-                      fontSize: 26,
+                      fontSize: 26.sp,
                       color: color,
                     ),
                   ),
-                  const XMargin(5),
+                  const XMargin(4),
                   Text(
                     unit,
                     style: const TextStyle(
-                      color: grey,
+                      color: AppColors.grey,
                     ),
                   ),
                 ],

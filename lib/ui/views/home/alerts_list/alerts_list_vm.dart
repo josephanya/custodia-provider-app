@@ -17,17 +17,17 @@ class AlertVM extends StateNotifier<AlertViewState> {
   final Reader _reader;
   final _log = Logger(filter: DevelopmentFilter());
 
-  void initialize(String alertID) async {
-    await fetchAlerts(alertID);
+  void initialize() async {
+    await fetchAlerts();
   }
 
-  Future<void> fetchAlerts(String alertID) async {
+  Future<void> fetchAlerts() async {
     state = state.copyWith(viewState: ViewState.loading);
     try {
-      final alert = await _reader(alertRepository).getSingleAlert(alertID);
+      final alerts = await _reader(alertRepository).getAlerts();
       if (!mounted) return;
       state = state.copyWith(
-        alert: alert,
+        alerts: alerts,
         viewState: ViewState.idle,
       );
     } on Failure catch (e) {
@@ -38,36 +38,33 @@ class AlertVM extends StateNotifier<AlertViewState> {
     }
   }
 
-  void resolveAlert(String alertID) async {
-    try {
-      state = state.copyWith(viewState: ViewState.loading);
-      await _reader(alertRepository).resolveAlert(alertID);
-      state = state.copyWith(viewState: ViewState.idle);
-      _reader(navigationProvider).pop();
-      _reader(navigationProvider)
-          .showCustomSnackbar(message: 'Alert resolved successfully');
-    } on Failure catch (e) {
-      state = state.copyWith(viewState: ViewState.idle);
-      _reader(navigationProvider).showErrorSnackbar(message: e.message);
-    }
+  void goToAlertDetailView(AlertModel alert) {
+    _reader(navigationProvider)
+        .pushNamed('/alert-details', arguments: alert)
+        ?.then((value) async {
+      final alerts = await _reader(alertRepository).getAlerts();
+      state = state.copyWith(
+        alerts: alerts,
+      );
+    });
   }
 }
 
 class AlertViewState {
   final ViewState viewState;
-  final AlertModel? alert;
+  final List? alerts;
 
   const AlertViewState._({
     required this.viewState,
-    required this.alert,
+    required this.alerts,
   });
 
   factory AlertViewState.initial() =>
-      const AlertViewState._(viewState: ViewState.idle, alert: null);
+      const AlertViewState._(viewState: ViewState.idle, alerts: []);
 
-  AlertViewState copyWith({ViewState? viewState, AlertModel? alert}) =>
+  AlertViewState copyWith({ViewState? viewState, List? alerts}) =>
       AlertViewState._(
         viewState: viewState ?? this.viewState,
-        alert: alert ?? this.alert,
+        alerts: alerts ?? this.alerts,
       );
 }

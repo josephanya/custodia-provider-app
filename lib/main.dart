@@ -9,6 +9,7 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:custodia_provider/ui/core/routes.dart';
 import 'firebase_options.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,14 +34,17 @@ class CustodiaProvider extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return OverlaySupport(
-      child: MaterialApp(
-        title: 'Custodia Provider',
-        theme: themeData(context),
-        initialRoute: '/',
-        onGenerateRoute: RouteGenerator.generateRoute,
-        navigatorKey: ref.read(navigationProvider).navigatorKey,
-        debugShowCheckedModeBanner: false,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, child) => OverlaySupport.global(
+        child: MaterialApp(
+          title: 'Custodia Provider',
+          theme: themeData(context),
+          initialRoute: '/',
+          onGenerateRoute: Routes.generateRoute,
+          navigatorKey: ref.read(navigationProvider).navigatorKey,
+          debugShowCheckedModeBanner: false,
+        ),
       ),
     );
   }

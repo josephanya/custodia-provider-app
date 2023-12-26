@@ -38,14 +38,14 @@ class LocalNotificationsService {
 
   getPlatformChannelSpecfics() {
     const androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'ng.lifebox.sustain', 'Custodia',
+        'ng.lifebox.custodiaProvider', 'Custodia Provider',
         channelDescription: 'default channel',
         playSound: true,
         enableLights: true,
         enableVibration: true,
         importance: Importance.max,
         priority: Priority.high,
-        ticker: 'Custodia');
+        ticker: 'Custodia Provider');
     const iOSPlatformChannelSpecifics = IOSNotificationDetails();
     const platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,

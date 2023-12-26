@@ -1,5 +1,6 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomBottomSheet {
   const CustomBottomSheet({
@@ -12,16 +13,18 @@ class CustomBottomSheet {
 
   void modalBottomSheet() {
     showModalBottomSheet(
-      barrierColor: grey.withOpacity(0.4),
+      barrierColor: AppColors.grey.withOpacity(0.4),
       context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.r),
+        ),
       ),
       builder: (builder) {
         return Container(
           color: Colors.transparent,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 45, 20, 70),
+            padding: EdgeInsets.fromLTRB(20.w, 45.h, 20.w, 70.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,

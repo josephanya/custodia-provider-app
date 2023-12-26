@@ -1,8 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/models/alert_model.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/home/alerts_details_vm.dart';
+import 'package:custodia_provider/ui/views/home/alert_details/alert_details_vm.dart';
 import 'package:custodia_provider/ui/views/photo/full_photo.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
@@ -10,6 +11,7 @@ import 'package:custodia_provider/ui/widgets/buttons.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -29,8 +31,8 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
   @override
   Widget build(BuildContext context) {
     final alert = widget.alert;
-    final provider = ref.watch(alertProvider);
-    final providerNotifier = ref.watch(alertProvider.notifier);
+    final provider = ref.watch(alertsDetailProvider);
+    final providerNotifier = ref.watch(alertsDetailProvider.notifier);
     return Scaffold(
       appBar: appBarWithAction(
         context,
@@ -38,20 +40,23 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
         GestureDetector(
           onTap: () => providerNotifier.resolveAlert(alert.alertID),
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 14.h,
+            ),
             child: Container(
-              decoration: const BoxDecoration(
-                color: lightBlue,
+              decoration: BoxDecoration(
+                color: AppColors.lightBlue,
                 borderRadius: BorderRadius.all(
-                  Radius.circular(20),
+                  Radius.circular(20.r),
                 ),
               ),
-              child: const Padding(
-                padding: EdgeInsets.all(6.0),
-                child: Icon(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 6.h),
+                child: const Icon(
                   Icons.check,
                   size: 16,
-                  color: blue,
+                  color: AppColors.blue,
                 ),
               ),
             ),
@@ -60,17 +65,17 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            vertical: 15,
-            horizontal: 16,
+          padding: EdgeInsets.symmetric(
+            vertical: 15.h,
+            horizontal: 16.w,
           ),
           child: provider.viewState.isLoading
-              ? const Center(
+              ? Center(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: 20,
+                      top: 20.h,
                     ),
-                    child: Loader(),
+                    child: const Loader(),
                   ),
                 )
               : Column(
@@ -78,36 +83,36 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                   children: [
                     Text(
                       alert.alertType,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: FontSize.s18,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     const YMargin(8),
                     Text(
                       'Triggered at ${DateFormat('d/M/y, hh:mm aaa').format(alert.triggerTime)}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: grey,
+                      style: TextStyle(
+                        fontSize: FontSize.s13,
+                        color: AppColors.grey,
                       ),
                     ),
                     const YMargin(35),
                     Column(
                         children: alert.data.entries.map((entry) {
                       return Padding(
-                        padding: const EdgeInsets.only(
-                          bottom: 20,
+                        padding: EdgeInsets.only(
+                          bottom: 20.h,
                         ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: 90,
+                              width: 90.w,
                               child: Text(
                                 '${entry.key}:',
-                                style: const TextStyle(
-                                  color: grey,
-                                  fontSize: 13,
+                                style: TextStyle(
+                                  color: AppColors.grey,
+                                  fontSize: FontSize.s13,
                                 ),
                               ),
                             ),
@@ -123,18 +128,18 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                                       ),
                                     ),
                                     child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(10),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.r),
                                       ),
                                       child: CachedNetworkImage(
                                         placeholder: (context, url) =>
                                             Container(
-                                          width: 70,
-                                          height: 70,
-                                          decoration: const BoxDecoration(
-                                            color: lightBlue,
+                                          width: 70.w,
+                                          height: 70.h,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.lightBlue,
                                             borderRadius: BorderRadius.all(
-                                              Radius.circular(10),
+                                              Radius.circular(10.r),
                                             ),
                                           ),
                                           child: const Center(
@@ -144,13 +149,13 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                                         errorWidget: (context, url, error) =>
                                             Image.asset(
                                           'images/img_not_available.jpeg',
-                                          width: 70,
-                                          height: 70,
+                                          width: 70.w,
+                                          height: 70.h,
                                           fit: BoxFit.cover,
                                         ),
                                         imageUrl: entry.value,
-                                        width: 70,
-                                        height: 70,
+                                        width: 70.w,
+                                        height: 70.h,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -158,8 +163,8 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
                                 : Flexible(
                                     child: Text(
                                       entry.value,
-                                      style: const TextStyle(
-                                        fontSize: 13,
+                                      style: TextStyle(
+                                        fontSize: FontSize.s13,
                                       ),
                                     ),
                                   ),
@@ -173,9 +178,12 @@ class _AlertDetailsState extends ConsumerState<AlertDetails> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(
-        color: white,
+        color: AppColors.white,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 10.h,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

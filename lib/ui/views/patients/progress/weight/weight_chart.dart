@@ -1,43 +1,48 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/ui/widgets/info_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class ProgressBloodGlucose extends StatefulWidget {
-  const ProgressBloodGlucose({Key? key}) : super(key: key);
+class WeightChart extends StatefulWidget {
+  const WeightChart({Key? key}) : super(key: key);
 
   @override
-  ProgressBloodGlucoseState createState() => ProgressBloodGlucoseState();
+  WeightChartState createState() => WeightChartState();
 }
 
-class ProgressBloodGlucoseState extends State<ProgressBloodGlucose> {
+class WeightChartState extends State<WeightChart> {
   int segmentedControlValue = 0;
 
   Widget segmentedControl() {
     return SizedBox(
-      width: 320,
+      width: 320.w,
       child: CupertinoSlidingSegmentedControl(
         groupValue: segmentedControlValue,
         padding: const EdgeInsets.all(2),
-        children: const <int, Widget>{
+        children: <int, Widget>{
           0: Text(
             'Daily',
             style: TextStyle(
+              fontSize: FontSize.s14,
               fontWeight: FontWeight.w500,
             ),
           ),
           1: Text(
             'Weekly',
             style: TextStyle(
+              fontSize: FontSize.s14,
               fontWeight: FontWeight.w500,
             ),
           ),
           2: Text(
             'Monthly',
             style: TextStyle(
+              fontSize: FontSize.s14,
               fontWeight: FontWeight.w500,
             ),
           )
@@ -77,7 +82,40 @@ class ProgressBloodGlucoseState extends State<ProgressBloodGlucose> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(context, 'Blood glucose'),
+      appBar: appBarWithAction(
+        context,
+        'Weight',
+        GestureDetector(
+          onTap: () => Navigator.pushNamed(context, '/log-weight'),
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 12.w,
+              vertical: 12.h,
+            ),
+            child: Container(
+              width: 32.w,
+              height: 32.h,
+              decoration: BoxDecoration(
+                color: AppColors.lightBlue,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20.r),
+                ),
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 6.w,
+                  vertical: 6.h,
+                ),
+                child: const Icon(
+                  Icons.add,
+                  size: 16,
+                  color: AppColors.blue,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -87,54 +125,48 @@ class ProgressBloodGlucoseState extends State<ProgressBloodGlucose> {
               graph[segmentedControlValue]!,
               const YMargin(30),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Weekly average',
-                      style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const YMargin(10),
                     const Row(
                       children: [
                         InfoCard(
-                          label: 'Before Meal',
+                          label: 'Starting Weight',
                           value: '100',
-                          color: blue,
-                          unit: 'mg/dL',
+                          color: AppColors.blue,
+                          unit: 'kg',
                         ),
                         XMargin(10),
                         InfoCard(
-                          label: 'After Meal',
+                          label: 'Weight Lost',
                           value: '129',
-                          color: blue,
-                          unit: 'mg/dL',
+                          color: AppColors.blue,
+                          unit: 'kg',
                         ),
                       ],
                     ),
-                    const YMargin(25),
+                    const YMargin(20),
                     DefaultCard(
-                      onPress: () => Navigator.pushNamed(
-                          context, '/readings-blood-glucose'),
-                      child: const Padding(
+                      onPress: () =>
+                          Navigator.pushNamed(context, '/weight-logs'),
+                      child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 15,
-                          vertical: 17,
+                          horizontal: 16.w,
+                          vertical: 18.h,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               'All Readings',
-                              style: TextStyle(fontSize: 14),
+                              style: TextStyle(
+                                fontSize: FontSize.s14,
+                              ),
                             ),
-                            Icon(
+                            const Icon(
                               Icons.chevron_right,
-                              color: grey,
+                              color: AppColors.grey,
                               size: 16,
                             ),
                           ],

@@ -1,7 +1,9 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SustainTextField extends StatelessWidget {
+class AppTextField extends StatelessWidget {
   final Widget? suffix;
   final VoidCallback? onTap;
   final bool autocorrect,
@@ -16,7 +18,7 @@ class SustainTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
 
-  const SustainTextField({
+  const AppTextField({
     super.key,
     this.suffix,
     this.onTap,
@@ -37,7 +39,6 @@ class SustainTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      //cursorColor: blue,
       controller: controller,
       obscureText: isPassword,
       enabled: isEnabled,
@@ -56,49 +57,70 @@ class SustainTextField extends StatelessWidget {
               : isNumber
                   ? const TextInputType.numberWithOptions(decimal: true)
                   : TextInputType.text,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.w400,
-        fontSize: 14,
-        color: black,
+        fontSize: FontSize.s14,
+        height: 1.35.h,
+        color: AppColors.black,
       ),
       decoration: InputDecoration(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 13, vertical: 16.2),
-        fillColor: white,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+          vertical: 16.5.h,
+        ),
+        fillColor: AppColors.white,
         hintText: hintText,
-        hintStyle: const TextStyle(
-          color: grey,
-          fontSize: 14,
+        hintStyle: TextStyle(
+          color: AppColors.grey,
+          fontSize: FontSize.s14,
           fontWeight: FontWeight.w400,
         ),
         filled: true,
         suffix: suffix,
-        errorStyle: const TextStyle(
-            fontWeight: FontWeight.w500, fontSize: 11, color: Colors.red),
+        errorStyle: TextStyle(
+          fontWeight: FontWeight.w500,
+          fontSize: FontSize.s11,
+          color: Colors.red,
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: lightGrey, width: .5),
+          borderRadius: BorderRadius.circular(15.r),
+          borderSide: BorderSide(
+            color: AppColors.lightGrey,
+            width: .5.w,
+          ),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.red[400]!, width: .5),
+          borderRadius: BorderRadius.circular(15.r),
+          borderSide: BorderSide(
+            color: Colors.red[400]!,
+            width: .5,
+          ),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: Colors.red[400]!, width: .5),
+          borderRadius: BorderRadius.circular(15.r),
+          borderSide: BorderSide(
+            color: Colors.red[400]!,
+            width: .5,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: lightGrey, width: .5),
+          borderRadius: BorderRadius.circular(15.r),
+          borderSide: const BorderSide(
+            color: AppColors.lightGrey,
+            width: .5,
+          ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
-          borderSide: const BorderSide(color: lightGrey, width: .5),
+          borderRadius: BorderRadius.circular(15.r),
+          borderSide: const BorderSide(
+            color: AppColors.lightGrey,
+            width: .5,
+          ),
         ),
         disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15.r),
           borderSide: const BorderSide(
-            color: lightGrey,
+            color: AppColors.lightGrey,
           ),
         ),
       ),
@@ -106,7 +128,7 @@ class SustainTextField extends StatelessWidget {
   }
 }
 
-class SustainBorderlessTextField extends StatelessWidget {
+class AppBorderlessTextField extends StatelessWidget {
   final Widget? suffix;
   final VoidCallback? onTap;
   final bool autocorrect,
@@ -121,7 +143,7 @@ class SustainBorderlessTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
 
-  const SustainBorderlessTextField({
+  const AppBorderlessTextField({
     super.key,
     this.suffix,
     this.onTap,
@@ -144,7 +166,7 @@ class SustainBorderlessTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
+      children: [
         TextFormField(
           controller: controller,
           obscureText: isPassword,
@@ -164,34 +186,21 @@ class SustainBorderlessTextField extends StatelessWidget {
                   : isNumber
                       ? const TextInputType.numberWithOptions(decimal: true)
                       : TextInputType.text,
-          style: const TextStyle(
+          style: TextStyle(
             fontWeight: FontWeight.w400,
-            fontSize: 14,
-            color: black,
+            fontSize: FontSize.s14,
+            color: AppColors.black,
           ),
-          decoration: InputDecoration(
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 10, vertical: 15.5),
-            fillColor: white,
+          decoration: InputDecoration.collapsed(
+            fillColor: AppColors.white,
             hintText: hintText,
-            hintStyle: const TextStyle(
-              color: grey,
-              fontSize: 14,
+            hintStyle: TextStyle(
+              color: AppColors.grey,
+              fontSize: FontSize.s14,
               fontWeight: FontWeight.w400,
             ),
             filled: true,
-            suffix: suffix,
-            errorStyle: const TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 11,
-              color: Colors.red,
-            ),
             border: InputBorder.none,
-            errorBorder: InputBorder.none,
-            focusedErrorBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
           ),
         )
       ],

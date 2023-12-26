@@ -1,7 +1,8 @@
 import 'dart:io';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Loader extends StatelessWidget {
   const Loader({Key? key}) : super(key: key);
@@ -9,12 +10,12 @@ class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 28,
-      height: 28,
+      width: 28.w,
+      height: 28.h,
       child: Platform.isIOS
           ? const CupertinoActivityIndicator()
           : const CircularProgressIndicator(
-              color: blue,
+              color: AppColors.blue,
             ),
     );
   }

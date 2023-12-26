@@ -1,8 +1,10 @@
-import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MedicalRecords extends StatelessWidget {
   const MedicalRecords({super.key});
@@ -13,9 +15,9 @@ class MedicalRecords extends StatelessWidget {
       appBar: appBar(context, 'Medical records'),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 15,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 15.h,
           ),
           child: Center(
             child: Column(
@@ -28,33 +30,35 @@ class MedicalRecords extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: lightBlue,
-                          borderRadius: BorderRadius.circular(50),
+                          color: AppColors.lightBlue,
+                          borderRadius: BorderRadius.circular(50.r),
                         ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Icon(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20.w, vertical: 20.h),
+                          child: const Icon(
                             CustomIcon.medical_records,
                             size: 30,
-                            color: blue,
+                            color: AppColors.blue,
                           ),
                         ),
                       ),
                       const YMargin(20),
                       const Text(
-                        'Find your patient\'s medical records \n in one place',
+                        'Medical records',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const YMargin(15),
-                      const Text(
-                        'Find your patients medical records here',
+                      const YMargin(16),
+                      Text(
+                        'Find your patients medical records in one place',
                         style: TextStyle(
-                          color: grey,
-                          height: 1.35,
+                          color: AppColors.grey,
+                          fontSize: FontSize.s14,
+                          height: 1.35.h,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -64,22 +68,23 @@ class MedicalRecords extends StatelessWidget {
                 const YMargin(30),
                 Container(
                   width: double.infinity,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 16.h,
+                  ),
                   decoration: BoxDecoration(
-                    color: offWhite,
+                    color: AppColors.offWhite,
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
-                      width: .5,
-                      color: lightGrey,
+                      width: .5.w,
+                      color: AppColors.lightGrey,
                     ),
                   ),
-                  child: const Center(
+                  child: Center(
                       child: Text(
                     'Coming soon..',
                     style: TextStyle(
-                      color: darkGrey,
-                      fontSize: 14,
+                      color: AppColors.darkGrey,
+                      fontSize: FontSize.s14,
                     ),
                   )),
                 ),

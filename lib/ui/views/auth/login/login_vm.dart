@@ -2,6 +2,7 @@ import 'package:custodia_provider/core/navigation.dart';
 import 'package:custodia_provider/repository/auth/auth_impl.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
+import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/validator.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -38,7 +39,7 @@ class LoginVM extends StateNotifier<LoginViewState> {
       );
       state = state.copyWith(viewState: ViewState.idle);
       _reader(navigationProvider)
-          .pushNamedAndRemoveUntil('/bottom-navigation', (_) => false);
+          .pushNamedAndRemoveUntil(Routes.bottomNavigationView, (_) => false);
     } on Failure catch (e) {
       state = state.copyWith(viewState: ViewState.idle);
       _reader(navigationProvider).showErrorSnackbar(message: e.message);
@@ -49,7 +50,7 @@ class LoginVM extends StateNotifier<LoginViewState> {
     try {
       await _reader(authRepository).logout();
       _reader(navigationProvider)
-          .pushNamedAndRemoveUntil('/welcome', (_) => false);
+          .pushNamedAndRemoveUntil(Routes.loginView, (_) => false);
     } on Failure catch (e) {
       _reader(navigationProvider).showErrorSnackbar(message: e.message);
     }

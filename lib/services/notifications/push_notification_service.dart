@@ -1,7 +1,7 @@
-import 'dart:io';
 import 'package:custodia_provider/core/navigation.dart';
 import 'package:custodia_provider/repository/auth/auth_impl.dart';
 import 'package:custodia_provider/services/api/failure.dart';
+// import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -38,20 +38,9 @@ class PushNotificationService {
   }
 
   void saveDeviceToken() async {
-    if (Platform.isAndroid) {
-      messaging.getToken().then(
-        (token) {
-          storeToken(token!);
-        },
-      );
-    }
-    // else if (Platform.isIOS) {
-    //   messaging.getAPNSToken().then(
-    //     (token) {
-    //       storeToken(token!);
-    //     },
-    //   );
-    // }
+    String? token = await messaging.getToken();
+    storeToken(token!);
+    messaging.onTokenRefresh.listen(storeToken);
   }
 
   void setupInteractedMessage() async {
@@ -72,7 +61,9 @@ class PushNotificationService {
 
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'chat') {
-      // navigate to chat
+      //navigate to chat
+    } else {
+      // navigate elsewhere
     }
   }
 }

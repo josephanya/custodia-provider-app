@@ -1,6 +1,8 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:flutter/material.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppBarBorderless extends StatelessWidget implements PreferredSizeWidget {
   const AppBarBorderless({super.key});
@@ -23,10 +25,10 @@ class AppBarBorderless extends StatelessWidget implements PreferredSizeWidget {
           GestureDetector(
             onTap: () => Navigator.maybePop(context),
             child: Container(
-              width: 30,
-              height: 30,
+              width: 32,
+              height: 32,
               decoration: const BoxDecoration(
-                color: lightBlue,
+                color: AppColors.lightBlue,
                 borderRadius: BorderRadius.all(
                   Radius.circular(20),
                 ),
@@ -36,7 +38,7 @@ class AppBarBorderless extends StatelessWidget implements PreferredSizeWidget {
                 child: Icon(
                   Icons.arrow_back,
                   size: 16,
-                  color: blue,
+                  color: AppColors.blue,
                 ),
               ),
             ),
@@ -66,11 +68,38 @@ class AppBarBorderlessWithoutBack extends StatelessWidget
   }
 }
 
+class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const ChatAppBar({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Size get preferredSize => const Size.fromHeight(90);
+
+  @override
+  Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+    return Container(
+      padding: EdgeInsets.fromLTRB(20, statusBarHeight, 20, 0),
+      height: statusBarHeight + 56,
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width,
+      child: child,
+    );
+  }
+}
+
 class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Widget buildActions, searchBar;
 
-  const SearchAppBar(
-      {super.key, required this.buildActions, required this.searchBar});
+  const SearchAppBar({
+    super.key,
+    required this.buildActions,
+    required this.searchBar,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(90);
@@ -83,13 +112,6 @@ class SearchAppBar extends StatelessWidget implements PreferredSizeWidget {
       height: statusBarHeight + 56,
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: white,
-        border: Border.all(
-          width: .5,
-          color: white,
-        ),
-      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -106,20 +128,25 @@ appBar(context, title) => AppBar(
       leading: GestureDetector(
         onTap: () => Navigator.maybePop(context),
         child: Padding(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.all(12.0),
           child: Container(
-            decoration: const BoxDecoration(
-              color: lightBlue,
+            width: 32.w,
+            height: 32.h,
+            decoration: BoxDecoration(
+              color: AppColors.lightBlue,
               borderRadius: BorderRadius.all(
-                Radius.circular(20),
+                Radius.circular(20.r),
               ),
             ),
-            child: const Padding(
-              padding: EdgeInsets.all(6.0),
-              child: Icon(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 6.w,
+                vertical: 6.h,
+              ),
+              child: const Icon(
                 Icons.arrow_back,
                 size: 16,
-                color: blue,
+                color: AppColors.blue,
               ),
             ),
           ),
@@ -127,15 +154,18 @@ appBar(context, title) => AppBar(
       ),
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 18,
+        style: TextStyle(
+          fontSize: FontSize.s18,
           fontWeight: FontWeight.w500,
         ),
       ),
       elevation: 0,
       centerTitle: true,
-      shape: const Border(
-        bottom: BorderSide(color: white, width: .5),
+      shape: Border(
+        bottom: BorderSide(
+          color: AppColors.white,
+          width: .5.w,
+        ),
       ),
     );
 
@@ -143,20 +173,25 @@ appBarWithAction(context, title, action) => AppBar(
       leading: GestureDetector(
         onTap: () => Navigator.maybePop(context),
         child: Padding(
-          padding: const EdgeInsets.all(14.0),
+          padding: const EdgeInsets.all(12.0),
           child: Container(
-            decoration: const BoxDecoration(
-              color: lightBlue,
+            width: 32.w,
+            height: 32.h,
+            decoration: BoxDecoration(
+              color: AppColors.lightBlue,
               borderRadius: BorderRadius.all(
-                Radius.circular(20),
+                Radius.circular(20.r),
               ),
             ),
-            child: const Padding(
-              padding: EdgeInsets.all(6.0),
-              child: Icon(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 6.w,
+                vertical: 6.h,
+              ),
+              child: const Icon(
                 Icons.arrow_back,
                 size: 16,
-                color: blue,
+                color: AppColors.blue,
               ),
             ),
           ),
@@ -164,46 +199,55 @@ appBarWithAction(context, title, action) => AppBar(
       ),
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 18,
+        style: TextStyle(
+          fontSize: FontSize.s18,
           fontWeight: FontWeight.w500,
         ),
       ),
       actions: [action],
       elevation: 0,
       centerTitle: true,
-      shape: const Border(
-        bottom: BorderSide(color: white, width: .5),
+      shape: Border(
+        bottom: BorderSide(
+          color: AppColors.white,
+          width: .5.w,
+        ),
       ),
     );
 
 appBarWithActionWithoutBack(context, title, action) => AppBar(
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 18,
+        style: TextStyle(
+          fontSize: FontSize.s18,
           fontWeight: FontWeight.w500,
         ),
       ),
       actions: [action],
       elevation: 0,
       centerTitle: true,
-      shape: const Border(
-        bottom: BorderSide(color: white, width: .5),
+      shape: Border(
+        bottom: BorderSide(
+          color: AppColors.white,
+          width: .5.w,
+        ),
       ),
     );
 
 appBarWithoutBack(context, title) => AppBar(
       title: Text(
         title,
-        style: const TextStyle(
-          fontSize: 18,
+        style: TextStyle(
+          fontSize: FontSize.s18,
           fontWeight: FontWeight.w500,
         ),
       ),
       elevation: 0,
       centerTitle: true,
-      shape: const Border(
-        bottom: BorderSide(color: white, width: .5),
+      shape: Border(
+        bottom: BorderSide(
+          color: AppColors.white,
+          width: .5.w,
+        ),
       ),
     );

@@ -1,9 +1,11 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PersonalDetails extends ConsumerWidget {
@@ -16,56 +18,74 @@ class PersonalDetails extends ConsumerWidget {
       appBar: appBar(context, 'Personal details'),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 15,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 15.h,
           ),
           child: Column(
             children: [
               DefaultCard(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 25,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
+                    vertical: 25.h,
                   ),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'First name',
                             style: TextStyle(
-                              color: grey,
+                              color: AppColors.grey,
+                              fontSize: FontSize.s14,
                             ),
                           ),
-                          Text('${provider.user?.firstName}'),
+                          Text(
+                            '${provider.user?.firstName}',
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                       const YMargin(29),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Last name',
                             style: TextStyle(
-                              color: grey,
+                              color: AppColors.grey,
+                              fontSize: FontSize.s14,
                             ),
                           ),
-                          Text('${provider.user?.lastName}'),
+                          Text(
+                            '${provider.user?.lastName}',
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                       const YMargin(29),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Email',
                             style: TextStyle(
-                              color: grey,
+                              fontSize: FontSize.s14,
+                              color: AppColors.grey,
                             ),
                           ),
-                          Text('${provider.user?.email}'),
+                          Text(
+                            '${provider.user?.email}',
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                     ],

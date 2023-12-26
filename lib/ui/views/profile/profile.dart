@@ -1,11 +1,13 @@
-import 'package:custodia_provider/ui/core/theme/custom_icons.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
 import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
 import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,49 +26,49 @@ class _ProfileState extends ConsumerState<Profile> {
       appBar: appBar(context, ''),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 16,
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+            vertical: 16.h,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: blue,
-                foregroundColor: white,
-                radius: 30,
+                backgroundColor: AppColors.blue,
+                foregroundColor: AppColors.white,
+                radius: 32.r,
                 child: Text(
                   '${provider.user?.firstName![0].toUpperCase()}${provider.user?.lastName![0].toUpperCase()}',
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: TextStyle(
+                    fontSize: FontSize.s20,
                   ),
                 ),
               ),
-              const YMargin(15),
+              const YMargin(16),
               Text(
                 '${provider.user?.firstName} ${provider.user?.lastName}',
-                style: const TextStyle(
-                  fontSize: 18,
+                style: TextStyle(
+                  fontSize: FontSize.s18,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               const YMargin(4),
               Text(
                 '${provider.user?.email} ',
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: grey,
+                style: TextStyle(
+                  fontSize: FontSize.s13,
+                  color: AppColors.grey,
                 ),
               ),
-              const YMargin(35),
-              const Text(
+              const YMargin(32),
+              Text(
                 'My account',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: FontSize.s16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const YMargin(15),
+              const YMargin(12),
               const DefaultCard(
                 child: Column(
                   children: [
@@ -76,7 +78,7 @@ class _ProfileState extends ConsumerState<Profile> {
                       icon: Icon(
                         CustomIcon.information,
                         size: 20,
-                        color: blue,
+                        color: AppColors.blue,
                       ),
                     ),
                     // Option(
@@ -91,15 +93,15 @@ class _ProfileState extends ConsumerState<Profile> {
                   ],
                 ),
               ),
-              const YMargin(40),
-              const Text(
+              const YMargin(32),
+              Text(
                 'About',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: FontSize.s16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const YMargin(15),
+              const YMargin(12),
               const DefaultCard(
                 child: Column(
                   children: [
@@ -109,7 +111,7 @@ class _ProfileState extends ConsumerState<Profile> {
                       icon: Icon(
                         CustomIcon.help,
                         size: 20,
-                        color: blue,
+                        color: AppColors.blue,
                       ),
                     ),
                     LinkOption(
@@ -118,7 +120,7 @@ class _ProfileState extends ConsumerState<Profile> {
                       icon: Icon(
                         CustomIcon.privacy_policy,
                         size: 20,
-                        color: blue,
+                        color: AppColors.blue,
                       ),
                     ),
                     LinkOption(
@@ -127,13 +129,13 @@ class _ProfileState extends ConsumerState<Profile> {
                       icon: Icon(
                         CustomIcon.terms,
                         size: 20,
-                        color: blue,
+                        color: AppColors.blue,
                       ),
                     ),
                   ],
                 ),
               ),
-              const YMargin(40),
+              const YMargin(24),
               DefaultCard(
                 onPress: () async {
                   ref.read(loginProvider.notifier).logout();
@@ -151,7 +153,7 @@ class _ProfileState extends ConsumerState<Profile> {
                           Icon(
                             CustomIcon.logout,
                             size: 20,
-                            color: red,
+                            color: AppColors.red,
                           ),
                           XMargin(16),
                           Text(
@@ -162,7 +164,7 @@ class _ProfileState extends ConsumerState<Profile> {
                       ),
                       Icon(
                         Icons.chevron_right,
-                        color: grey,
+                        color: AppColors.grey,
                         size: 18,
                       )
                     ],
@@ -170,15 +172,18 @@ class _ProfileState extends ConsumerState<Profile> {
                 ),
               ),
               const YMargin(20),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 10),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 50.w,
+                  vertical: 10.h,
+                ),
                 child: Center(
                   child: Text(
-                    'Version 1.0.0 \n Copyright © 2022 Custodia Health',
+                    'Version 1.0.0 \n Copyright © 2023 Custodia Health',
                     style: TextStyle(
-                      color: grey,
-                      height: 1.615,
-                      fontSize: 13,
+                      color: AppColors.grey,
+                      height: 1.615.h,
+                      fontSize: FontSize.s13,
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -214,9 +219,9 @@ class LinkOption extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 17.5,
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.w,
+        vertical: 16.h,
       ),
       child: InkWell(
         onTap: () => _openLink(optionLink),
@@ -229,12 +234,15 @@ class LinkOption extends StatelessWidget {
                 const XMargin(16),
                 Text(
                   optionName,
+                  style: TextStyle(
+                    fontSize: FontSize.s14,
+                  ),
                 ),
               ],
             ),
             const Icon(
               Icons.chevron_right,
-              color: grey,
+              color: AppColors.grey,
               size: 18,
             )
           ],
@@ -258,9 +266,9 @@ class Option extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 17.5,
+      padding: EdgeInsets.symmetric(
+        horizontal: 16.w,
+        vertical: 16.h,
       ),
       child: InkWell(
         onTap: () => Navigator.pushNamed(context, optionRoute),
@@ -271,12 +279,17 @@ class Option extends StatelessWidget {
               children: [
                 icon,
                 const XMargin(16),
-                Text(optionName),
+                Text(
+                  optionName,
+                  style: TextStyle(
+                    fontSize: FontSize.s14,
+                  ),
+                ),
               ],
             ),
             const Icon(
               Icons.chevron_right,
-              color: grey,
+              color: AppColors.grey,
               size: 18,
             )
           ],

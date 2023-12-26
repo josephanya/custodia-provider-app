@@ -1,7 +1,9 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class WeightLogCard extends StatelessWidget {
@@ -18,9 +20,9 @@ class WeightLogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultCard(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 15,
+        padding: EdgeInsets.symmetric(
+          horizontal: 15.w,
+          vertical: 15.h,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,15 +33,16 @@ class WeightLogCard extends StatelessWidget {
               children: [
                 Text(
                   weight,
-                  style: const TextStyle(
-                    fontSize: 20,
+                  style: TextStyle(
+                    fontSize: FontSize.s12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const XMargin(3),
-                const Text(
+                Text(
                   'kg',
                   style: TextStyle(
+                    fontSize: FontSize.s14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -48,9 +51,9 @@ class WeightLogCard extends StatelessWidget {
             const YMargin(5),
             Text(
               DateFormat('MMM dd, hh:mm aaa').format(date),
-              style: const TextStyle(
-                fontSize: 12,
-                color: grey,
+              style: TextStyle(
+                fontSize: FontSize.s12,
+                color: AppColors.grey,
               ),
             ),
           ],

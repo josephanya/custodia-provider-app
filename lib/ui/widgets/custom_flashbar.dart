@@ -1,5 +1,7 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:overlay_support/overlay_support.dart';
 
 class Flashbar extends StatelessWidget {
@@ -21,15 +23,20 @@ class Flashbar extends StatelessWidget {
       child: Material(
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.fromLTRB(16, statusBarHeight + 16, 16, 16),
+          padding: EdgeInsets.fromLTRB(
+            16.w,
+            statusBarHeight.h + 16.h,
+            16.w,
+            16.h,
+          ),
           color: color,
           child: Text(
             message,
-            style: const TextStyle(
-              fontSize: 14,
-              color: white,
+            style: TextStyle(
+              fontSize: FontSize.s14,
+              color: AppColors.white,
               fontWeight: FontWeight.w400,
-              height: 1.357,
+              height: 1.357.h,
             ),
           ),
         ),

@@ -1,11 +1,14 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/home/home_vm.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/core/routes.dart';
+import 'package:custodia_provider/ui/views/home/alerts_list/alerts_list_vm.dart';
 import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
 import 'package:custodia_provider/ui/widgets/alert_card.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
@@ -22,7 +25,7 @@ class _HomeState extends ConsumerState<Home> {
   void initState() {
     super.initState();
     ref.read(profileProvider.notifier).initialize();
-    ref.read(homeProvider.notifier).initialize();
+    ref.read(alertProvider.notifier).initialize();
   }
 
   int segmentedControlValue = 0;
@@ -51,6 +54,7 @@ class _HomeState extends ConsumerState<Home> {
           setState(
             () {
               segmentedControlValue = value!;
+              // call
             },
           );
         },
@@ -76,7 +80,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(profileProvider);
-    final provider = ref.watch(homeProvider);
+    final provider = ref.watch(alertProvider);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -90,16 +94,19 @@ class _HomeState extends ConsumerState<Home> {
                 children: [
                   SvgPicture.asset(
                     'images/logo.svg',
-                    color: blue,
+                    color: AppColors.blue,
                     height: 22,
                   ),
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () => Navigator.pushNamed(context, '/profile'),
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          Routes.profileView,
+                        ),
                         child: CircleAvatar(
-                          backgroundColor: blue,
-                          foregroundColor: white,
+                          backgroundColor: AppColors.blue,
+                          foregroundColor: AppColors.white,
                           radius: 20,
                           child: Text(
                             '${profile.user?.firstName![0].toUpperCase()}${profile.user?.lastName![0].toUpperCase()}',
@@ -110,41 +117,44 @@ class _HomeState extends ConsumerState<Home> {
                   ),
                 ],
               ),
-              // const YMargin(25),
-              // segmentedControl(),
               const YMargin(25),
+              // segmentedControl(),
+              // const YMargin(25),
+              // list[segmentedControlValue]!,
               Column(
                 children: [
                   provider.viewState.isLoading
-                      ? const Center(
+                      ? Center(
                           child: Padding(
                             padding: EdgeInsets.only(
-                              top: 20,
+                              top: 20.h,
                             ),
-                            child: Loader(),
+                            child: const Loader(),
                           ),
                         )
                       : provider.alerts!.isEmpty || provider.viewState.isError
-                          ? const Center(
+                          ? Center(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 50,
-                                  vertical: 190,
+                                  horizontal: 50.w,
+                                  vertical: 190.h,
                                 ),
                                 child: Column(
                                   children: [
                                     Text(
                                       'No alerts yet',
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: FontSize.s18,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    YMargin(14),
+                                    const YMargin(12),
                                     Text(
                                       'Alerts from patient will show up here',
-                                      style:
-                                          TextStyle(color: grey, height: 1.35),
+                                      style: TextStyle(
+                                        color: AppColors.grey,
+                                        height: 1.35.h,
+                                      ),
                                       textAlign: TextAlign.center,
                                     ),
                                   ],

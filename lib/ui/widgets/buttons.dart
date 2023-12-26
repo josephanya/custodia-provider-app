@@ -1,5 +1,7 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -17,27 +19,27 @@ class PrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(25.r),
         border: Border.all(
-          width: 1,
-          color: isEnabled ? blue : disabled,
+          width: 1.w,
+          color: isEnabled ? AppColors.blue : AppColors.disabled,
         ),
       ),
-      height: 50,
+      height: 50.h,
       width: double.infinity,
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: white,
-          backgroundColor: isEnabled ? blue : disabled,
+          foregroundColor: AppColors.white,
+          backgroundColor: isEnabled ? AppColors.blue : AppColors.disabled,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(25.r),
           ),
         ),
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: FontSize.s14,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -64,25 +66,25 @@ class SecondaryButton extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25.0),
         border: Border.all(
-          width: 1,
-          color: lightGrey,
+          width: 1.w,
+          color: AppColors.lightGrey,
         ),
       ),
-      height: 50,
+      height: 50.h,
       width: double.infinity,
       child: TextButton(
         style: TextButton.styleFrom(
-          foregroundColor: color ?? blue,
-          backgroundColor: white,
+          foregroundColor: color ?? AppColors.blue,
+          backgroundColor: AppColors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(25.r),
           ),
         ),
         onPressed: onPressed,
         child: Text(
           buttonText,
-          style: const TextStyle(
-            fontSize: 14,
+          style: TextStyle(
+            fontSize: FontSize.s14,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -109,22 +111,24 @@ class TetiaryButtonOutlined extends StatelessWidget {
       onTap: onPress,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            width: .5,
-            color: blue,
+            width: .5.w,
+            color: AppColors.blue,
           ),
         ),
-        height: 32,
+        height: 32.h,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.w,
+          ),
           child: Center(
             child: Text(
               buttonText,
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: FontSize.s14,
                 fontWeight: FontWeight.w500,
-                color: blue,
+                color: AppColors.blue,
               ),
             ),
           ),
@@ -152,19 +156,19 @@ class TetiaryButtonFilled extends StatelessWidget {
       onTap: onPress,
       child: Container(
         decoration: BoxDecoration(
-          color: isEnabled ? blue : disabled,
-          borderRadius: BorderRadius.circular(16.0),
+          color: isEnabled ? AppColors.blue : AppColors.disabled,
+          borderRadius: BorderRadius.circular(16.r),
         ),
-        height: 32,
+        height: 32.h,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Center(
             child: Text(
               buttonText,
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: FontSize.s14,
                 fontWeight: FontWeight.w500,
-                color: white,
+                color: AppColors.white,
               ),
             ),
           ),

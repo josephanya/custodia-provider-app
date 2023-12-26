@@ -1,11 +1,13 @@
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
 import 'package:custodia_provider/ui/views/chats/conversations/conversation_list_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/conversation_list_card.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ConversationList extends ConsumerStatefulWidget {
@@ -32,39 +34,42 @@ class _ConversationsListState extends ConsumerState<ConversationList> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 20.h,
           ),
           child: provider.viewState.isLoading
-              ? const Center(
+              ? Center(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: 10,
+                      top: 10.h,
                     ),
-                    child: Loader(),
+                    child: const Loader(),
                   ),
                 )
               : provider.conversations == null || provider.viewState.isError
-                  ? const Center(
+                  ? Center(
                       child: Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 50,
-                        vertical: 250,
+                        horizontal: 50.w,
+                        vertical: 250.h,
                       ),
                       child: Column(
                         children: [
                           Text(
                             'No data yet',
                             style: TextStyle(
-                              fontSize: 18,
+                              fontSize: FontSize.s18,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                          YMargin(14),
+                          const YMargin(12),
                           Text(
                             'Your patients will show up here',
-                            style: TextStyle(color: grey, height: 1.35),
+                            style: TextStyle(
+                              color: AppColors.grey,
+                              height: 1.35.h,
+                            ),
                             textAlign: TextAlign.center,
                           ),
                         ],

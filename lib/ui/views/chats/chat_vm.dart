@@ -8,6 +8,7 @@ import 'package:custodia_provider/repository/user/user_impl.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/services/sockets/sockets.dart';
 import 'package:custodia_provider/ui/core/enums/view_state.dart';
+import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -104,7 +105,7 @@ class ChatVM extends StateNotifier<ChatViewState> {
 
   navigateToPatientDetails() {
     _reader(navigationProvider)
-        .pushNamed('/patient-profile', arguments: patient.patientID);
+        .pushNamed(Routes.patientProfileView, arguments: patient.patientID);
   }
 
   fetchOldMessages(String patientID) async {

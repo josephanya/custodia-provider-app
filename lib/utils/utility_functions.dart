@@ -14,6 +14,8 @@ class UtilityFunctions {
   static String redactString(String input) {
     const maxLength = 22;
 
+    input = input.replaceAll('\n', ' ').trim();
+
     if (input.length <= maxLength) {
       return input;
     }

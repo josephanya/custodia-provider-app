@@ -1,4 +1,4 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/widgets/custom_flashbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -85,7 +85,7 @@ class Navigation {
     showOverlayNotification(
       (context) {
         return Flashbar(
-          color: navyBlue,
+          color: AppColors.navyBlue,
           message: message,
         );
       },
@@ -97,7 +97,7 @@ class Navigation {
     showOverlayNotification(
       (context) {
         return Flashbar(
-          color: red,
+          color: AppColors.red,
           message: message,
         );
       },

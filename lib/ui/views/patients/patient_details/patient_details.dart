@@ -1,10 +1,12 @@
 import 'package:custodia_provider/models/patient_model.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
 import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:custodia_provider/utils/utility_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PatientDetails extends StatelessWidget {
   const PatientDetails({
@@ -21,69 +23,93 @@ class PatientDetails extends StatelessWidget {
       appBar: appBar(context, 'Patient details'),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 15,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 15.h,
           ),
           child: Column(
             children: [
               DefaultCard(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 25,
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 15.w,
+                    vertical: 25.h,
                   ),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'First name',
                             style: TextStyle(
-                              color: grey,
+                              color: AppColors.grey,
+                              fontSize: FontSize.s14,
                             ),
                           ),
-                          Text(patient.firstName),
+                          Text(
+                            patient.firstName,
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                       const YMargin(29),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Last name',
                             style: TextStyle(
-                              color: grey,
+                              color: AppColors.grey,
+                              fontSize: FontSize.s14,
                             ),
                           ),
-                          Text(patient.lastName),
+                          Text(
+                            patient.lastName,
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                       const YMargin(29),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Gender',
                             style: TextStyle(
-                              color: grey,
+                              color: AppColors.grey,
+                              fontSize: FontSize.s14,
                             ),
                           ),
-                          Text(patient.gender),
+                          Text(
+                            patient.gender,
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                       const YMargin(29),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text(
+                          Text(
                             'Age',
                             style: TextStyle(
-                              color: grey,
+                              color: AppColors.grey,
+                              fontSize: FontSize.s14,
                             ),
                           ),
-                          Text(age),
+                          Text(
+                            age,
+                            style: TextStyle(
+                              fontSize: FontSize.s14,
+                            ),
+                          ),
                         ],
                       ),
                     ],

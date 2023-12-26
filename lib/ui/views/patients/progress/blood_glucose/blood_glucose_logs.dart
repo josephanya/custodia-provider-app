@@ -1,71 +1,78 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
-import 'package:custodia_provider/ui/views/patients/progress/food/food_entries_vm.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/views/patients/progress/blood_glucose/blood_glucose_vm.dart';
 import 'package:custodia_provider/ui/widgets/appbar.dart';
-import 'package:custodia_provider/ui/widgets/food_log_card.dart';
+import 'package:custodia_provider/ui/widgets/blood_glucose_log_card.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:custodia_provider/ui/core/extensions/view_state.dart';
 
-class FoodEntries extends ConsumerStatefulWidget {
-  const FoodEntries({
+class BloodGlucoseLogs extends ConsumerStatefulWidget {
+  const BloodGlucoseLogs({
     Key? key,
     this.patientID,
   }) : super(key: key);
 
   final String? patientID;
+
   @override
-  ConsumerState<FoodEntries> createState() => _FoodEntriesState();
+  BloodGlucoseLogsState createState() => BloodGlucoseLogsState();
 }
 
-class _FoodEntriesState extends ConsumerState<FoodEntries> {
+class BloodGlucoseLogsState extends ConsumerState<BloodGlucoseLogs> {
   @override
   void initState() {
     super.initState();
-    ref.read(getFoodrovider.notifier).initialize(widget.patientID);
+    ref.read(getBloodGlucoseProvider.notifier).initialize(widget.patientID);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = ref.watch(getFoodrovider);
+    final provider = ref.watch(getBloodGlucoseProvider);
     return Scaffold(
-      appBar: appBar(context, 'Food'),
+      appBar: appBar(context, 'All Readings'),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 12,
+          padding: EdgeInsets.symmetric(
+            horizontal: 16.w,
+            vertical: 12.h,
           ),
           child: provider.viewState.isLoading
-              ? const Center(
+              ? Center(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      top: 20,
+                      top: 20.h,
                     ),
-                    child: Loader(),
+                    child: const Loader(),
                   ),
                 )
-              : provider.entries!.isEmpty || provider.viewState.isError
-                  ? const Center(
+              : provider.readings!.isEmpty || provider.viewState.isError
+                  ? Center(
                       child: Padding(
                         padding: EdgeInsets.symmetric(
-                          horizontal: 50,
-                          vertical: 250,
+                          horizontal: 50.w,
+                          vertical: 250.h,
                         ),
                         child: Column(
                           children: [
                             Text(
                               'No data yet',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: FontSize.s18,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            YMargin(14),
+                            const YMargin(12),
                             Text(
-                              'Food entries will show up here',
-                              style: TextStyle(color: grey, height: 1.35),
+                              'Blood glucose readings will show up here',
+                              style: TextStyle(
+                                fontSize: FontSize.s14,
+                                color: AppColors.grey,
+                                height: 1.35.h,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ],
@@ -75,13 +82,12 @@ class _FoodEntriesState extends ConsumerState<FoodEntries> {
                   : ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: provider.entries?.length ?? 1,
+                      itemCount: provider.readings?.length ?? 1,
                       itemBuilder: (context, index) {
-                        return FoodLogCard(
-                          food: provider.entries?[index].food,
-                          mealType: provider.entries?[index].mealType,
-                          imageURL: provider.entries?[index].imageURL,
-                          date: provider.entries?[index].timestamp,
+                        return BloodGlucoseLogCard(
+                          bloodGlucose: provider.readings?[index].bloodGlucose,
+                          bgContext: provider.readings?[index].context,
+                          date: provider.readings?[index].timestamp,
                         );
                       },
                       separatorBuilder: (context, index) {

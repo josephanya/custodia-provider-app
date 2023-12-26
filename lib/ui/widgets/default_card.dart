@@ -1,15 +1,16 @@
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DefaultCard extends StatelessWidget {
-  final Function()? onPress;
-  final Widget child;
-
   const DefaultCard({
-    super.key,
+    Key? key,
     this.onPress,
     required this.child,
-  });
+  }) : super(key: key);
+
+  final Function()? onPress;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +18,12 @@ class DefaultCard extends StatelessWidget {
       onTap: onPress,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(15.r),
           border: Border.all(
-            width: .5,
-            color: lightGrey,
+            width: .5.w,
+            color: AppColors.lightGrey,
           ),
         ),
         child: child,

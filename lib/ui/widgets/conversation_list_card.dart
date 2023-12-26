@@ -1,9 +1,11 @@
 import 'package:custodia_provider/models/conversation_model.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/views/chats/conversations/conversation_list_vm.dart';
 import 'package:custodia_provider/utils/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -30,13 +32,13 @@ class ConversationListCard extends ConsumerWidget {
           Row(
             children: [
               CircleAvatar(
-                backgroundColor: blue,
-                foregroundColor: white,
-                radius: 23,
+                backgroundColor: AppColors.blue,
+                foregroundColor: AppColors.white,
+                radius: 23.r,
                 child: Text(
                   '${conversationModel.firstName[0].toUpperCase()}${conversationModel.lastName[0].toUpperCase()}',
-                  style: const TextStyle(
-                    fontSize: 15,
+                  style: TextStyle(
+                    fontSize: FontSize.s15,
                   ),
                 ),
               ),
@@ -46,8 +48,8 @@ class ConversationListCard extends ConsumerWidget {
                 children: [
                   Text(
                     '${conversationModel.firstName} ${conversationModel.lastName} ',
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize: FontSize.s14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -56,9 +58,9 @@ class ConversationListCard extends ConsumerWidget {
                     width: MediaQuery.of(context).size.width * 0.5,
                     child: Text(
                       redactedText,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: grey,
+                      style: TextStyle(
+                        fontSize: FontSize.s12,
+                        color: AppColors.grey,
                       ),
                     ),
                   ),
@@ -73,9 +75,9 @@ class ConversationListCard extends ConsumerWidget {
               Text(
                 DateFormat('MMM dd, hh:mm aaa')
                     .format(conversationModel.lastMessageTime),
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: grey,
+                style: TextStyle(
+                  fontSize: FontSize.s12,
+                  color: AppColors.grey,
                 ),
               ),
               const YMargin(6),

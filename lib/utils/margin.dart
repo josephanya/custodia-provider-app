@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class XMargin extends StatelessWidget {
   final double x;
@@ -7,7 +8,7 @@ class XMargin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(width: x);
+    return SizedBox(width: x.w);
   }
 }
 
@@ -18,7 +19,7 @@ class YMargin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(height: y);
+    return SizedBox(height: y.h);
   }
 }
 

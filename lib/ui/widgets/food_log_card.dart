@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:custodia_provider/ui/core/theme/theme.dart';
+import 'package:custodia_provider/ui/core/constants/colors.dart';
+import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/views/photo/full_photo.dart';
+import 'package:custodia_provider/ui/widgets/default_card.dart';
 import 'package:custodia_provider/ui/widgets/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'default_card.dart';
 
 class FoodLogCard extends StatelessWidget {
   const FoodLogCard({
@@ -23,34 +25,26 @@ class FoodLogCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultCard(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 15,
-          vertical: 15,
+        padding: EdgeInsets.symmetric(
+          horizontal: 15.w,
+          vertical: 15.h,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              mealType,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            const YMargin(5),
-            Text(
               food,
-              style: const TextStyle(
-                fontSize: 14,
+              style: TextStyle(
+                fontSize: FontSize.s14,
                 fontWeight: FontWeight.w500,
-                height: 1.35,
+                height: 1.35.h,
               ),
             ),
             imageURL == ''
                 ? Container()
                 : Column(
                     children: [
-                      const YMargin(13),
+                      const YMargin(12),
                       GestureDetector(
                         onTap: () => Navigator.push(
                           context,
@@ -66,12 +60,12 @@ class FoodLogCard extends StatelessWidget {
                           ),
                           child: CachedNetworkImage(
                             placeholder: (context, url) => Container(
-                              width: 70,
-                              height: 70,
-                              decoration: const BoxDecoration(
-                                color: lightBlue,
+                              width: 70.w,
+                              height: 70.h,
+                              decoration: BoxDecoration(
+                                color: AppColors.lightBlue,
                                 borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
+                                  Radius.circular(10.r),
                                 ),
                               ),
                               child: const Center(
@@ -80,27 +74,39 @@ class FoodLogCard extends StatelessWidget {
                             ),
                             errorWidget: (context, url, error) => Image.asset(
                               'images/img_not_available.jpeg',
-                              width: 70,
-                              height: 70,
+                              width: 70.w,
+                              height: 70.h,
                               fit: BoxFit.cover,
                             ),
                             imageUrl: imageURL,
-                            width: 70,
-                            height: 70,
+                            width: 70.w,
+                            height: 70.h,
                             fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      const YMargin(3),
+                      const YMargin(4),
                     ],
                   ),
-            const YMargin(12),
-            Text(
-              DateFormat('MMM dd, hh:mm aaa').format(date),
-              style: const TextStyle(
-                fontSize: 12,
-                color: grey,
-              ),
+            const YMargin(8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  DateFormat('MMM dd, hh:mm aaa').format(date),
+                  style: TextStyle(
+                    fontSize: FontSize.s12,
+                    color: AppColors.grey,
+                  ),
+                ),
+                Text(
+                  mealType,
+                  style: TextStyle(
+                    fontSize: FontSize.s12,
+                    color: AppColors.grey,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
