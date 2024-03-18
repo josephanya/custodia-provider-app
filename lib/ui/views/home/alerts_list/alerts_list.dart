@@ -1,10 +1,11 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
 import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:custodia_provider/ui/views/home/alerts_list/alerts_list_vm.dart';
-import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
-import 'package:custodia_provider/ui/widgets/alert_card.dart';
-import 'package:custodia_provider/ui/widgets/loader.dart';
+import 'package:custodia_provider/ui/widgets/home/alert_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/appbar.dart';
+import 'package:custodia_provider/ui/widgets/utils/loader.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
@@ -24,7 +25,6 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
-    ref.read(profileProvider.notifier).initialize();
     ref.read(alertProvider.notifier).initialize();
   }
 
@@ -79,47 +79,52 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    final profile = ref.watch(profileProvider);
     final provider = ref.watch(alertProvider);
     return Scaffold(
+      appBar: SectionAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SvgPicture.asset(
+              'images/logo.svg',
+              color: AppColors.blue,
+              height: 22.h,
+            ),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(
+                context,
+                Routes.profileView,
+              ),
+              child: Container(
+                width: 40.w,
+                height: 40.w,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(20.r),
+                  border: Border.all(
+                    width: .5.w,
+                    color: AppColors.lightGrey,
+                  ),
+                ),
+                child: const Icon(
+                  CustomIcon.profile,
+                  size: 18,
+                  color: AppColors.blue,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const YMargin(15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SvgPicture.asset(
-                    'images/logo.svg',
-                    color: AppColors.blue,
-                    height: 22,
-                  ),
-                  Row(
-                    children: [
-                      GestureDetector(
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          Routes.profileView,
-                        ),
-                        child: CircleAvatar(
-                          backgroundColor: AppColors.blue,
-                          foregroundColor: AppColors.white,
-                          radius: 20,
-                          child: Text(
-                            '${profile.user?.firstName![0].toUpperCase()}${profile.user?.lastName![0].toUpperCase()}',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              const YMargin(25),
+              const YMargin(12),
               // segmentedControl(),
-              // const YMargin(25),
+              // const YMargin(20),
               // list[segmentedControlValue]!,
               Column(
                 children: [

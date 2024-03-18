@@ -1,9 +1,9 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/views/patients/progress/food/food_logs_vm.dart';
-import 'package:custodia_provider/ui/widgets/appbar.dart';
-import 'package:custodia_provider/ui/widgets/food_log_card.dart';
-import 'package:custodia_provider/ui/widgets/loader.dart';
+import 'package:custodia_provider/ui/widgets/patients/food_log_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/appbar.dart';
+import 'package:custodia_provider/ui/widgets/utils/loader.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

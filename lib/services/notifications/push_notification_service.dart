@@ -1,6 +1,7 @@
 import 'package:custodia_provider/core/navigation.dart';
 import 'package:custodia_provider/repository/auth/auth_impl.dart';
 import 'package:custodia_provider/services/api/failure.dart';
+import 'package:custodia_provider/ui/views/bottom_navigation/bottom_navigation_vm.dart';
 // import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -53,17 +54,28 @@ class PushNotificationService {
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) {
-        _reader(navigationProvider)
-            .showCustomSnackbar(message: message.notification?.body ?? '');
+        if (message.data['type'] == 'chat') {
+          final activeTabIndex = _reader(activeTabProvider);
+          if (activeTabIndex != 1) {
+            _reader(unreadMessagesProvider.notifier)
+                .updateUnreadMessagesCount(1);
+            _reader(navigationProvider)
+                .showCustomSnackbar(message: message.notification?.body ?? '');
+          }
+        } else {
+          _reader(navigationProvider)
+              .showCustomSnackbar(message: message.notification?.body ?? '');
+        }
       }
     });
   }
 
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'chat') {
-      //navigate to chat
-    } else {
-      // navigate elsewhere
+      final activeTabIndex = _reader(activeTabProvider);
+      if (activeTabIndex != 1) {
+        _reader(unreadMessagesProvider.notifier).updateUnreadMessagesCount(1);
+      }
     }
   }
 }

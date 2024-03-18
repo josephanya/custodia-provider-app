@@ -20,7 +20,7 @@ class DefaultCard extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           color: AppColors.white,
-          borderRadius: BorderRadius.circular(15.r),
+          borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             width: .5.w,
             color: AppColors.lightGrey,

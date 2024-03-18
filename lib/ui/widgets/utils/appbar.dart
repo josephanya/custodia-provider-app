@@ -49,27 +49,8 @@ class AppBarBorderless extends StatelessWidget implements PreferredSizeWidget {
   }
 }
 
-class AppBarBorderlessWithoutBack extends StatelessWidget
-    implements PreferredSizeWidget {
-  const AppBarBorderlessWithoutBack({super.key});
-
-  @override
-  Size get preferredSize => const Size.fromHeight(90);
-
-  @override
-  Widget build(BuildContext context) {
-    double statusBarHeight = MediaQuery.of(context).padding.top;
-    return Container(
-      padding: EdgeInsets.fromLTRB(12, statusBarHeight, 12, 0),
-      height: statusBarHeight + 56,
-      alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width,
-    );
-  }
-}
-
-class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const ChatAppBar({
+class SectionAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const SectionAppBar({
     super.key,
     required this.child,
   });
@@ -83,8 +64,8 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     double statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
-      padding: EdgeInsets.fromLTRB(20, statusBarHeight, 20, 0),
-      height: statusBarHeight + 56,
+      padding: EdgeInsets.fromLTRB(16, statusBarHeight, 16, 0),
+      height: statusBarHeight + 60,
       alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
       child: child,
@@ -251,3 +232,22 @@ appBarWithoutBack(context, title) => AppBar(
         ),
       ),
     );
+
+class AppBarBorderlessWithoutBack extends StatelessWidget
+    implements PreferredSizeWidget {
+  const AppBarBorderlessWithoutBack({super.key});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(90);
+
+  @override
+  Widget build(BuildContext context) {
+    double statusBarHeight = MediaQuery.of(context).padding.top;
+    return Container(
+      padding: EdgeInsets.fromLTRB(12, statusBarHeight, 12, 0),
+      height: statusBarHeight + 56,
+      alignment: Alignment.center,
+      width: MediaQuery.of(context).size.width,
+    );
+  }
+}

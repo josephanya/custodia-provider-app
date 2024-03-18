@@ -1,6 +1,6 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
-import 'package:custodia_provider/ui/widgets/default_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

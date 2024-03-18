@@ -1,20 +1,20 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
-import 'package:custodia_provider/ui/widgets/default_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
-class BloodGlucoseLogCard extends StatelessWidget {
-  const BloodGlucoseLogCard({
+class BloodPressureLogCard extends StatelessWidget {
+  const BloodPressureLogCard({
     Key? key,
-    required this.bloodGlucose,
-    required this.bgContext,
+    required this.systolicBloodPressure,
+    required this.diastolicBloodPressure,
     required this.date,
   }) : super(key: key);
 
-  final String bloodGlucose, bgContext;
+  final String systolicBloodPressure, diastolicBloodPressure;
   final DateTime date;
 
   @override
@@ -33,15 +33,15 @@ class BloodGlucoseLogCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.baseline,
               children: [
                 Text(
-                  bloodGlucose,
+                  '$systolicBloodPressure/$diastolicBloodPressure',
                   style: TextStyle(
                     fontSize: FontSize.s20,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const XMargin(3),
+                const XMargin(2),
                 Text(
-                  'mg/dL',
+                  'mmHg',
                   style: TextStyle(
                     fontSize: FontSize.s14,
                     fontWeight: FontWeight.w500,
@@ -51,19 +51,11 @@ class BloodGlucoseLogCard extends StatelessWidget {
             ),
             const YMargin(5),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   DateFormat('MMM dd, hh:mm aaa').format(date),
                   style: TextStyle(
                     fontSize: FontSize.s12,
-                    color: AppColors.grey,
-                  ),
-                ),
-                Text(
-                  bgContext,
-                  style: TextStyle(
-                    fontSize: 12.sp,
                     color: AppColors.grey,
                   ),
                 ),

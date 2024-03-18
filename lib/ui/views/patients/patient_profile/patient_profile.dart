@@ -4,10 +4,10 @@ import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
 import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/patient_profile_vm.dart';
-import 'package:custodia_provider/ui/widgets/appbar.dart';
-import 'package:custodia_provider/ui/widgets/buttons.dart';
-import 'package:custodia_provider/ui/widgets/default_card.dart';
-import 'package:custodia_provider/ui/widgets/loader.dart';
+import 'package:custodia_provider/ui/widgets/utils/appbar.dart';
+import 'package:custodia_provider/ui/widgets/utils/buttons.dart';
+import 'package:custodia_provider/ui/widgets/utils/default_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/loader.dart';
 import 'package:custodia_provider/utils/utility_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/utils/margin.dart';
@@ -127,7 +127,7 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                             optionName: 'Medical records',
                             optionRoute: Routes.medicalRecordsView,
                             icon: Icon(
-                              CustomIcon.medical_records,
+                              CustomIcon.medicalRecords,
                               size: 20,
                               color: AppColors.blue,
                             ),
@@ -162,7 +162,7 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                             optionRoute: Routes.bloodGlucoseLogsView,
                             patientID: provider.patient!.patientID,
                             icon: const Icon(
-                              CustomIcon.blood_glucose,
+                              CustomIcon.bloodGlucose,
                               size: 20,
                               color: AppColors.blue,
                             ),
@@ -172,7 +172,7 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                             optionRoute: Routes.bloodPressureLogsView,
                             patientID: provider.patient!.patientID,
                             icon: const Icon(
-                              CustomIcon.blood_pressure,
+                              CustomIcon.bloodPressure,
                               size: 20,
                               color: AppColors.blue,
                             ),

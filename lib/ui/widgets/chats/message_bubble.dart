@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/views/photo/full_photo.dart';
-import 'package:custodia_provider/ui/widgets/loader.dart';
+import 'package:custodia_provider/ui/widgets/utils/loader.dart';
 // import 'package:custodia/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

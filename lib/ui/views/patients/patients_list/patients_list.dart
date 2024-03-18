@@ -1,9 +1,9 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/views/patients/patients_list/patients_list_vm.dart';
-import 'package:custodia_provider/ui/widgets/appbar.dart';
-import 'package:custodia_provider/ui/widgets/loader.dart';
-import 'package:custodia_provider/ui/widgets/patients_list_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/appbar.dart';
+import 'package:custodia_provider/ui/widgets/utils/loader.dart';
+import 'package:custodia_provider/ui/widgets/patients/patients_list_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,16 +77,25 @@ class _PatientsListState extends ConsumerState<PatientsList> {
       //         ),
       //       )
       //     :
-      appBar: appBarWithoutBack(
-        context,
-        'Patients',
-        // const SearchPatients(),
+      appBar: const SectionAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Patients',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(
             horizontal: 16.w,
-            vertical: 20.h,
+            vertical: 16.h,
           ),
           child: provider.viewState.isLoading
               ? Center(

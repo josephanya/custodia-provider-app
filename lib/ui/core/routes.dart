@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:custodia_provider/models/alert_model.dart';
 import 'package:custodia_provider/models/patient_model.dart';
 import 'package:custodia_provider/ui/views/404/not_found.dart';
+import 'package:custodia_provider/ui/views/bottom_navigation/bottom_navigation.dart';
 import 'package:custodia_provider/ui/views/chats/chat.dart';
 import 'package:custodia_provider/ui/views/chats/conversations/conversation_list.dart';
 import 'package:custodia_provider/ui/views/patients/patient_profile/medical_records/medical_records.dart';
@@ -16,7 +17,6 @@ import 'package:custodia_provider/ui/views/patients/progress/weight/weight_chart
 import 'package:custodia_provider/ui/views/patients/progress/weight/weight_logs.dart';
 import 'package:custodia_provider/ui/views/profile/personal_details.dart';
 import 'package:custodia_provider/ui/views/profile/profile.dart';
-import 'package:custodia_provider/ui/widgets/bottom_navigation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia_provider/ui/views/home/alert_details/alert_details.dart';

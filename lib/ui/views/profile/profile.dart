@@ -3,8 +3,8 @@ import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
 import 'package:custodia_provider/ui/views/auth/login/login_vm.dart';
 import 'package:custodia_provider/ui/views/profile/profile_vm.dart';
-import 'package:custodia_provider/ui/widgets/appbar.dart';
-import 'package:custodia_provider/ui/widgets/default_card.dart';
+import 'package:custodia_provider/ui/widgets/utils/appbar.dart';
+import 'package:custodia_provider/ui/widgets/utils/default_card.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +19,12 @@ class Profile extends ConsumerStatefulWidget {
 }
 
 class _ProfileState extends ConsumerState<Profile> {
+  @override
+  void initState() {
+    ref.read(profileProvider.notifier).initialize();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final provider = ref.watch(profileProvider);
@@ -118,7 +124,7 @@ class _ProfileState extends ConsumerState<Profile> {
                       optionName: 'Privacy policy',
                       optionLink: 'https://custodiahealth.com/privacy-policy',
                       icon: Icon(
-                        CustomIcon.privacy_policy,
+                        CustomIcon.privacyPolicy,
                         size: 20,
                         color: AppColors.blue,
                       ),

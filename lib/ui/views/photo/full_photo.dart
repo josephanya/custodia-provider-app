@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:custodia_provider/ui/core/constants/colors.dart';
-import 'package:custodia_provider/ui/widgets/loader.dart';
+import 'package:custodia_provider/ui/widgets/utils/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
