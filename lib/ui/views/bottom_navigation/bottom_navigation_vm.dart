@@ -7,7 +7,7 @@ final activeTabProvider = StateNotifierProvider<ActiveTabNotifier, int>((ref) {
 });
 
 class ActiveTabNotifier extends StateNotifier<int> {
-  ActiveTabNotifier() : super(0); // Assuming the first tab is the default
+  ActiveTabNotifier() : super(0);
 
   void updateActiveTab(int index) {
     state = index;
@@ -34,8 +34,7 @@ class UnreadMessagesNotifier extends StateNotifier<int> {
   }) : super(0);
 
   void updateUnreadMessagesCount(int count) {
-    final isOnChatTab = activeTabIndex ==
-        1; // Update this line if the chat tab index is different
+    final isOnChatTab = activeTabIndex == 1;
     if (!isOnChatTab) {
       state = count;
       _unreadMessagesCountController.sink.add(count);

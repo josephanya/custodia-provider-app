@@ -6,4 +6,6 @@ abstract class Chat {
   Future saveConversation({required Map<String, dynamic> payload});
 
   Future<List<ConversationModel>> getConversations();
+
+  Future markConversationAsRead({required String conversationID});
 }

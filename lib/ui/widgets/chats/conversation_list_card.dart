@@ -24,7 +24,10 @@ class ConversationListCard extends ConsumerWidget {
         UtilityFunctions.redactString(conversationModel.lastMessage);
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => provider.goToChatView(conversationModel.patientID),
+      onTap: () => provider.goToChatView(
+        conversationModel.patientID,
+        conversationModel.conversationID,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,16 +45,26 @@ class ConversationListCard extends ConsumerWidget {
                   ),
                 ),
               ),
-              const XMargin(13),
+              const XMargin(12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '${conversationModel.firstName} ${conversationModel.lastName} ',
-                    style: TextStyle(
-                      fontSize: FontSize.s14,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        '${conversationModel.firstName} ${conversationModel.lastName} ',
+                        style: TextStyle(
+                          fontSize: FontSize.s14,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      const XMargin(4),
+                      if (conversationModel.hasUnreadMessage)
+                        const CircleAvatar(
+                          backgroundColor: AppColors.blue,
+                          radius: 3.5,
+                        ),
+                    ],
                   ),
                   const YMargin(4),
                   SizedBox(

@@ -42,7 +42,7 @@ class _ProfileState extends ConsumerState<Profile> {
               CircleAvatar(
                 backgroundColor: AppColors.blue,
                 foregroundColor: AppColors.white,
-                radius: 32.r,
+                radius: 30.r,
                 child: Text(
                   '${provider.user?.firstName![0].toUpperCase()}${provider.user?.lastName![0].toUpperCase()}',
                   style: TextStyle(
@@ -66,15 +66,7 @@ class _ProfileState extends ConsumerState<Profile> {
                   color: AppColors.grey,
                 ),
               ),
-              const YMargin(32),
-              Text(
-                'My account',
-                style: TextStyle(
-                  fontSize: FontSize.s16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const YMargin(12),
+              const YMargin(24),
               const DefaultCard(
                 child: Column(
                   children: [
@@ -99,15 +91,7 @@ class _ProfileState extends ConsumerState<Profile> {
                   ],
                 ),
               ),
-              const YMargin(32),
-              Text(
-                'About',
-                style: TextStyle(
-                  fontSize: FontSize.s16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const YMargin(12),
+              const YMargin(24),
               const DefaultCard(
                 child: Column(
                   children: [
@@ -146,12 +130,12 @@ class _ProfileState extends ConsumerState<Profile> {
                 onPress: () async {
                   ref.read(loginProvider.notifier).logout();
                 },
-                child: const Padding(
+                child: Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 17.5,
+                    horizontal: 16.r,
+                    vertical: 16.h,
                   ),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Row(
@@ -185,7 +169,7 @@ class _ProfileState extends ConsumerState<Profile> {
                 ),
                 child: Center(
                   child: Text(
-                    'Version 1.0.0 \n Copyright © 2023 Custodia Health',
+                    'Version 1.0.0 \n Copyright © ${DateTime.now().year} Custodia Health',
                     style: TextStyle(
                       color: AppColors.grey,
                       height: 1.615.h,

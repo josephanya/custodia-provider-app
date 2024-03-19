@@ -43,4 +43,9 @@ class ChatImpl implements Chat {
         .map((conversation) => ConversationModel.fromJson(conversation))
         .toList();
   }
+
+  @override
+  Future markConversationAsRead({required String conversationID}) async {
+    await _api.get(ApiBase.chatBase('/conversation/$conversationID'));
+  }
 }

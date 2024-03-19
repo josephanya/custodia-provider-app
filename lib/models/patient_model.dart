@@ -1,5 +1,5 @@
 class PatientModel {
-  String firstName, lastName, patientID, gender;
+  String firstName, lastName, patientID, gender, motivation, phoneNumber;
   DateTime dob;
 
   PatientModel({
@@ -8,6 +8,8 @@ class PatientModel {
     required this.lastName,
     required this.dob,
     required this.gender,
+    required this.motivation,
+    required this.phoneNumber,
   });
 
   factory PatientModel.fromJSON(Map<String, dynamic> data) {
@@ -17,6 +19,8 @@ class PatientModel {
       lastName: data['last_name'],
       gender: data['gender'],
       dob: DateTime.parse(data['dob']),
+      motivation: data['motivation'] ?? 'no data',
+      phoneNumber: data['phone_number'],
     );
   }
 }

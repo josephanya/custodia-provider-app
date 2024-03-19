@@ -34,10 +34,12 @@ class ConversationListVM extends StateNotifier<ConversationListViewState> {
     }
   }
 
-  void goToChatView(String patientID) {
+  void goToChatView(String patientID, conversationID) {
     _reader(navigationProvider)
         .pushNamed('/chat', arguments: patientID)
         ?.then((value) async {
+      await _reader(chatRepository)
+          .markConversationAsRead(conversationID: conversationID);
       final conversations = await _reader(chatRepository).getConversations();
       state = state.copyWith(
         conversations: conversations,

@@ -93,6 +93,19 @@ class Navigation {
     );
   }
 
+  void showCustomMessageSnackbar({required String sender, message}) {
+    showOverlayNotification(
+      (context) {
+        return MessageFlashbar(
+          color: AppColors.navyBlue,
+          sender: sender,
+          message: message,
+        );
+      },
+      duration: const Duration(milliseconds: 8000),
+    );
+  }
+
   void showErrorSnackbar({required String message}) {
     showOverlayNotification(
       (context) {

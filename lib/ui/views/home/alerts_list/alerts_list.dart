@@ -122,7 +122,7 @@ class _HomeState extends ConsumerState<Home> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const YMargin(12),
+              const YMargin(8),
               // segmentedControl(),
               // const YMargin(20),
               // list[segmentedControlValue]!,

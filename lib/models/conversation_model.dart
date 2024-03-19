@@ -1,6 +1,7 @@
 class ConversationModel {
   String firstName, lastName, conversationID, lastMessage, patientID;
   DateTime lastMessageTime;
+  bool hasUnreadMessage;
 
   ConversationModel({
     required this.conversationID,
@@ -9,6 +10,7 @@ class ConversationModel {
     required this.lastMessage,
     required this.lastMessageTime,
     required this.patientID,
+    required this.hasUnreadMessage,
   });
 
   factory ConversationModel.fromJson(Map<String, dynamic> json) {
@@ -19,6 +21,7 @@ class ConversationModel {
       lastMessage: json['last_message'],
       lastMessageTime: DateTime.parse(json['last_message_time']),
       patientID: json['patient_id'],
+      hasUnreadMessage: json['has_unread_message'],
     );
   }
 }

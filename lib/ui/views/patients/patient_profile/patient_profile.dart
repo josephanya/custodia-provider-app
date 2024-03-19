@@ -62,7 +62,7 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CircleAvatar(
-                          radius: 32.r,
+                          radius: 30.r,
                           backgroundColor: AppColors.blue,
                           foregroundColor: AppColors.white,
                           child: Text(
@@ -101,15 +101,15 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                         fontSize: FontSize.s13,
                       ),
                     ),
-                    const YMargin(32),
+                    const YMargin(12),
                     Text(
-                      'Personal info',
+                      provider.patient!.motivation,
                       style: TextStyle(
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeight.w500,
+                        height: 1.35.h,
+                        fontSize: FontSize.s14,
                       ),
                     ),
-                    const YMargin(12),
+                    const YMargin(24),
                     DefaultCard(
                       child: Column(
                         children: [
@@ -135,15 +135,7 @@ class _PatientProfileState extends ConsumerState<PatientProfile> {
                         ],
                       ),
                     ),
-                    const YMargin(32),
-                    Text(
-                      'Health data',
-                      style: TextStyle(
-                        fontSize: FontSize.s16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const YMargin(12),
+                    const YMargin(24),
                     DefaultCard(
                       child: Column(
                         children: [

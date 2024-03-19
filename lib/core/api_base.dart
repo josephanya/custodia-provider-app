@@ -58,13 +58,9 @@ class ApiBase {
 
   static get login => authBase('/login');
   static get deviceToken => authBase('/push-token');
-
   static get alert => alertBase('');
-
   static get profile => profileBase('');
-
   static get patients => patientBase('');
-
   static get chatMessages => chatBase('/messages');
   static get conversation => chatBase('/conversation');
 }
