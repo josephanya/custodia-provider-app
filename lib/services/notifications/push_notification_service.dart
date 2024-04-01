@@ -3,7 +3,6 @@ import 'package:custodia_provider/repository/auth/auth_impl.dart';
 import 'package:custodia_provider/services/api/failure.dart';
 import 'package:custodia_provider/ui/views/bottom_navigation/bottom_navigation_vm.dart';
 import 'package:custodia_provider/ui/views/chats/conversations/conversation_list_vm.dart';
-// import 'package:custodia_provider/ui/core/routes.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:logger/logger.dart';
@@ -64,6 +63,9 @@ class PushNotificationService {
                 sender: message.notification?.title ?? '',
                 message: message.notification?.body ?? '');
           } else {
+            _reader(navigationProvider).showCustomMessageSnackbar(
+                sender: message.notification?.title ?? '',
+                message: message.notification?.body ?? '');
             _reader(conversationListProvider.notifier).initialize();
           }
         } else {
@@ -78,6 +80,7 @@ class PushNotificationService {
   void _handleMessage(RemoteMessage message) {
     if (message.data['type'] == 'chat') {
       final activeTabIndex = _reader(activeTabProvider);
+
       if (activeTabIndex != 1) {
         _reader(unreadMessagesProvider.notifier).updateUnreadMessagesCount(1);
       } else {

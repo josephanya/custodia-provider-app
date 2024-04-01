@@ -146,16 +146,36 @@ class _HomeState extends ConsumerState<Home> {
                                 ),
                                 child: Column(
                                   children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: AppColors.lightBlue,
+                                        borderRadius:
+                                            BorderRadius.circular(50.r),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 20.w,
+                                          vertical: 20.h,
+                                        ),
+                                        child: const Icon(
+                                          CustomIcon.calendar,
+                                          size: 30,
+                                          color: AppColors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                    const YMargin(16),
                                     Text(
-                                      'No alerts yet',
+                                      'No data yet',
                                       style: TextStyle(
                                         fontSize: FontSize.s18,
                                         fontWeight: FontWeight.w500,
                                       ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    const YMargin(12),
+                                    const YMargin(8),
                                     Text(
-                                      'Alerts from patient will show up here',
+                                      'Alerts from patients will show up here',
                                       style: TextStyle(
                                         color: AppColors.grey,
                                         height: 1.35.h,

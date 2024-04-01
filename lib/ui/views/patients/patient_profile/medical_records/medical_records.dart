@@ -25,7 +25,7 @@ class MedicalRecords extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
+                  width: MediaQuery.of(context).size.width * 0.75.w,
                   child: Column(
                     children: [
                       Container(
@@ -35,7 +35,9 @@ class MedicalRecords extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 20.w, vertical: 20.h),
+                            horizontal: 20.w,
+                            vertical: 20.h,
+                          ),
                           child: const Icon(
                             CustomIcon.medicalRecords,
                             size: 30,
@@ -43,50 +45,51 @@ class MedicalRecords extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const YMargin(20),
-                      const Text(
+                      const YMargin(16),
+                      Text(
                         'Medical records',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: FontSize.s18,
                           fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const YMargin(16),
+                      const YMargin(8),
                       Text(
-                        'Find your patients medical records in one place',
+                        'View your medical records and share with your loved ones',
                         style: TextStyle(
+                          fontSize: FontSize.s15,
                           color: AppColors.grey,
-                          fontSize: FontSize.s14,
                           height: 1.35.h,
                         ),
                         textAlign: TextAlign.center,
                       ),
+                      const YMargin(24),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                          vertical: 16.h,
+                          horizontal: 0.w,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.offWhite,
+                          borderRadius: BorderRadius.circular(30.r),
+                          border: Border.all(
+                            width: .5.w,
+                            color: AppColors.lightGrey,
+                          ),
+                        ),
+                        child: Center(
+                            child: Text(
+                          'Coming soon..',
+                          style: TextStyle(
+                            color: AppColors.darkGrey,
+                            fontSize: FontSize.s14,
+                          ),
+                        )),
+                      ),
                     ],
                   ),
-                ),
-                const YMargin(30),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 16.h,
-                  ),
-                  decoration: BoxDecoration(
-                    color: AppColors.offWhite,
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      width: .5.w,
-                      color: AppColors.lightGrey,
-                    ),
-                  ),
-                  child: Center(
-                      child: Text(
-                    'Coming soon..',
-                    style: TextStyle(
-                      color: AppColors.darkGrey,
-                      fontSize: FontSize.s14,
-                    ),
-                  )),
                 ),
                 const YMargin(100),
               ],

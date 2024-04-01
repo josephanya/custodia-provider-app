@@ -33,6 +33,7 @@ class LocalStorage {
     prefs.setString('firstName', profile.firstName!);
     prefs.setString('lastName', profile.lastName!);
     prefs.setString('email', profile.email!);
+    prefs.setString('role', profile.role!);
   }
 
   Future<UserModel> getUser() async {
@@ -41,12 +42,14 @@ class LocalStorage {
     String? firstName = prefs.getString('firstName');
     String? lastName = prefs.getString('lastName');
     String? email = prefs.getString('email');
+    String? role = prefs.getString('role');
 
     return UserModel(
       userID: userID,
       firstName: firstName,
       lastName: lastName,
       email: email,
+      role: role,
     );
   }
 }

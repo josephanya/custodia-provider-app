@@ -1,10 +1,10 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
 import 'package:custodia_provider/ui/widgets/utils/default_card.dart';
+import 'package:custodia_provider/utils/date.dart';
 import 'package:custodia_provider/utils/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 
 class WeightLogCard extends StatelessWidget {
   const WeightLogCard({
@@ -50,7 +50,7 @@ class WeightLogCard extends StatelessWidget {
             ),
             const YMargin(5),
             Text(
-              DateFormat('MMM dd, hh:mm aaa').format(date),
+              CustomDate().formatDate(date),
               style: TextStyle(
                 fontSize: FontSize.s12,
                 color: AppColors.grey,

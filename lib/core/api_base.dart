@@ -14,6 +14,7 @@ class ApiBase {
   static const connectTimeout = 10000;
 
   static const websocketUri = '$httpsScheme://$apiHost';
+  // static const websocketUri = 'http://localhost:$apiPort';
 
   static get baseUri => Uri(
         scheme: httpsScheme,

@@ -1,5 +1,6 @@
 import 'package:custodia_provider/ui/core/constants/colors.dart';
 import 'package:custodia_provider/ui/core/constants/component_sizes.dart';
+import 'package:custodia_provider/ui/core/constants/custom_icons.dart';
 import 'package:custodia_provider/ui/views/patients/patients_list/patients_list_vm.dart';
 import 'package:custodia_provider/ui/widgets/utils/appbar.dart';
 import 'package:custodia_provider/ui/widgets/utils/loader.dart';
@@ -111,18 +112,37 @@ class _PatientsListState extends ConsumerState<PatientsList> {
                       child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 50.w,
-                        vertical: 250.h,
+                        vertical: 180.h,
                       ),
                       child: Column(
                         children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.lightBlue,
+                              borderRadius: BorderRadius.circular(50.r),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 20.h,
+                              ),
+                              child: const Icon(
+                                CustomIcon.profile,
+                                size: 30,
+                                color: AppColors.blue,
+                              ),
+                            ),
+                          ),
+                          const YMargin(16),
                           Text(
                             'No data yet',
                             style: TextStyle(
                               fontSize: FontSize.s18,
                               fontWeight: FontWeight.w500,
                             ),
+                            textAlign: TextAlign.center,
                           ),
-                          const YMargin(12),
+                          const YMargin(8),
                           Text(
                             'Your patients will show up here',
                             style: TextStyle(
